@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --trust-indigo: 79 70 229;
+    --trust-emerald: 16 185 129;
+    --trust-slate: 71 85 105;
+    --trust-amber: 245 158 11;
+  }
+
+  body {
+    @apply font-sans bg-[#F9FAFB] text-slate-900 antialiased scroll-smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  * {
+    @apply transition-colors duration-200 ease-in-out;
+  }
+}
+
+@layer components {
+  .premium-card {
+    background-color: white;
+    border: 1px solid rgb(226 232 240 / 0.6);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+    border-radius: 1rem;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  .dense-table {
+    @apply w-full text-left text-[13px] leading-tight;
+  }
+
+  .dense-table th {
+    @apply py-3 px-4 font-semibold text-slate-500 bg-slate-50/50 uppercase tracking-wider text-[11px];
+  }
+
+  .dense-table td {
+    @apply py-3 px-4 border-t border-slate-100 font-medium text-slate-700 whitespace-nowrap;
+  }
+
+  .tab-btn {
+    @apply relative py-4 px-1 text-sm font-medium transition-all;
+  }
+
+  .tab-btn-active {
+    @apply text-indigo-600;
+  }
+
+  .tab-btn-active::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-full;
+  }
+
+  .trust-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Global Scrollbar Hiding */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+* {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
