@@ -27,15 +27,15 @@ export const api = {
   getCompanyStatus: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/status`),
   generateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/generate`, 'POST'),
   adminGenerateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/admin/company/${symbol}/generate`, 'POST'),
-  getMarketFacts: (symbol: string) => request<MarketFacts>(`/stocks/${symbol}/market`),
+  getMarketFacts: (symbol: string) => request<MarketFacts>(`/api/stocks/${symbol}/market`),
   getCoverageIndex: () => request<CoverageIndexResponse>("/coverage"),
   searchSymbols: (query: string, sector?: string) =>
-    request<{ query: string; results: { symbol: string; name: string; sector: string }[]; disclaimer: string }>(
+    request<{ query: string; results: { symbol: string; name: string; sector: string; status: string }[]; disclaimer: string }>(
       `/api/search?q=${encodeURIComponent(query)}${sector ? `&sector=${encodeURIComponent(sector)}` : ""}`,
     ),
   searchRegistry: (query: string) =>
     request<{ query: string; results: { symbol: string; name: string; sector: string; status: string }[]; disclaimer: string }>(
-      `/search/registry?q=${encodeURIComponent(query)}`,
+      `/api/search?q=${encodeURIComponent(query)}`,
     ),
   getSectors: () => request<string[]>("/api/sectors"),
   checkComparison: (metric_a: any, metric_b: any) =>

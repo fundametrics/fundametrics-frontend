@@ -18,6 +18,7 @@ const App = () => {
         <Route index element={<LandingPage />} />
         <Route path="stocks" element={<StocksPage />} />
         <Route path="stocks/:symbol" element={<CompanyPage />} />
+        <Route path="company/:symbol" element={<CompanyPage />} />
         <Route path="watchlist" element={<WatchlistPage />} /> {/* Phase 23: Watchlist */}
         <Route path="indices/:indexId" element={<IndexPage />} />
         <Route path="about" element={<AboutPage />} />

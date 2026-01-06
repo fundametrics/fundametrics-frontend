@@ -184,8 +184,15 @@ const CompanyPage = () => {
   const reliability = state.company?.reliability;
 
   const isNotAnalyzed = !state.company && state.statusData?.status !== 'available';
+  const isPending = state.statusData?.status === 'generating' || state.statusData?.status === 'queued';
   const companyName = state.company?.company?.name || state.statusData?.name || symbol;
   const sector = state.company?.company?.sector || state.statusData?.sector || 'NSE Listed';
+
+  // Step 6 UI Text Mapping
+  let uiStatusText = "Data not available yet";
+  if (isPending) uiStatusText = "Processing data";
+  else if (state.statusData?.status === 'not_found') uiStatusText = "Data coverage pending";
+  else if (state.company) uiStatusText = "Ready";
 
   const schemaData = {
     "@context": "https://schema.org",
@@ -214,6 +221,7 @@ const CompanyPage = () => {
           : `View structured financial data, disclosures, and reliability status for ${companyName} (NSE: ${symbol}). No opinions or investment advice.`
         }
       >
+        <meta name="robots" content="index, follow" />
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>
@@ -270,9 +278,18 @@ const CompanyPage = () => {
                 {symbol} • {sector}
               </div>
               <p className="text-slate-500 font-medium leading-relaxed mb-10">
-                This company is in our registry but structured financial data has not been generated yet.
-                Fundametrics generates data on-demand to ensure maximum accuracy from public filings.
+                {isPending
+                  ? "We are currently generating the structured data report for this company from original public filings. This typically takes 1-2 minutes."
+                  : "This company is in our registry but structured financial data has not been generated yet. Fundametrics generates data on-demand to ensure maximum accuracy from public filings."
+                }
               </p>
+
+              <div className="flex items-center justify-center gap-2 mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Status:</span>
+                <span className={`text-[10px] font-black uppercase tracking-widest leading-none ${isPending ? 'text-amber-500 animate-pulse' : 'text-slate-600'}`}>
+                  {uiStatusText}
+                </span>
+              </div>
 
               <div className="space-y-4">
                 <button

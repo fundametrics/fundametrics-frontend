@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { api } from '../utils/api';
 import { Database, Search, Zap, Loader2, CheckCircle2, History, AlertCircle, Lock, ShieldCheck } from 'lucide-react';
 import SEO from '../components/SEO';
+
+const ADMIN_TOKEN = 'fundametrics18';
 
 interface RegistryItem {
     symbol: string;
@@ -21,12 +24,18 @@ const AdminPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const location = useLocation();
+
     useEffect(() => {
-        const token = localStorage.getItem('finox_admin_token');
-        if (token === 'fundametrics18') {
+        const queryParams = new URLSearchParams(location.search);
+        const tokenParam = queryParams.get('token');
+        const storedToken = localStorage.getItem('finox_admin_token');
+
+        if (tokenParam === ADMIN_TOKEN || storedToken === ADMIN_TOKEN) {
+            localStorage.setItem('finox_admin_token', ADMIN_TOKEN);
             setIsAuthenticated(true);
         }
-    }, []);
+    }, [location]);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -37,8 +46,8 @@ const AdminPage = () => {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        if (password === 'fundametrics18') {
-            localStorage.setItem('finox_admin_token', 'fundametrics18');
+        if (password === ADMIN_TOKEN) {
+            localStorage.setItem('finox_admin_token', ADMIN_TOKEN);
             setIsAuthenticated(true);
             setError('');
         } else {
