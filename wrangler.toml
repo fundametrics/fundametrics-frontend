@@ -1,9 +1,0 @@
-name = "fundametrics-frontend"
-compatibility_date = "2026-01-06"
-
-[site]
-bucket = "./dist"
-
-[env.production]
-name = "fundametrics-frontend"
-route = "fundametrics.in/*"
