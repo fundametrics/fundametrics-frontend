@@ -7,6 +7,7 @@ interface Constituent {
     symbol: string;
     name: string;
     sector: string;
+    currentPrice?: number;
 }
 
 const IndexPage = () => {
@@ -99,10 +100,17 @@ const IndexPage = () => {
                                         </div>
 
                                         <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest truncate max-w-[70%]">
-                                                {item.sector || 'Market Weighted'}
-                                            </span>
-                                            <TrendingUp size={12} className="text-emerald-500" />
+                                            <div className="flex flex-col">
+                                                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest truncate max-w-[100%]">
+                                                    {item.sector || 'Market Weighted'}
+                                                </span>
+                                                {item.currentPrice && (
+                                                    <span className="text-sm font-bold text-slate-900 mt-1">
+                                                        ₹{item.currentPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <TrendingUp size={12} className="text-emerald-500 mb-auto mt-1" />
                                         </div>
                                     </Link>
                                 ))}
