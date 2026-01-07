@@ -67,7 +67,7 @@ const LandingPage = () => {
 
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-bold uppercase tracking-widest mb-10 shadow-sm animate-fade-in-up">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-            Live NSE Data Connection Active
+            Verified NSE Market Data
           </div>
 
           <h1 className="text-5xl sm:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] mb-8 text-slate-900 max-w-5xl">

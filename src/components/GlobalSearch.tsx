@@ -174,7 +174,7 @@ const GlobalSearch = ({ variant = 'default' }: GlobalSearchProps) => {
           onFocus={() => setIsOpen(results.length > 0 || !!trimmedQuery)}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search all NSE companies (Ola, Paytm, etc)..."
+          placeholder="Search 2000+ NSE Stocks (e.g. RELIANCE, TATASTEEL)..."
           className="w-full bg-transparent text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none"
           aria-label="Search companies"
           aria-expanded={isOpen}
