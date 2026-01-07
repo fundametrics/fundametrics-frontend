@@ -5,11 +5,18 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8002';
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 async function request<T>(endpoint: string, method: HttpMethod = 'GET', body?: unknown): Promise<T> {
+  const token = localStorage.getItem('finox_admin_token');
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+  };
+
+  if (token) {
+    headers['x-admin-token'] = token;
+  }
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
 
