@@ -225,7 +225,9 @@ const GlobalSearch = ({ variant = 'default' }: GlobalSearchProps) => {
                       )}
                     </div>
                     <span className="text-xs text-neutral-600">{result.name}</span>
-                    <span className="text-[11px] text-neutral-400">Sector: {result.sector}</span>
+                    <span className="text-[11px] text-neutral-400">
+                      {result.sector !== 'Unknown' ? `Sector: ${result.sector}` : 'NSE Listed'}
+                    </span>
                   </button>
                 </li>
               ))}

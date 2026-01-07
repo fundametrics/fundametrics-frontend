@@ -102,7 +102,7 @@ const IndexPage = () => {
                                         <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
                                             <div className="flex flex-col">
                                                 <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest truncate max-w-[100%]">
-                                                    {item.sector || 'Market Weighted'}
+                                                    {(item.sector && item.sector !== 'Unknown') ? item.sector : 'Market Weighted'}
                                                 </span>
                                                 {item.currentPrice && (
                                                     <span className="text-sm font-bold text-slate-900 mt-1">

@@ -30,7 +30,7 @@ const LandingPage = () => {
           companies = nifty.constituents.slice(0, 8).map((c: any) => ({
             symbol: c.symbol,
             name: c.name || c.symbol,
-            sector: c.sector || 'Bluechip', // Fallback for famous stocks
+            sector: (c.sector && c.sector !== 'Unknown') ? c.sector : 'Bluechip',
             currentPrice: c.currentPrice
           }));
         }
