@@ -369,9 +369,16 @@ const CompanyPage = () => {
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {fundametricsMetrics.filter((m: any) => m.value !== null).slice(0, 8).map((m: any, idx: number) => (
-                  <InsightTile key={idx} metric={m} onExplore={handleExplainMetric} />
-                ))}
+                {fundametricsMetrics.filter((m: any) => m.value !== null).length > 0 ? (
+                  fundametricsMetrics.filter((m: any) => m.value !== null).slice(0, 8).map((m: any, idx: number) => (
+                    <InsightTile key={idx} metric={m} onExplore={handleExplainMetric} />
+                  ))
+                ) : (
+                  <div className="col-span-full p-8 bg-slate-50 border border-slate-200 border-dashed rounded-2xl text-center">
+                    <FileText className="mx-auto text-slate-300 mb-2" size={24} />
+                    <p className="text-sm font-bold text-slate-400">No computed metrics available for this period.</p>
+                  </div>
+                )}
               </div>
             </section>
 
