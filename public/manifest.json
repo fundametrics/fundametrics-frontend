@@ -1,0 +1,16 @@
+{
+    "short_name": "Fundametrics",
+    "name": "Fundametrics Financial Terminal",
+    "icons": [
+        {
+            "src": "fundametrics_logo.svg",
+            "sizes": "48x48 72x72 96x96 144x144 192x192 512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#4f46e5",
+    "background_color": "#ffffff"
+}
