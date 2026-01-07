@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
-import { Search, ArrowRight, ShieldCheck, Activity, BarChart3, Users, Zap, Database, Clock, Cpu, ArrowUpRight, Globe, Lock, TrendingUp } from 'lucide-react';
+import { Search, ArrowRight, ShieldCheck, Activity, TrendingUp, Zap, Database, Globe, ChevronRight } from 'lucide-react';
 import GlobalSearch from '../components/GlobalSearch';
 import MarketIndices from '../components/MarketIndices';
 import SEO from '../components/SEO';
@@ -15,101 +15,95 @@ interface CompanySummary {
 
 const LandingPage = () => {
   const [stats, setStats] = useState({
-    totalCompanies: 0,
     recentCompanies: [] as CompanySummary[],
     loading: true
   });
 
   useEffect(() => {
-    const fetchHomeData = async () => {
+    const fetchFamousStocks = async () => {
       try {
-        const stocks = await api.getStocks();
-        // Handle both legacy and new API responses
+        // Use NIFTY 50 to get famous stocks ensuring high quality data
+        const nifty = await api.getIndexConstituents("NIFTY 50");
+
         let companies: CompanySummary[] = [];
-        if (stocks.companies) {
-          companies = stocks.companies.map((c: any) => ({
+        if (nifty.constituents) {
+          companies = nifty.constituents.slice(0, 8).map((c: any) => ({
             symbol: c.symbol,
             name: c.name || c.symbol,
-            sector: c.sector || 'General',
+            sector: c.sector || 'Bluechip', // Fallback for famous stocks
             currentPrice: c.currentPrice
           }));
-        } else if (stocks.symbols) {
-          // Fallback for very old API cache
-          companies = stocks.symbols.map((s: string) => ({ symbol: s, name: s, sector: 'General' }));
         }
 
         setStats({
-          totalCompanies: stocks.total || 0,
-          recentCompanies: companies.slice(0, 8),
+          recentCompanies: companies,
           loading: false
         });
       } catch (err) {
-        console.error("Failed to load landing stats", err);
+        console.error("Failed to load famous stocks", err);
         setStats(s => ({ ...s, loading: false }));
       }
     };
-    fetchHomeData();
+    fetchFamousStocks();
   }, []);
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white font-sans">
       <SEO
         title="Fundametrics | Verified Financial Intelligence"
         description="Institutional-grade financial terminal for Indian stocks. Pure data, zero bias."
       />
 
-      {/* Premium Background Effects */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px]" />
-        <div className="absolute top-[20%] right-[30%] w-[300px] h-[300px] bg-blue-600/10 rounded-full blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150" />
-      </div>
+      {/* Subtle Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
-      <div className="relative z-10 space-y-20 pb-24 pt-16 lg:pt-24">
+      {/* Radiant Gradient Top */}
+      <div className="absolute top-0 left-0 right-0 h-[600px] bg-gradient-to-b from-blue-50/50 to-transparent pointer-events-none" />
+
+      <div className="relative z-10 space-y-24 pb-32 pt-12 lg:pt-20">
 
         {/* SECTION 1: HERO */}
         <section className="px-6 max-w-[1920px] mx-auto text-center flex flex-col items-center">
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-[10px] font-bold uppercase tracking-widest mb-8 animate-fade-in-up">
-            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-            Live Market Data Now Available
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-bold uppercase tracking-widest mb-10 shadow-sm animate-fade-in-up">
+            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+            Live NSE Data Connection Active
           </div>
 
-          <h1 className="text-5xl sm:text-7xl xl:text-9xl font-black tracking-tighter leading-[0.85] mb-8 bg-gradient-to-b from-white via-white to-neutral-400 bg-clip-text text-transparent max-w-5xl">
-            Financial Truth.<br />
-            <span className="text-indigo-500">Engineered.</span>
+          <h1 className="text-5xl sm:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] mb-8 text-slate-900 max-w-5xl">
+            The Financial Terminal <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
+              For Modern India.
+            </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl leading-relaxed mb-12">
-            Reject consensus. Access audit-traceable financial extraction directly from NSE disclosures. No opinions. Just raw, structured intelligence.
+          <p className="text-xl text-slate-500 max-w-2xl leading-relaxed mb-12 font-medium">
+            Institutional-grade analysis for retail investors.
+            <span className="text-slate-900 font-bold"> 2000+ NSE Stocks.</span>
+            Zero noise. Zero bias.
           </p>
 
-          <div className="w-full max-w-2xl relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative bg-neutral-900 border border-neutral-800 rounded-2xl p-2 flex items-center gap-2 shadow-2xl">
+          <div className="w-full max-w-2xl relative shadow-2xl shadow-blue-900/10 rounded-2xl">
+            <div className="bg-white border border-slate-200 rounded-2xl p-2 flex items-center gap-2">
               <div className="flex-1">
                 <GlobalSearch variant="minimal" />
               </div>
             </div>
           </div>
 
-          {/* Hero Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16 w-full max-w-5xl opacity-80 hover:opacity-100 transition-opacity">
-            <div className="bg-neutral-800/50 backdrop-blur-md border border-white/5 p-6 rounded-2xl text-left hover:border-indigo-500/30 transition-colors">
-              <Database className="text-indigo-400 mb-4" size={24} />
-              <div className="text-2xl font-black">2000+</div>
-              <div className="text-xs text-neutral-500 font-bold uppercase tracking-widest mt-1">Companies Covered</div>
+          {/* Hero Features */}
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 mt-16 text-sm font-bold text-slate-500 uppercase tracking-widest">
+            <div className="flex items-center gap-2">
+              <Database size={16} className="text-blue-600" />
+              Audit Traceable
             </div>
-            <div className="bg-neutral-800/50 backdrop-blur-md border border-white/5 p-6 rounded-2xl text-left hover:border-emerald-500/30 transition-colors">
-              <Zap className="text-emerald-400 mb-4" size={24} />
-              <div className="text-2xl font-black">500ms</div>
-              <div className="text-xs text-neutral-500 font-bold uppercase tracking-widest mt-1">Extraction Latency</div>
+            <div className="flex items-center gap-2">
+              <Zap size={16} className="text-amber-500" />
+              Real-time Compute
             </div>
-            <div className="bg-neutral-800/50 backdrop-blur-md border border-white/5 p-6 rounded-2xl text-left hover:border-blue-500/30 transition-colors">
-              <ShieldCheck className="text-blue-400 mb-4" size={24} />
-              <div className="text-2xl font-black">100%</div>
-              <div className="text-xs text-neutral-500 font-bold uppercase tracking-widest mt-1">Audit Traceability</div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck size={16} className="text-emerald-500" />
+              Source Transparent
             </div>
           </div>
         </section>
@@ -117,54 +111,66 @@ const LandingPage = () => {
         {/* SECTION 2: MARKET PULSE */}
         <section className="px-6 max-w-[1920px] mx-auto">
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="text-xs font-black text-neutral-400 uppercase tracking-[0.2em]">Market Pulse</h2>
-            <div className="h-px bg-neutral-800 flex-1" />
+            <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Market Overview</h2>
+            <div className="h-px bg-slate-100 flex-1" />
           </div>
           <MarketIndices />
         </section>
 
-        {/* SECTION 3: GLOBAL REGISTRY STREAM */}
+        {/* SECTION 3: MARKET LEADERS STREAM */}
         <section className="px-6 max-w-[1920px] mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
-              <Activity className="text-emerald-500" />
-              Global Registry Stream
-            </h2>
-            <Link to="/stocks" className="px-4 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-xs font-bold uppercase tracking-widest transition-colors">
-              View Full Database
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-2">
+                Market Leaders
+              </h2>
+              <p className="text-slate-500 font-medium">Real-time valuation updates for top NSE constituents.</p>
+            </div>
+            <Link to="/stocks" className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold uppercase tracking-widest transition-all">
+              View All 2000+
+              <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.recentCompanies.map((company) => (
               <Link key={company.symbol} to={`/stocks/${company.symbol}`}
-                className="group bg-neutral-800/40 border border-white/5 p-5 rounded-xl hover:bg-neutral-800 hover:border-indigo-500/50 transition-all duration-300 relative overflow-hidden">
+                className="group bg-white border border-slate-200 p-6 rounded-2xl hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-[180px]">
 
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex justify-between items-start">
                   <div>
-                    <div className="text-lg font-black tracking-tight group-hover:text-indigo-400 transition-colors">{company.symbol}</div>
-                    <div className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider truncate max-w-[150px]">{company.sector}</div>
+                    <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 font-bold mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                      {company.symbol[0]}
+                    </div>
+                    <div className="text-xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">{company.symbol}</div>
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{company.sector}</div>
                   </div>
                   {company.currentPrice ? (
                     <div className="text-right">
-                      <div className="text-sm font-bold text-emerald-400">₹{company.currentPrice.toLocaleString('en-IN')}</div>
-                      <div className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">Live</div>
+                      <div className="text-lg font-bold text-slate-900">₹{company.currentPrice.toLocaleString('en-IN')}</div>
+                      <div className="flex items-center justify-end gap-1 text-[10px] text-emerald-600 font-bold uppercase tracking-wider mt-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        Live
+                      </div>
                     </div>
                   ) : (
-                    <div className="w-2 h-2 rounded-full bg-neutral-700 animate-pulse" title="Price pending" />
+                    <div className="w-2 h-2 rounded-full bg-slate-200 animate-pulse" />
                   )}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center opacity-60 group-hover:opacity-100 transition-opacity">
-                  <div className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest">{company.name}</div>
-                  <ArrowUpRight size={12} className="text-indigo-500" />
+                <div className="pt-4 border-t border-slate-50 flex justify-between items-center">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[180px]">{company.name}</div>
+                  <Activity size={14} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
                 </div>
               </Link>
             ))}
 
             {!stats.loading && stats.recentCompanies.length === 0 && (
-              <div className="col-span-full py-12 text-center text-neutral-600 border border-dashed border-neutral-800 rounded-xl">
-                Awaiting feed data...
+              <div className="col-span-full py-16 text-center">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="text-slate-300" />
+                </div>
+                <p className="text-slate-500 font-medium">Connecting to market feed...</p>
               </div>
             )}
           </div>
