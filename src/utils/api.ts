@@ -47,9 +47,9 @@ export const api = {
   getSectors: () => request<string[]>("/api/sectors"),
   checkComparison: (metric_a: any, metric_b: any) =>
     request<{ comparable: boolean; reason: string | null }>("/api/v1/compare/check", "POST", { metric_a, metric_b }),
-  getIndices: () => request<string[]>("/indices"),
+  getIndices: () => request<string[]>("/api/indices"),
   getIndexConstituents: (index: string) =>
-    request<{ index: string; count: number; constituents: { symbol: string; name: string; sector: string }[] }>(`/indices/${index}/constituents`),
+    request<{ index: string; count: number; constituents: { symbol: string; name: string; sector: string }[] }>(`/api/indices/${index}/constituents`),
   getPeers: (symbol: string) => request<{ symbol: string; peers: any[] }>(`/api/peers/${symbol}`),
   getAdminStats: () => request<any>('/admin/stats'),
 };
