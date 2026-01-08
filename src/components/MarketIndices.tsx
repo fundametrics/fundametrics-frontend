@@ -4,7 +4,10 @@ import { Activity, ArrowUpRight, Layers } from 'lucide-react';
 const indicesList = [
     { id: 'NIFTY 50', label: 'Nifty 50', desc: 'Top 50 Blue Chip Companies' },
     { id: 'SENSEX', label: 'Sensex', desc: 'BSE Benchmark Index' },
-    { id: 'BANK NIFTY', label: 'Bank Nifty', desc: 'Liquid Banking Stocks' }
+    { id: 'BANK NIFTY', label: 'Bank Nifty', desc: 'Liquid Banking Stocks' },
+    { id: 'NIFTY IT', label: 'Nifty IT', desc: 'Technology Sector Leaders' },
+    { id: 'NIFTY AUTO', label: 'Nifty Auto', desc: 'Automobile Industry Index' },
+    { id: 'NIFTY PHARMA', label: 'Nifty Pharma', desc: 'Pharmaceutical Stocks' }
 ];
 
 const MarketIndices = () => {

@@ -213,12 +213,12 @@ const CompanyPage = () => {
     <div className="min-h-screen bg-[#F8FAFC]">
       <SEO
         title={isNotAnalyzed
-          ? `${companyName} (${symbol}) – NSE Listed Company | Fundametrics`
-          : `${companyName} (${symbol}) – Financial Overview & Disclosures | Fundametrics`
+          ? `${companyName} (${symbol}) Stock Fundamentals & Analysis | Fundametrics`
+          : `${companyName} (${symbol}) Fundamentals: Financial Statements, Ratios & Analysis | Fundametrics`
         }
         description={isNotAnalyzed
-          ? `${companyName} is listed on NSE. Financial data has not been generated yet. Transparent data availability and reliability status shown.`
-          : `View structured financial data, disclosures, and reliability status for ${companyName} (NSE: ${symbol}). No opinions or investment advice.`
+          ? `${companyName} (NSE: ${symbol}) stock fundamentals and financial analysis. View company profile, sector information, and data availability status. Comprehensive fundamental analysis platform.`
+          : `Complete fundamental analysis of ${companyName} (NSE: ${symbol}). View financial statements, key ratios, balance sheet, P&L, cash flow, and detailed metrics. ${sector ? `${sector} sector.` : ''} Data-driven stock fundamentals.`
         }
       >
         <meta name="robots" content="index, follow" />
