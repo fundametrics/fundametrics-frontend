@@ -1,0 +1,11 @@
+# Redirect www to non-www
+https://www.fundametrics.in/* https://fundametrics.in/:splat 301!
+
+# If you own fundametrics.io, redirect to .in
+https://fundametrics.io/* https://fundametrics.in/:splat 301!
+https://www.fundametrics.io/* https://fundametrics.in/:splat 301!
+
+# Ensure trailing slashes are consistent
+/stocks /stocks/ 301
+/about /about/ 301
+/indices /indices/ 301
