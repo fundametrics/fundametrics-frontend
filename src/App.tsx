@@ -5,6 +5,7 @@ import StocksPage from './pages/StocksPage';
 import CompanyPage from './pages/CompanyPage';
 import WatchlistPage from './pages/WatchlistPage'; // Phase 23: Watchlist
 import IndexPage from './pages/IndexPage';
+import IndicesListPage from './pages/IndicesListPage';
 import AboutPage from './pages/AboutPage';
 import AdminPage from './pages/AdminPage';
 import AboutDataPage from './pages/AboutDataPage';
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="stocks/:symbol" element={<CompanyPage />} />
         <Route path="company/:symbol" element={<CompanyPage />} />
         <Route path="watchlist" element={<WatchlistPage />} /> {/* Phase 23: Watchlist */}
+        <Route path="indices" element={<IndicesListPage />} />
         <Route path="indices/:indexId" element={<IndexPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="about-data" element={<AboutDataPage />} />

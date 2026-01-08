@@ -12,7 +12,7 @@ const MobileBottomNav = () => {
     const globalNavItems = [
         { id: 'home', label: 'Home', icon: LayoutGrid, path: '/', isAnchor: false },
         { id: 'stocks', label: 'Stocks', icon: Search, path: '/stocks', isAnchor: false },
-        { id: 'indices', label: 'Indices', icon: Layers, path: '/indices/NIFTY%2050', isAnchor: false },
+        { id: 'indices', label: 'Indices', icon: Layers, path: '/indices', isAnchor: false },
         { id: 'logic', label: 'Logic', icon: BookOpen, path: '/about', isAnchor: false },
     ];
 
