@@ -19,12 +19,12 @@ const MarketIndices = () => {
                 </div>
             </div>
 
-            <div className="flex overflow-x-auto snap-x gap-4 pb-4 md:grid md:grid-cols-3 md:gap-6 hide-scroll">
+            <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-6">
                 {indicesList.map((idx) => (
                     <Link
                         key={idx.id}
                         to={`/indices/${encodeURIComponent(idx.id)}`}
-                        className="min-w-[85%] sm:min-w-0 snap-center bg-white border border-slate-200 p-6 md:p-8 rounded-2xl hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-50 transition-all text-left group block"
+                        className="w-full bg-white border border-slate-200 p-6 md:p-8 rounded-2xl hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-50 transition-all text-left group block"
                     >
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-50 group-hover:bg-indigo-50 flex items-center justify-center mb-4 md:mb-6 transition-colors">
                             <Activity size={20} className="md:w-6 md:h-6 text-slate-400 group-hover:text-indigo-600" />

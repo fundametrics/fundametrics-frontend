@@ -126,8 +126,8 @@ const LandingPage = () => {
               </h2>
               <p className="text-slate-500 font-medium">Real-time valuation updates for top NSE constituents.</p>
             </div>
-            <Link to="/stocks" className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold uppercase tracking-widest transition-all">
-              View All 2000+
+            <Link to="/stocks" className="group flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-xl bg-slate-900 hover:bg-black text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all">
+              View All <span className="hidden sm:inline">2000+</span>
               <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
