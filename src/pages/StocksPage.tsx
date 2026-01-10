@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, TrendingUp, TrendingDown, Minus, ArrowUpDown } from 'lucide-react';
 import { api } from '../utils/api';
@@ -30,25 +30,34 @@ const StocksPage = () => {
   const [total, setTotal] = useState(0);
   const LIMIT = 20;
 
+  // Debounce hook setup
+  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+
   useEffect(() => {
-    loadCompanies(0, true);
-  }, []);
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 400);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
+  // Effect to trigger search or load default list
+  useEffect(() => {
+    if (debouncedQuery) {
+      handleSearch(debouncedQuery);
+    } else {
+      // If search is cleared, reload default list
+      if (companies.length === 0 || companies.length <= LIMIT) {
+        loadCompanies(0, true);
+      }
+    }
+    // Note: We don't depend on 'companies' length to avoid loops, only query changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedQuery]);
 
   const filteredCompanies = useMemo(() => {
     let filtered = [...companies];
 
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (c) =>
-          c.symbol.toLowerCase().includes(query) ||
-          c.name.toLowerCase().includes(query) ||
-          c.sector.toLowerCase().includes(query)
-      );
-    }
-
-    // Filter by sector
+    // Filter by sector (Client side for now, as search backend returns sector)
     if (selectedSector !== 'all') {
       filtered = filtered.filter((c) => c.sector === selectedSector);
     }
@@ -70,38 +79,73 @@ const StocksPage = () => {
     });
 
     return filtered;
-  }, [companies, searchQuery, sortField, sortDirection, selectedSector]);
+  }, [companies, sortField, sortDirection, selectedSector]);
+
+  const handleSearch = async (query: string) => {
+    setLoading(true);
+    try {
+      const response = await api.searchRegistry(query);
+
+      const searchResults = response.results.map((c: any) => ({
+        symbol: c.symbol,
+        name: c.name,
+        sector: c.sector || 'Unknown',
+        // Search API currently returns partial data
+        marketCap: undefined,
+        roe: undefined,
+        roce: undefined,
+        pe: undefined,
+        debt: undefined
+      }));
+
+      setCompanies(searchResults);
+      setTotal(searchResults.length); // Update total to show match count
+      setLoading(false);
+    } catch (err) {
+      console.error("Search failed", err);
+      setLoading(false);
+    }
+  };
 
   const loadCompanies = async (currentSkip: number, replace: boolean = false) => {
+    // Don't load paginated data if we are searching
+    if (debouncedQuery) return;
+
     try {
       if (!replace) setLoadingMore(true);
       else setLoading(true);
 
-      // Use getStocks to show companies, limit to 20
       const response = await api.getStocks(currentSkip, LIMIT);
 
       let companyData: CompanyListItem[] = [];
 
       if (response.companies) {
-        companyData = response.companies.map(c => ({
+        companyData = response.companies.map((c: any) => ({
           symbol: c.symbol,
           name: c.name || c.company || c.symbol,
           sector: c.sector || 'Unknown',
-          marketCap: (c as any).marketCap || undefined,
-          roe: (c as any).roe || undefined,
-          roce: (c as any).roce || undefined,
-          pe: (c as any).pe || undefined,
-          debt: (c as any).debt || undefined
+          marketCap: c.marketCap || undefined,
+          roe: c.roe || undefined,
+          roce: c.roce || undefined,
+          pe: c.pe || undefined,
+          debt: c.debt || undefined
         }));
       }
 
       if (replace) {
         setCompanies(companyData);
       } else {
-        setCompanies(prev => [...prev, ...companyData]);
+        setCompanies(prev => {
+          // Avoid duplicates
+          const existing = new Set(prev.map(p => p.symbol));
+          const uniqueNew = companyData.filter(d => !existing.has(d.symbol));
+          return [...prev, ...uniqueNew];
+        });
       }
 
-      setTotal(response.total || response.count || 0);
+      // Only update total if we are not searching (which we strictly aren't here)
+      if (response.total) setTotal(response.total);
+
       setSkip(currentSkip);
       setLoading(false);
       setLoadingMore(false);
@@ -164,7 +208,7 @@ const StocksPage = () => {
                 Company Registry & Disclosures
               </h1>
               <p className="text-sm text-slate-600 mt-1">
-                {filteredCompanies.length} of {total} companies tracked
+                {total} companies tracked
               </p>
             </div>
 
