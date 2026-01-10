@@ -196,16 +196,39 @@ const CompanyPage = () => {
 
   const schemaData = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": companyName,
-    "tickerSymbol": symbol,
-    "exchange": "NSE",
-    "url": `https://fundametrics.in/stocks/${symbol}`,
-    "description": isNotAnalyzed
-      ? `${companyName} is listed on NSE. Financial data has not been generated yet. Transparent data availability shown.`
-      : `Structured financial data, disclosures, and reliability status for ${companyName} (NSE: ${symbol}). No opinions or investment advice.`,
-    "sameAs": [
-      `https://www.nseindia.com/get-quotes/equity?symbol=${symbol}`
+    "@graph": [
+      {
+        "@type": "Corporation",
+        "@id": `https://fundametrics.in/stocks/${symbol}#organization`,
+        "name": companyName,
+        "tickerSymbol": `NSE:${symbol}`,
+        "legalName": companyName,
+        "url": `https://fundametrics.in/stocks/${symbol}`
+      },
+      {
+        "@type": "FinancialProduct",
+        "@id": `https://fundametrics.in/stocks/${symbol}#stock`,
+        "name": `${symbol} Stock Fundamentals`,
+        "symbol": symbol,
+        "exchangeTicker": `NSE:${symbol}`,
+        "description": `Financial fundamentals and structural analysis of ${companyName}.`,
+        "brand": {
+          "@type": "Brand",
+          "name": "Fundametrics"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": `https://fundametrics.in/stocks/${symbol}#webpage`,
+        "url": `https://fundametrics.in/stocks/${symbol}`,
+        "name": `${companyName} (${symbol}) Fundamentals & Analysis`,
+        "isPartOf": {
+          "@id": "https://fundametrics.in/#website"
+        },
+        "about": {
+          "@id": `https://fundametrics.in/stocks/${symbol}#organization`
+        }
+      }
     ]
   };
 
@@ -213,12 +236,12 @@ const CompanyPage = () => {
     <div className="min-h-screen bg-[#F8FAFC]">
       <SEO
         title={isNotAnalyzed
-          ? `${companyName} (${symbol}) Stock Fundamentals & Analysis | Fundametrics`
-          : `${companyName} (${symbol}) Fundamentals: Financial Statements, Ratios & Analysis | Fundametrics`
+          ? `${companyName} (${symbol}) Share Price, Fundamentals & Analysis | Fundametrics`
+          : `${companyName} (${symbol}) Share Price, Fundamentals, Financials & Analysis | Fundametrics`
         }
         description={isNotAnalyzed
-          ? `${companyName} (NSE: ${symbol}) stock fundamentals and financial analysis. View company profile, sector information, and data availability status. Comprehensive fundamental analysis platform.`
-          : `Complete fundamental analysis of ${companyName} (NSE: ${symbol}). View financial statements, key ratios, balance sheet, P&L, cash flow, and detailed metrics. ${sector ? `${sector} sector.` : ''} Data-driven stock fundamentals.`
+          ? `Analyze ${companyName} (${symbol}) fundamentals. View company profile, sector information, and data availability status on NSE.`
+          : `Analyze ${companyName} (${symbol}) fundamentals. View Balance Sheet, Profit & Loss, PE Ratio, ROE, and shareholding pattern. Detailed financial analysis.`
         }
       >
         <meta name="robots" content="index, follow" />
