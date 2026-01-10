@@ -226,22 +226,79 @@ const CompanyPage = () => {
     ]
   };
 
+  // Phase 4.2: Data Extraction for SEO Content
+  const getMetricVal = (names: string[]) => {
+    const m = state.company?.fundametrics_metrics?.find(m => names.includes(m.metric_name));
+    return m ? Number(m.value) : null;
+  };
+
+  const marketCapVal = getMetricVal(['Market Cap', 'Market Capitalization']);
+  const peVal = getMetricVal(['P/E Ratio', 'PE Ratio']);
+  const roeVal = getMetricVal(['ROE', 'Return on Equity']);
+  const roceVal = getMetricVal(['ROCE', 'Return on Capital Employed']);
+
+  // Phase 4.2: Dynamic Title (CTR Optimized)
+  const seoTitle = isNotAnalyzed
+    ? `${companyName} Share Analysis – Fundamentals & Data Status | Fundametrics`
+    : `${companyName} Share Analysis – PE Ratio, ROE, ROCE & Valuation | Fundametrics`;
+
+  // Phase 4.2: FAQ Schema
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `What is the PE ratio of ${companyName}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": peVal
+            ? `The P/E ratio of ${companyName} is ${peVal.toFixed(2)}, which indicates its valuation relative to its earnings per share.`
+            : `The P/E ratio for ${companyName} is calculated based on its latest market price and trailing 12-month earnings. Check the valuation section for the latest data.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `Is ${companyName} a good stock to buy?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${companyName} is evaluated based on key fundamental metrics including ROE ${roeVal ? `(${roeVal.toFixed(2)}%)` : ''}, ROCE ${roceVal ? `(${roceVal.toFixed(2)}%)` : ''}, and its debt-to-equity profile. Investors should analyze these ratios in comparison to the ${sector || 'industry'} sector peers.`
+        }
+      }
+    ]
+  };
+
+  // Merge schemas
+  const combinedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      ...schemaData["@graph"],
+      faqSchema
+    ]
+  };
+
+  // Price Fallback Logic (Phase 24 Fix)
+  const priceMetric = state.company?.fundametrics_metrics?.find(
+    m => m.metric_name === "Current Price" || m.metric_name === "Price" || m.metric_name === "Close Price"
+  );
+
+  const displayPrice = priceMetric
+    ? { value: Number(priceMetric.value), currency: 'INR' }
+    : (state.company as any)?.market?.current_price;
+
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       <SEO
-        title={isNotAnalyzed
-          ? `${companyName} Ltd – Financial Ratios, Fundamentals & Analysis | Fundametrics`
-          : `${companyName} Ltd – Financial Ratios, Fundamentals & Analysis | Fundametrics`
-        }
+        title={seoTitle}
         description={isNotAnalyzed
-          ? `Check complete financial fundamentals of ${companyName} Ltd including valuation ratios, profitability, data coverage and status on Fundametrics.`
-          : `Check complete financial fundamentals of ${companyName} Ltd including valuation ratios, profitability, balance sheet strength, growth and returns. Updated data at Fundametrics.`
+          ? `Check ${companyName} (${symbol}) fundamentals and data status. Comprehensive analysis platform.`
+          : `Share Analysis of ${companyName} (${symbol}): Market Cap ₹${marketCapVal ? (marketCapVal / 10000000).toFixed(0) + 'Cr' : 'N/A'}, PE Ratio ${peVal ? peVal.toFixed(2) : 'N/A'}, ROE and detailed valuation metrics. Updated at Fundametrics.`
         }
       >
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`https://fundametrics.in/company/${symbol}`} />
         <script type="application/ld+json">
-          {JSON.stringify(schemaData)}
+          {JSON.stringify(combinedSchema)}
         </script>
       </SEO>
       <CompanyHeader
@@ -249,7 +306,7 @@ const CompanyPage = () => {
         symbol={symbol}
         sector={state.company?.company?.sector || sector}
         metadataAsOfDate={(state.company as any)?.metadata?.generated}
-        price={(state.company as any)?.market?.current_price}
+        price={displayPrice}
         priceDelayMinutes={15}
         coverage={(state as any).coverage}
         statementScope="FY24 Consolidated"
@@ -278,12 +335,13 @@ const CompanyPage = () => {
             <div className="p-4 bg-indigo-50 rounded-2xl border border-indigo-100">
               <span className="text-[9px] font-black text-indigo-600 uppercase tracking-widest block mb-1">Status</span>
               <p className="text-[10px] font-medium text-slate-600 leading-relaxed">
-                Structured data generated from original public filings.
+                Transparent data availability and reliability status shown.
               </p>
             </div>
           </div>
         </aside>
 
+        {/* Main Content Area */}
         {/* Main Content Area */}
         {isNotAnalyzed ? (
           <main className="flex-1 px-4 lg:px-8 py-20 flex items-center justify-center">
@@ -295,49 +353,48 @@ const CompanyPage = () => {
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-full mb-8">
                 {symbol} • {sector}
               </div>
-              <p className="text-slate-500 font-medium leading-relaxed mb-10">
-                {isPending
-                  ? "We are currently generating the structured data report for this company from original public filings. This typically takes 1-2 minutes."
-                  : "This company is in our registry but structured financial data has not been generated yet. Fundametrics generates data on-demand to ensure maximum accuracy from public filings."
-                }
+              <p className="text-slate-500 font-medium leading-relaxed mb-6">
+                We are aggregating data for this company. Please check back later.
               </p>
-
-              <div className="flex items-center justify-center gap-2 mb-8 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Status:</span>
-                <span className={`text-[10px] font-black uppercase tracking-widest leading-none ${isPending ? 'text-amber-500 animate-pulse' : 'text-slate-600'}`}>
-                  {uiStatusText}
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                <button
-                  onClick={() => window.location.href = '/admin'}
-                  className="w-full py-4 bg-indigo-600 hover:bg-slate-900 text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all shadow-lg shadow-indigo-100 flex items-center justify-center gap-2"
-                >
-                  <Zap size={16} />
-                  Ingest & Analyze Now
-                </button>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 italic text-[11px] text-slate-400">
-                  "Transparent data availability and reliability status shown."
-                </div>
-              </div>
             </div>
           </main>
         ) : (
           <main className="flex-1 px-4 lg:px-8 py-8 space-y-12 pb-40 min-w-0">
 
-            {/* SEO: Programmatic Content (Phase 4.1) */}
-            <div className="max-w-4xl">
-              <h2 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">
-                {companyName} ({symbol}) Fundamentals & Financial Ratios
-              </h2>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                {companyName} is a publicly listed company on the National Stock Exchange (NSE: {symbol}) operating in the {sector || 'General'} sector.
-                This page provides a comprehensive fundamental analysis of {companyName}, including key valuation ratios
-                like Price-to-Earnings (P/E), Return on Equity (ROE), and Return on Capital Employed (ROCE).
-                Investors can also view the company's latest Balance Sheet, Profit & Loss statement, and Shareholding patterns
-                to assess its long-term financial health and growth prospects.
-              </p>
+            {/* SEO: Phase 4.2 Data-Driven Overview */}
+            <div className="max-w-4xl space-y-6">
+              <div>
+                <h2 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">
+                  {companyName} Share Analysis & Fundamentals
+                </h2>
+                <p className="text-sm text-slate-600 leading-relaxed text-justify">
+                  <span className="font-bold text-slate-800">{companyName}</span> is an Indian listed company (NSE: <span className="font-bold text-slate-800">{symbol}</span>) operating in the <span className="font-bold text-slate-800">{sector || 'General'}</span> sector.
+                  The company {marketCapVal ? `has a market capitalization of ₹${(marketCapVal / 10000000).toFixed(2)} Crore and ` : ''}
+                  is a significant player in the {sector ? sector.toLowerCase() : 'Indian'} market.
+                  Key financial indicators such as
+                  <span className="font-bold text-indigo-600"> P/E Ratio {peVal ? `(${peVal.toFixed(2)})` : ''}</span>,
+                  <span className="font-bold text-indigo-600"> ROE {roeVal ? `(${roeVal.toFixed(2)}%)` : ''}</span>, and
+                  <span className="font-bold text-indigo-600"> ROCE {roceVal ? `(${roceVal.toFixed(2)}%)` : ''}</span>
+                  help investors evaluate its valuation and capital efficiency.
+                </p>
+              </div>
+
+              {/* Phase 4.2: Featured Snippet / Answer Box */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <Info size={48} className="text-indigo-600" />
+                </div>
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-3 flex items-center gap-2 relative z-10">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                  Is {companyName} a good stock?
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed relative z-10">
+                  {companyName} is a {marketCapVal && marketCapVal > 200000000000 ? 'large-cap' : 'stock'} entity.
+                  Fundamental analysis suggests checking its <strong>Price-to-Earnings (P/E) ratio of {peVal ? peVal.toFixed(2) : 'N/A'}</strong>
+                  and <strong>Return on Equity (ROE) of {roeVal ? roeVal.toFixed(2) : 'N/A'}%</strong>.
+                  Reviewing the debt profile (Debt-to-Equity) and recent quarterly results on Fundametrics is recommended for a complete investment thesis.
+                </p>
+              </div>
             </div>
 
             {/* Snapshot */}
@@ -550,8 +607,9 @@ const CompanyPage = () => {
             </section>
 
           </main>
-        )}
-      </div>
+        )
+        }
+      </div >
 
 
       <ExplainabilityModal

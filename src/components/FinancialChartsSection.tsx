@@ -37,7 +37,7 @@ const FinancialChartsSection: FC<FinancialChartsSectionProps> = ({ yearlyData, r
                 </div>
             </div>
             <div className="flex-1 min-h-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minHeight={100}>
                     {children as any}
                 </ResponsiveContainer>
             </div>
