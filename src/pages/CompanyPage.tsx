@@ -292,7 +292,7 @@ const CompanyPage = () => {
         title={seoTitle}
         description={isNotAnalyzed
           ? `Check ${companyName} (${symbol}) fundamentals and data status. Comprehensive analysis platform.`
-          : `Share Analysis of ${companyName} (${symbol}): Market Cap ₹${marketCapVal ? (marketCapVal / 10000000).toFixed(0) + 'Cr' : 'N/A'}, PE Ratio ${peVal ? peVal.toFixed(2) : 'N/A'}, ROE and detailed valuation metrics. Updated at Fundametrics.`
+          : `Share Analysis of ${companyName} (${symbol}): Market Cap ₹${marketCapVal ? marketCapVal.toLocaleString('en-IN') + 'Cr' : 'N/A'}, PE Ratio ${peVal ? peVal.toFixed(2) : 'N/A'}, ROE ${roeVal ? roeVal.toFixed(2) + '%' : 'N/A'} and detailed valuation metrics. Updated at Fundametrics.`
         }
       >
         <meta name="robots" content="index, follow" />
@@ -369,13 +369,27 @@ const CompanyPage = () => {
                 </h2>
                 <p className="text-sm text-slate-600 leading-relaxed text-justify">
                   <span className="font-bold text-slate-800">{companyName}</span> is an Indian listed company (NSE: <span className="font-bold text-slate-800">{symbol}</span>) operating in the <span className="font-bold text-slate-800">{sector || 'General'}</span> sector.
-                  The company {marketCapVal ? `has a market capitalization of ₹${(marketCapVal / 10000000).toFixed(2)} Crore and ` : ''}
+                  The company {marketCapVal ? `has a market capitalization of ₹${marketCapVal.toLocaleString('en-IN')} Crore and ` : ''}
                   is a significant player in the {sector ? sector.toLowerCase() : 'Indian'} market.
-                  Key financial indicators such as
-                  <span className="font-bold text-indigo-600"> P/E Ratio {peVal ? `(${peVal.toFixed(2)})` : ''}</span>,
-                  <span className="font-bold text-indigo-600"> ROE {roeVal ? `(${roeVal.toFixed(2)}%)` : ''}</span>, and
-                  <span className="font-bold text-indigo-600"> ROCE {roceVal ? `(${roceVal.toFixed(2)}%)` : ''}</span>
-                  help investors evaluate its valuation and capital efficiency.
+                  {(peVal || roeVal || roceVal) && (
+                    <>
+                      {" "}Key financial indicators such as
+                      {(() => {
+                        const items = [];
+                        if (peVal) items.push(<span key="pe" className="font-bold text-indigo-600">P/E Ratio ({peVal.toFixed(2)})</span>);
+                        if (roeVal) items.push(<span key="roe" className="font-bold text-indigo-600">ROE ({roeVal.toFixed(2)}%)</span>);
+                        if (roceVal) items.push(<span key="roce" className="font-bold text-indigo-600">ROCE ({roceVal.toFixed(2)}%)</span>);
+
+                        return items.map((item, i) => (
+                          <Fragment key={i}>
+                            {i === 0 ? " " : i === items.length - 1 ? ", and " : ", "}
+                            {item}
+                          </Fragment>
+                        ));
+                      })()}
+                      {" "}help investors evaluate its valuation and capital efficiency.
+                    </>
+                  )}
                 </p>
               </div>
 
@@ -389,8 +403,8 @@ const CompanyPage = () => {
                   Is {companyName} a good stock?
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed relative z-10">
-                  {companyName} is a {marketCapVal && marketCapVal > 200000000000 ? 'large-cap' : 'stock'} entity.
-                  Fundamental analysis suggests checking its <strong>Price-to-Earnings (P/E) ratio of {peVal ? peVal.toFixed(2) : 'N/A'}</strong>
+                  {companyName} is a {marketCapVal && marketCapVal > 20000 ? 'large-cap' : 'stock'} entity.
+                  Fundamental analysis suggests checking its <strong>Price-to-Earnings (P/E) ratio of {peVal ? peVal.toFixed(2) : 'N/A'}</strong>{" "}
                   and <strong>Return on Equity (ROE) of {roeVal ? roeVal.toFixed(2) : 'N/A'}%</strong>.
                   Reviewing the debt profile (Debt-to-Equity) and recent quarterly results on Fundametrics is recommended for a complete investment thesis.
                 </p>

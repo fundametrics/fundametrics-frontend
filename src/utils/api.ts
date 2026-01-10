@@ -48,6 +48,7 @@ export const api = {
   checkComparison: (metric_a: any, metric_b: any) =>
     request<{ comparable: boolean; reason: string | null }>("/api/v1/compare/check", "POST", { metric_a, metric_b }),
   getIndices: () => request<string[]>("/api/indices"),
+  getIndicesPrices: () => request<{ id: string, label: string, price: number, change: number, changePercent: number, symbol: string }[]>("/api/indices/prices"),
   getIndexConstituents: (index: string) =>
     request<{ index: string; count: number; constituents: { symbol: string; name: string; sector: string; currentPrice?: number }[] }>(`/api/indices/${index}/constituents`),
   getPeers: (symbol: string) => request<{ symbol: string; peers: any[] }>(`/api/peers/${symbol}`),
