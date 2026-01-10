@@ -4,7 +4,20 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8002';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
+const CACHE = new Map<string, { data: any, timestamp: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 async function request<T>(endpoint: string, method: HttpMethod = 'GET', body?: unknown): Promise<T> {
+  const cacheKey = `${method}:${endpoint}:${body ? JSON.stringify(body) : ''}`;
+
+  // Cache Check for GET requests
+  if (method === 'GET') {
+    const cached = CACHE.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp < CACHE_TTL)) {
+      return cached.data as T;
+    }
+  }
+
   const token = localStorage.getItem('finox_admin_token');
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -24,7 +37,14 @@ async function request<T>(endpoint: string, method: HttpMethod = 'GET', body?: u
     throw new Error(`API error: ${response.status} ${response.statusText}`);
   }
 
-  return response.json() as Promise<T>;
+  const data = await response.json();
+
+  // Cache Set for GET requests
+  if (method === 'GET') {
+    CACHE.set(cacheKey, { data, timestamp: Date.now() });
+  }
+
+  return data as T;
 }
 
 export const api = {
