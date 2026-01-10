@@ -25,6 +25,56 @@ const OwnershipSection = lazy(() => import('../components/OwnershipSection'));
 const DocumentsSection = lazy(() => import('../components/DocumentsSection'));
 import Skeleton from '../components/Skeleton';
 
+const CompanySkeleton = () => (
+  <div className="min-h-screen bg-slate-50 flex flex-col">
+    {/* Header Skeleton */}
+    <div className="bg-white border-b border-slate-200 pt-12 pb-8">
+      <div className="max-w-[1440px] mx-auto px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="space-y-4">
+            <Skeleton className="h-10 w-64 md:w-96" />
+            <div className="flex items-center gap-4">
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-6 w-32" />
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Nav Skeleton */}
+    <div className="sticky top-[72px] z-30 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <div className="max-w-[1440px] mx-auto px-6 h-14 flex items-center gap-6 overflow-hidden">
+        {[1, 2, 3, 4, 5, 6].map(i => (
+          <Skeleton key={i} className="h-8 w-24 flex-shrink-0" />
+        ))}
+      </div>
+    </div>
+
+    {/* Content Skeleton */}
+    <div className="max-w-[1440px] mx-auto px-6 py-12 w-full space-y-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          <Skeleton className="h-48 w-full rounded-2xl" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <Skeleton key={i} className="h-32 rounded-2xl" />
+            ))}
+          </div>
+        </div>
+        <div className="space-y-6">
+          <Skeleton className="h-64 w-full rounded-2xl" />
+          <Skeleton className="h-96 w-full rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 interface SectionState {
   company: StockDetailResponse | null;
   market: MarketFacts | null;
@@ -86,28 +136,27 @@ const CompanyPage = () => {
       setState((prev) => ({ ...prev, loading: true, error: null }));
 
       try {
-        const [companyRes, marketRes, peersRes] = await Promise.allSettled([
-          api.getCompany(symbol),
-          api.getMarketFacts(symbol),
-          api.getPeers(symbol),
-        ]);
+        // Optimization: Fetch critical company data first, then supplementals
+        const companyData = await api.getCompany(symbol);
 
         if (!isMounted) return;
 
-        const companyData = companyRes.status === 'fulfilled' ? companyRes.value : null;
-        const marketData = marketRes.status === 'fulfilled' ? marketRes.value as MarketFacts : null;
-        const peersData = peersRes.status === 'fulfilled' ? peersRes.value.peers : [];
+        // Update state with primary data immediately
+        setState(prev => ({ ...prev, company: companyData, loading: false }));
 
-        if (companyRes.status === 'rejected' || !companyData) {
-          throw new Error('API Unavailable');
-        }
+        // Fetch supplementary data in background
+        Promise.allSettled([
+          api.getMarketFacts(symbol),
+          api.getPeers(symbol),
+        ]).then(results => {
+          if (!isMounted) return;
+          const [marketRes, peersRes] = results;
 
-        setState({
-          company: companyData,
-          market: marketData,
-          peers: peersData,
-          loading: false,
-          error: null,
+          setState(prev => ({
+            ...prev,
+            market: marketRes.status === 'fulfilled' ? marketRes.value as MarketFacts : prev.market,
+            peers: peersRes.status === 'fulfilled' ? peersRes.value.peers : prev.peers,
+          }));
         });
       } catch (error) {
         if (!isMounted) return;
@@ -167,17 +216,7 @@ const CompanyPage = () => {
   };
 
   if (state.loading) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-6">
-          <div className="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin shadow-xl shadow-indigo-50" />
-          <div className="text-center">
-            <p className="text-xs font-black text-slate-900 uppercase tracking-[0.3em]">Loading Company Registry</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 animate-pulse">Structuring Public Data...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <CompanySkeleton />;
   }
 
   const fundametricsMetrics = state.company?.fundametrics_metrics || [];
