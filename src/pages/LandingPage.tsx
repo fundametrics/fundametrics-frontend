@@ -79,7 +79,7 @@ const LandingPage = () => {
 
           <p className="text-xl text-slate-500 max-w-2xl leading-relaxed mb-12 font-medium">
             Institutional-grade analysis for retail investors.
-            <span className="text-slate-900 font-bold"> 2000+ NSE Stocks.</span>
+            <span className="text-slate-900 font-bold"> NSE Stocks.</span>
             Zero noise. Zero bias.
           </p>
 
@@ -127,7 +127,7 @@ const LandingPage = () => {
               <p className="text-slate-500 font-medium">Real-time valuation updates for top NSE constituents.</p>
             </div>
             <Link to="/stocks" className="group flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-xl bg-slate-900 hover:bg-black text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all">
-              View All <span className="hidden sm:inline">2000+</span>
+              View All
               <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
