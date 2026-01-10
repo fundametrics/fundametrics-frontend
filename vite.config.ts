@@ -12,4 +12,8 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  build: {
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+  },
 });

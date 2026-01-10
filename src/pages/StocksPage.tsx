@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, TrendingUp, TrendingDown, Minus, ArrowUpDown } from 'lucide-react';
 import { api } from '../utils/api';
@@ -20,7 +20,6 @@ type SortDirection = 'asc' | 'desc';
 
 const StocksPage = () => {
   const [companies, setCompanies] = useState<CompanyListItem[]>([]);
-  const [filteredCompanies, setFilteredCompanies] = useState<CompanyListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,14 +28,48 @@ const StocksPage = () => {
   const [selectedSector, setSelectedSector] = useState<string>('all');
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
-  const LIMIT = 50;
+  const LIMIT = 20;
 
   useEffect(() => {
     loadCompanies(0, true);
   }, []);
 
-  useEffect(() => {
-    filterAndSortCompanies();
+  const filteredCompanies = useMemo(() => {
+    let filtered = [...companies];
+
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (c) =>
+          c.symbol.toLowerCase().includes(query) ||
+          c.name.toLowerCase().includes(query) ||
+          c.sector.toLowerCase().includes(query)
+      );
+    }
+
+    // Filter by sector
+    if (selectedSector !== 'all') {
+      filtered = filtered.filter((c) => c.sector === selectedSector);
+    }
+
+    // Sort
+    filtered.sort((a, b) => {
+      let aVal = a[sortField];
+      let bVal = b[sortField];
+
+      if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+      if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+
+      if (aVal === undefined || aVal === null) return 1;
+      if (bVal === undefined || bVal === null) return -1;
+
+      if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+      if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return filtered;
   }, [companies, searchQuery, sortField, sortDirection, selectedSector]);
 
   const loadCompanies = async (currentSkip: number, replace: boolean = false) => {
@@ -44,8 +77,8 @@ const StocksPage = () => {
       if (!replace) setLoadingMore(true);
       else setLoading(true);
 
-      // Use registry endpoint to show ALL companies (including non-ingested)
-      const response = await api.getRegistry(currentSkip, LIMIT);
+      // Use getStocks to show companies, limit to 20
+      const response = await api.getStocks(currentSkip, LIMIT);
 
       let companyData: CompanyListItem[] = [];
 
@@ -84,43 +117,6 @@ const StocksPage = () => {
     loadCompanies(nextSkip, false);
   };
 
-  const filterAndSortCompanies = () => {
-    let filtered = [...companies];
-
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (c) =>
-          c.symbol.toLowerCase().includes(query) ||
-          c.name.toLowerCase().includes(query) ||
-          c.sector.toLowerCase().includes(query)
-      );
-    }
-
-    // Filter by sector
-    if (selectedSector !== 'all') {
-      filtered = filtered.filter((c) => c.sector === selectedSector);
-    }
-
-    // Sort
-    filtered.sort((a, b) => {
-      let aVal = a[sortField];
-      let bVal = b[sortField];
-
-      if (typeof aVal === 'string') aVal = aVal.toLowerCase();
-      if (typeof bVal === 'string') bVal = bVal.toLowerCase();
-
-      if (aVal === undefined || aVal === null) return 1;
-      if (bVal === undefined || bVal === null) return -1;
-
-      if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
-      return 0;
-    });
-
-    setFilteredCompanies(filtered);
-  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
