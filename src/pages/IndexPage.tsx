@@ -95,13 +95,16 @@ const IndexPage = () => {
                                                 <Activity size={14} className="text-slate-300 group-hover:text-indigo-400" />
                                             </div>
                                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight line-clamp-2 mt-2 leading-relaxed">
-                                                {item.name || item.symbol}
+                                                {(item.name && item.name.toUpperCase() !== 'UNKNOWN') ? item.name : item.symbol}
                                             </p>
                                         </div>
 
-                                        <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                                            <div className="flex flex-col">
-                                                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest truncate max-w-[100%]">
+                                        <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between gap-2">
+                                            <div className="flex flex-col min-w-0 flex-1">
+                                                <span
+                                                    className="text-[9px] font-black text-slate-500 uppercase tracking-widest truncate w-full block"
+                                                    title={(item.sector && item.sector !== 'Unknown') ? item.sector : 'Market Weighted'}
+                                                >
                                                     {(item.sector && item.sector !== 'Unknown') ? item.sector : 'Market Weighted'}
                                                 </span>
                                                 {item.currentPrice && (
