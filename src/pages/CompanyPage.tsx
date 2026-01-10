@@ -194,40 +194,34 @@ const CompanyPage = () => {
   else if (state.statusData?.status === 'not_found') uiStatusText = "Data coverage pending";
   else if (state.company) uiStatusText = "Ready";
 
+  // Schema - Updated for /company/ URL structure
   const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Corporation",
-        "@id": `https://fundametrics.in/stocks/${symbol}#organization`,
+        "@id": `https://fundametrics.in/company/${symbol}#organization`,
         "name": companyName,
         "tickerSymbol": `NSE:${symbol}`,
         "legalName": companyName,
-        "url": `https://fundametrics.in/stocks/${symbol}`
+        "url": `https://fundametrics.in/company/${symbol}`
       },
       {
         "@type": "FinancialProduct",
-        "@id": `https://fundametrics.in/stocks/${symbol}#stock`,
+        "@id": `https://fundametrics.in/company/${symbol}#stock`,
         "name": `${symbol} Stock Fundamentals`,
         "symbol": symbol,
         "exchangeTicker": `NSE:${symbol}`,
         "description": `Financial fundamentals and structural analysis of ${companyName}.`,
-        "brand": {
-          "@type": "Brand",
-          "name": "Fundametrics"
-        }
+        "brand": { "@type": "Brand", "name": "Fundametrics" }
       },
       {
         "@type": "WebPage",
-        "@id": `https://fundametrics.in/stocks/${symbol}#webpage`,
-        "url": `https://fundametrics.in/stocks/${symbol}`,
-        "name": `${companyName} (${symbol}) Fundamentals & Analysis`,
-        "isPartOf": {
-          "@id": "https://fundametrics.in/#website"
-        },
-        "about": {
-          "@id": `https://fundametrics.in/stocks/${symbol}#organization`
-        }
+        "@id": `https://fundametrics.in/company/${symbol}#webpage`,
+        "url": `https://fundametrics.in/company/${symbol}`,
+        "name": `${companyName} – Fundamentals & Financial Ratios`,
+        "isPartOf": { "@id": "https://fundametrics.in/#website" },
+        "about": { "@id": `https://fundametrics.in/company/${symbol}#organization` }
       }
     ]
   };
@@ -236,15 +230,16 @@ const CompanyPage = () => {
     <div className="min-h-screen bg-[#F8FAFC]">
       <SEO
         title={isNotAnalyzed
-          ? `${companyName} (${symbol}) Share Price, Fundamentals & Analysis | Fundametrics`
-          : `${companyName} (${symbol}) Share Price, Fundamentals, Financials & Analysis | Fundametrics`
+          ? `${companyName} Ltd – Financial Ratios, Fundamentals & Analysis | Fundametrics`
+          : `${companyName} Ltd – Financial Ratios, Fundamentals & Analysis | Fundametrics`
         }
         description={isNotAnalyzed
-          ? `Analyze ${companyName} (${symbol}) fundamentals. View company profile, sector information, and data availability status on NSE.`
-          : `Analyze ${companyName} (${symbol}) fundamentals. View Balance Sheet, Profit & Loss, PE Ratio, ROE, and shareholding pattern. Detailed financial analysis.`
+          ? `Check complete financial fundamentals of ${companyName} Ltd including valuation ratios, profitability, data coverage and status on Fundametrics.`
+          : `Check complete financial fundamentals of ${companyName} Ltd including valuation ratios, profitability, balance sheet strength, growth and returns. Updated data at Fundametrics.`
         }
       >
         <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={`https://fundametrics.in/company/${symbol}`} />
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>
@@ -253,11 +248,11 @@ const CompanyPage = () => {
         name={state.company?.company?.name || companyName}
         symbol={symbol}
         sector={state.company?.company?.sector || sector}
-        metadataAsOfDate="Latest Filing"
-        price={state.market?.market?.price}
-        coverage={state.company?.coverage}
-        statementScope="Standalone / Consolidated"
-        isPsu={sector === 'PSU' || companyName.includes('India') || companyName.includes('Corporation')}
+        metadataAsOfDate={(state.company as any)?.metadata?.generated}
+        price={(state.company as any)?.market?.current_price}
+        priceDelayMinutes={15}
+        coverage={(state as any).coverage}
+        statementScope="FY24 Consolidated"
       />
 
       <div className="flex w-full relative">
@@ -329,7 +324,21 @@ const CompanyPage = () => {
             </div>
           </main>
         ) : (
-          <main className="flex-1 px-4 lg:px-8 py-8 space-y-24 pb-40 min-w-0">
+          <main className="flex-1 px-4 lg:px-8 py-8 space-y-12 pb-40 min-w-0">
+
+            {/* SEO: Programmatic Content (Phase 4.1) */}
+            <div className="max-w-4xl">
+              <h2 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">
+                {companyName} ({symbol}) Fundamentals & Financial Ratios
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                {companyName} is a publicly listed company on the National Stock Exchange (NSE: {symbol}) operating in the {sector || 'General'} sector.
+                This page provides a comprehensive fundamental analysis of {companyName}, including key valuation ratios
+                like Price-to-Earnings (P/E), Return on Equity (ROE), and Return on Capital Employed (ROCE).
+                Investors can also view the company's latest Balance Sheet, Profit & Loss statement, and Shareholding patterns
+                to assess its long-term financial health and growth prospects.
+              </p>
+            </div>
 
             {/* Snapshot */}
             <section id="snapshot" className="scroll-mt-24 space-y-10 border-b border-slate-100 pb-20">

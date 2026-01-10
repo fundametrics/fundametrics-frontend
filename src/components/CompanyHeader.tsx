@@ -53,8 +53,11 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
         <div className="flex flex-col gap-3 sm:hidden">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-2xl font-black text-slate-900 tracking-tighter leading-none">{name || symbol}</h1>
-              <div className="flex items-center gap-2 mt-1">
+              <h1 className="text-2xl font-black text-slate-900 tracking-tighter leading-none">
+                {name || symbol}
+                <span className="block text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Fundamental Analysis</span>
+              </h1>
+              <div className="flex items-center gap-2 mt-2">
                 <span className="text-xs font-bold text-slate-500">{symbol}</span>
                 <span className="text-slate-300">|</span>
                 <span className="px-1.5 py-0.5 bg-slate-100 text-[9px] font-bold text-slate-500 rounded uppercase">NSE</span>
@@ -94,7 +97,10 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
             >
               <Bookmark size={20} className="transition-all" fill={isWatched ? "currentColor" : "none"} />
             </button>
-            <h1 className="text-xl font-black text-slate-900 tracking-tighter">{name || symbol}</h1>
+            <h1 className="text-xl font-black text-slate-900 tracking-tighter flex items-baseline gap-2">
+              {name || symbol}
+              <span className="text-sm text-slate-400 font-bold uppercase tracking-widest">Fundamental Analysis</span>
+            </h1>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-slate-500">{symbol}</span>
               <span className="text-slate-300">|</span>
