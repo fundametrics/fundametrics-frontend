@@ -1,8 +1,10 @@
-import Logo from '../components/Logo';
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MobileBottomNav from '../components/MobileBottomNav';
+import PageSkeleton from '../components/PageSkeleton';
 
 const Layout = () => {
   return (
@@ -18,7 +20,9 @@ const Layout = () => {
 
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-          <Outlet />
+          <Suspense fallback={<PageSkeleton />}>
+            <Outlet />
+          </Suspense>
         </div>
       </main>
 
