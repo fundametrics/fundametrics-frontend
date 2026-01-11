@@ -9,3 +9,6 @@ https://www.fundametrics.io/* https://fundametrics.in/:splat 301!
 /stocks /stocks/ 301
 /about /about/ 301
 /indices /indices/ 301
+
+# Dynamic Sitemap Proxy
+/sitemap.xml https://fundametrics-backend.onrender.com/api/sitemap.xml 200
