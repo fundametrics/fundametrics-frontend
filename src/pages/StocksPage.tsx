@@ -89,7 +89,7 @@ const StocksPage = () => {
       const searchResults = response.results.map((c: any) => ({
         symbol: c.symbol,
         name: c.name,
-        sector: c.sector || 'Unknown',
+        sector: c.sector || 'General',
         // Search API currently returns partial data
         marketCap: undefined,
         roe: undefined,
@@ -123,7 +123,7 @@ const StocksPage = () => {
         companyData = response.companies.map((c: any) => ({
           symbol: c.symbol,
           name: c.name || c.company || c.symbol,
-          sector: c.sector || 'Unknown',
+          sector: c.sector || 'General',
           marketCap: c.marketCap || undefined,
           roe: c.roe || undefined,
           roce: c.roce || undefined,
