@@ -133,37 +133,44 @@ const LandingPage = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.recentCompanies.map((company) => (
-              <Link key={company.symbol} to={`/stocks/${company.symbol}`}
-                className="group bg-white border border-slate-200 p-6 rounded-2xl hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-[180px]">
+            {stats.loading ? (
+              // Skeleton Loaders
+              Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="h-[180px] bg-slate-50 border border-slate-100 rounded-2xl animate-pulse" />
+              ))
+            ) : (
+              stats.recentCompanies.map((company) => (
+                <Link key={company.symbol} to={`/stocks/${company.symbol}`}
+                  className="group bg-white border border-slate-200 p-6 rounded-2xl hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-[180px]">
 
-                <div className="flex justify-between items-start">
-                  <div>
-                    <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 font-bold mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                      {company.symbol[0]}
-                    </div>
-                    <div className="text-xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">{company.symbol}</div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{company.sector}</div>
-                  </div>
-                  {company.currentPrice ? (
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-slate-900">₹{company.currentPrice.toLocaleString('en-IN')}</div>
-                      <div className="flex items-center justify-end gap-1 text-[10px] text-emerald-600 font-bold uppercase tracking-wider mt-1">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        Live
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 font-bold mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        {company.symbol[0]}
                       </div>
+                      <div className="text-xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">{company.symbol}</div>
+                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{company.sector}</div>
                     </div>
-                  ) : (
-                    <div className="w-2 h-2 rounded-full bg-slate-200 animate-pulse" />
-                  )}
-                </div>
+                    {company.currentPrice ? (
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-slate-900">₹{company.currentPrice.toLocaleString('en-IN')}</div>
+                        <div className="flex items-center justify-end gap-1 text-[10px] text-emerald-600 font-bold uppercase tracking-wider mt-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          Live
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-2 h-2 rounded-full bg-slate-200 animate-pulse" />
+                    )}
+                  </div>
 
-                <div className="pt-4 border-t border-slate-50 flex justify-between items-center">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[180px]">{company.name}</div>
-                  <Activity size={14} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
-                </div>
-              </Link>
-            ))}
+                  <div className="pt-4 border-t border-slate-50 flex justify-between items-center">
+                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[180px]">{company.name}</div>
+                    <Activity size={14} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
         </section>
 
