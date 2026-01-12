@@ -15,10 +15,10 @@ interface SEOProps {
 const SEO: FC<SEOProps> = ({
     title = "Fundametrics | Financial data & insights. No noise.",
     description = "Institutional-grade financial terminal for retail investors. Analyze stocks with deep P&L, Balance Sheets, and Cash Flow trends. No noise, just clean data.",
-    canonical = "https://fundametrics.io",
+    canonical = "https://fundametrics.in",
     ogTitle,
     ogDescription,
-    ogImage = "https://fundametrics.io/og-image.png",
+    ogImage = "https://fundametrics.in/Finox.jpeg",
     twitterHandle = "@fundametrics",
     children
 }) => {

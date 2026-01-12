@@ -164,15 +164,109 @@ const LandingPage = () => {
                 </div>
               </Link>
             ))}
+          </div>
+        </section>
 
-            {!stats.loading && stats.recentCompanies.length === 0 && (
-              <div className="col-span-full py-16 text-center">
-                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="text-slate-300" />
+        {/* SECTION 4: SECTOR INTELLIGENCE (SEO Link Juice) */}
+        <section className="px-6 max-w-[1920px] mx-auto">
+          <div className="flex items-center gap-4 mb-12">
+            <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Sector Intelligence</h2>
+            <div className="h-px bg-slate-100 flex-1" />
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { name: 'Banking', count: '42 Companies', icon: <TrendingUp className="text-blue-500" /> },
+              { name: 'IT Services', count: '58 Companies', icon: <Zap className="text-amber-500" /> },
+              { name: 'Automobile', count: '31 Companies', icon: <Activity className="text-emerald-500" /> },
+              { name: 'Energy', count: '24 Companies', icon: <TrendingUp className="text-rose-500" /> },
+              { name: 'Pharma', count: '45 Companies', icon: <ShieldCheck className="text-purple-500" /> },
+              { name: 'Consumer', count: '62 Companies', icon: <TrendingUp className="text-indigo-500" /> },
+            ].map((sector) => (
+              <div key={sector.name} className="p-6 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-white hover:border-blue-200 hover:shadow-lg transition-all cursor-default group">
+                <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                  {sector.icon}
                 </div>
-                <p className="text-slate-500 font-medium">Connecting to market feed...</p>
+                <div className="text-sm font-black text-slate-900 mb-1">{sector.name}</div>
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{sector.count}</div>
               </div>
-            )}
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 5: INSTITUTIONAL COVERAGE */}
+        <section className="px-6 max-w-[1920px] mx-auto">
+          <div className="bg-slate-900 rounded-[2.5rem] p-12 lg:p-20 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-600/20 to-transparent pointer-events-none" />
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tighter leading-none mb-6">
+                  Verified Financial <br />
+                  <span className="text-blue-400">Audit Trail.</span>
+                </h2>
+                <p className="text-slate-400 text-lg leading-relaxed mb-10 max-w-md">
+                  Every data point on Fundametrics is derived directly from institutional sources with full audit traceability.
+                  Clean data. No overrides.
+                </p>
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <div className="text-3xl font-black text-white mb-1">638+</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-tight">NSE Companies <br /> Tracked</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-black text-white mb-1">100%</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-tight">Verified <br /> Fact Feed</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ICICIBANK', 'BHARTIARTL', 'SBIN', 'LICI', 'ITC', 'HINDUNILVR', 'LT', 'BAJFINANCE'].map(sym => (
+                  <Link key={sym} to={`/stocks/${sym}`} className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-black text-xs tracking-tighter transition-all">
+                    {sym}
+                  </Link>
+                ))}
+                <Link to="/stocks" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white font-black text-xs tracking-tighter transition-all">
+                  View All Markets
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 6: FOOTER SITEMAP (SEO Link Juice) */}
+        <section className="px-6 max-w-[1920px] mx-auto border-t border-slate-100 pt-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div>
+              <h3 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] mb-6">Markets</h3>
+              <div className="flex flex-col gap-3">
+                <Link to="/indices/NIFTY%2050" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Nifty 50</Link>
+                <Link to="/indices/NIFTY%20BANK" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Nifty Bank</Link>
+                <Link to="/indices/SENSEX" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Sensex</Link>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] mb-6">Metrics</h3>
+              <div className="flex flex-col gap-3">
+                <Link to="/pe-ratio" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">P/E Ratio Analysis</Link>
+                <Link to="/roe" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Return on Equity</Link>
+                <Link to="/debt-equity-ratio" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Debt to Equity</Link>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] mb-6">Education</h3>
+              <div className="flex flex-col gap-3">
+                <Link to="/fundamental-analysis" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Fundamental Guide</Link>
+                <Link to="/data-sources" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Data Verification</Link>
+                <Link to="/glossary" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Financial Glossary</Link>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] mb-6">Company</h3>
+              <div className="flex flex-col gap-3">
+                <Link to="/about" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">About Fundametrics</Link>
+                <Link to="/disclaimer" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Legal Disclaimer</Link>
+              </div>
+            </div>
           </div>
         </section>
 
