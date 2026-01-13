@@ -37,9 +37,16 @@ const sections = [
   },
 ];
 
+import SEO from '../components/SEO';
+
 const AboutPage = () => {
   return (
     <div className="space-y-12">
+      <SEO
+        title="About Fundametrics | Institutional Quality Data"
+        description="Learn about our facts-first methodology and how we aggregate and normalize financial data for Indian public companies."
+        canonical="https://fundametrics.in/about/"
+      />
       <header className="max-w-3xl space-y-4">
         <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">About Fundametrics</p>
         <h1 className="text-3xl font-display font-semibold text-neutral-900">Facts-first financial intelligence</h1>

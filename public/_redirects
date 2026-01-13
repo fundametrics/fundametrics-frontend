@@ -5,10 +5,16 @@ https://www.fundametrics.in/* https://fundametrics.in/:splat 301!
 https://fundametrics.io/* https://fundametrics.in/:splat 301!
 https://www.fundametrics.io/* https://fundametrics.in/:splat 301!
 
-# Ensure trailing slashes are consistent
+# Ensure legacy company paths redirect to stocks
+/company/:symbol /stocks/:symbol 301
+
+# Standardize trailing slashes
 /stocks /stocks/ 301
 /about /about/ 301
 /indices /indices/ 301
 
 # Dynamic Sitemap Proxy
 /sitemap.xml https://fundametrics-backend.onrender.com/api/sitemap.xml 200
+
+# Catch-all for SPA
+/* /index.html 200

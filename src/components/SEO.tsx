@@ -48,6 +48,9 @@ const SEO: FC<SEOProps> = ({
             {/* Search Engine Directives */}
             <meta name="robots" content="index, follow" />
             <meta name="googlebot" content="index, follow" />
+
+            {/* Custom child tags */}
+            {children}
         </Helmet>
     );
 };

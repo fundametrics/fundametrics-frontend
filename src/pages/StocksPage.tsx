@@ -187,6 +187,7 @@ const StocksPage = () => {
       <SEO
         title="Stock Registry | Professional Market Data"
         description="Browse and filter high-quality financial disclosures for Indian stocks. Use advanced filters for P/E, Market Cap, and ROE."
+        canonical="https://fundametrics.in/stocks"
       />
 
       {/* Hero Header */}

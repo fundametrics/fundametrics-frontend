@@ -333,9 +333,9 @@ const CompanyPage = () => {
           ? `Check ${companyName} (${symbol}) fundamentals and data status. Comprehensive analysis platform.`
           : `Share Analysis of ${companyName} (${symbol}): Market Cap ₹${marketCapVal ? marketCapVal.toLocaleString('en-IN') + 'Cr' : 'N/A'}, PE Ratio ${peVal ? peVal.toFixed(2) : 'N/A'}, ROE ${roeVal ? roeVal.toFixed(2) + '%' : 'N/A'} and detailed valuation metrics. Updated at Fundametrics.`
         }
+        canonical={`https://fundametrics.in/stocks/${symbol}`}
       >
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://fundametrics.in/company/${symbol}`} />
         <script type="application/ld+json">
           {JSON.stringify(combinedSchema)}
         </script>

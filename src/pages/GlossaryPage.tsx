@@ -153,7 +153,7 @@ const GlossaryPage = () => {
                             {POPULAR_STOCKS.map(symbol => (
                                 <Link
                                     key={symbol}
-                                    to={`/company/${symbol}`}
+                                    to={`/stocks/${symbol}`}
                                     className="p-3 bg-slate-50 hover:bg-white hover:shadow-md border border-slate-100 rounded-lg text-xs font-bold text-slate-600 flex items-center justify-between transition-all group"
                                 >
                                     {symbol}

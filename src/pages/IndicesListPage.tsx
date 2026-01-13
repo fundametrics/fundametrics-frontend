@@ -17,6 +17,7 @@ const IndicesListPage = () => {
             <SEO
                 title="NSE Indices - Nifty 50, Sensex, Bank Nifty & More | Fundametrics"
                 description="Browse all major NSE and BSE indices including Nifty 50, Sensex, Bank Nifty, Nifty IT, Auto, and Pharma. View constituents and sector-wise breakdowns."
+                canonical="https://fundametrics.in/indices/"
             />
 
             {/* Header */}
