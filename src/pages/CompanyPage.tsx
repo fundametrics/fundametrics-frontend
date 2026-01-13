@@ -104,10 +104,10 @@ const NAV_ITEMS = [
 ];
 
 const SectionHeader = ({ title, icon: Icon, id }: { title: string, icon: any, id: string }) => (
-  <div id={id} className="flex items-center justify-between mb-8 scroll-mt-40 pt-4">
+  <div id={id} className="flex items-center justify-between mb-8 scroll-mt-48 pt-10">
     <div className="flex items-center gap-4">
-      <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100">
-        <Icon size={20} className="text-white" />
+      <div className="w-10 h-10 bg-[#6366f1] rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100">
+        <Icon size={18} className="text-white" />
       </div>
       <div>
         <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest leading-none">{title}</h3>
@@ -239,15 +239,15 @@ const CompanyPage = () => {
     "@graph": [
       {
         "@type": "Corporation",
-        "@id": `https://fundametrics.in/company/${symbol}#organization`,
+        "@id": `https://fundametrics.in/stocks/${symbol}#organization`,
         "name": companyName,
         "tickerSymbol": `NSE:${symbol}`,
         "legalName": companyName,
-        "url": `https://fundametrics.in/company/${symbol}`
+        "url": `https://fundametrics.in/stocks/${symbol}`
       },
       {
         "@type": "FinancialProduct",
-        "@id": `https://fundametrics.in/company/${symbol}#stock`,
+        "@id": `https://fundametrics.in/stocks/${symbol}#stock`,
         "name": `${symbol} Stock Fundamentals`,
         "symbol": symbol,
         "exchangeTicker": `NSE:${symbol}`,
@@ -256,11 +256,11 @@ const CompanyPage = () => {
       },
       {
         "@type": "WebPage",
-        "@id": `https://fundametrics.in/company/${symbol}#webpage`,
-        "url": `https://fundametrics.in/company/${symbol}`,
+        "@id": `https://fundametrics.in/stocks/${symbol}#webpage`,
+        "url": `https://fundametrics.in/stocks/${symbol}`,
         "name": `${companyName} – Fundamentals & Financial Ratios`,
         "isPartOf": { "@id": "https://fundametrics.in/#website" },
-        "about": { "@id": `https://fundametrics.in/company/${symbol}#organization` }
+        "about": { "@id": `https://fundametrics.in/stocks/${symbol}#organization` }
       }
     ]
   };

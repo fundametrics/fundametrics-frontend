@@ -87,7 +87,7 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
           </div>
         </div>
 
-        {/* Desktop Layout (Preserved & Cleaned) */}
+        {/* Desktop Layout - Realigned to match visual reference (Trust/Coverage in top row) */}
         <div className="hidden sm:flex items-center justify-between pb-2 border-b border-slate-100/50">
           <div className="flex items-center gap-4">
             <button
@@ -111,45 +111,46 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
             </div>
           </div>
 
-          {/* Desktop Price */}
-          {formattedPrice && (
-            <div className="flex items-center gap-3">
-              <div className="text-xl font-bold font-mono text-slate-900 tracking-tight">
-                {formattedPrice}
-              </div>
-              <div className="flex flex-col items-end leading-none">
-                <span className="text-[9px] font-bold text-slate-400 uppercase">Price Delayed</span>
-                <span className="text-[10px] font-bold text-slate-600 font-mono">{(priceDelayMinutes || 15)}M</span>
-              </div>
+          {/* Desktop Trust & Coverage (Moved to top row) */}
+          <div className="flex items-center gap-4 shrink-0">
+            <div className="flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg shadow-sm">
+              <ShieldCheck size={14} className="text-indigo-400" />
+              <span className="text-[11px] font-black uppercase tracking-widest leading-none">Trust {trustGrade}</span>
             </div>
-          )}
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em]">
+              Data Coverage <span className="text-slate-600">{coveragePercent}%</span>
+            </div>
+          </div>
         </div>
 
-        {/* Intelligence Strip (Desktop Only or Secondary Info on Mobile) */}
+        {/* Intelligence Strip - Price & Sector */}
         <div className="hidden sm:flex items-center justify-between pt-2 gap-4">
           <div className="flex items-center gap-6 text-[11px] font-medium text-slate-500 shrink-0">
             <div className="flex items-center gap-1.5">
               <span className="text-slate-400 uppercase tracking-widest text-[9px] font-bold">Sector</span>
-              <span className="text-slate-800 font-bold whitespace-nowrap">{sector || 'General'}</span>
+              <span className="text-slate-800 font-bold whitespace-nowrap uppercase">{sector || 'Utilities'}</span>
             </div>
             <div className="flex items-center gap-4 pl-4 border-l border-slate-100">
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-slate-400 font-bold uppercase tracking-widest text-[9px]">Financial Strength</span>
                 <span className="text-slate-950 font-bold">Improving</span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 shrink-0">
-            <div className="flex items-center gap-2 bg-slate-900 text-white px-2 py-1 rounded-md">
-              <ShieldCheck size={12} className="text-indigo-400" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">Trust {trustGrade}</span>
+          {/* Price Moved Here (Phase 21B Refinement) */}
+          {formattedPrice && (
+            <div className="flex items-center gap-4 py-1 px-3 bg-slate-50 rounded-full border border-slate-100">
+              <div className="text-sm font-black font-mono text-slate-900 tracking-tight">
+                {formattedPrice}
+              </div>
+              <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
+                <Clock size={12} className="text-slate-400" />
+                <span className="text-[10px] font-bold text-slate-600 font-mono">{(priceDelayMinutes || 15)}M Delay</span>
+              </div>
             </div>
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              Data Coverage {coveragePercent}%
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
