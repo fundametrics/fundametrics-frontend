@@ -1,6 +1,9 @@
 import type { CompanyResponse, CoverageIndexResponse, MarketFacts, StocksResponse, StockDetailResponse } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8002';
+const isProd = import.meta.env.PROD;
+const API_BASE_URL = isProd
+  ? 'https://fundametrics-backend.onrender.com'
+  : (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8002');
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
