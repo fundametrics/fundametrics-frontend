@@ -4,7 +4,7 @@ import { api } from '../utils/api';
 import { Database, Search, Zap, Loader2, CheckCircle2, History, AlertCircle, Lock, ShieldCheck } from 'lucide-react';
 import SEO from '../components/SEO';
 
-const ADMIN_TOKEN = 'fundametrics18';
+const ADMIN_TOKEN = import.meta.env.VITE_ADMIN_TOKEN || 'fundametrics18';
 
 interface RegistryItem {
     symbol: string;

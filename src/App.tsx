@@ -17,32 +17,36 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const DataSourcesPage = lazy(() => import('./pages/DataSourcesPage'));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 
+import ErrorBoundary from './components/ErrorBoundary';
+
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<LandingPage />} />
-        <Route path="stocks" element={<StocksPage />} />
-        <Route path="stocks/:symbol" element={<CompanyPage />} />
-        <Route path="watchlist" element={<WatchlistPage />} /> {/* Phase 23: Watchlist */}
-        <Route path="indices" element={<IndicesListPage />} />
-        <Route path="indices/:indexId" element={<IndexPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="about-data" element={<AboutDataPage />} />
-        <Route path="data-sources" element={<DataSourcesPage />} /> {/* Phase 4.2: Trust Signal */}
+    <ErrorBoundary>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="stocks" element={<StocksPage />} />
+          <Route path="stocks/:symbol" element={<CompanyPage />} />
+          <Route path="watchlist" element={<WatchlistPage />} /> {/* Phase 23: Watchlist */}
+          <Route path="indices" element={<IndicesListPage />} />
+          <Route path="indices/:indexId" element={<IndexPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="about-data" element={<AboutDataPage />} />
+          <Route path="data-sources" element={<DataSourcesPage />} /> {/* Phase 4.2: Trust Signal */}
 
-        {/* Phase 4.2: Authority Silos */}
-        <Route path="pe-ratio" element={<GlossaryPage />} />
-        <Route path="roe" element={<GlossaryPage />} />
-        <Route path="roce" element={<GlossaryPage />} />
-        <Route path="debt-equity-ratio" element={<GlossaryPage />} />
-        <Route path="fundamental-analysis" element={<GlossaryPage />} />
+          {/* Phase 4.2: Authority Silos */}
+          <Route path="pe-ratio" element={<GlossaryPage />} />
+          <Route path="roe" element={<GlossaryPage />} />
+          <Route path="roce" element={<GlossaryPage />} />
+          <Route path="debt-equity-ratio" element={<GlossaryPage />} />
+          <Route path="fundamental-analysis" element={<GlossaryPage />} />
 
-        <Route path="admin" element={<AdminPage />} />
-        <Route path="disclaimer" element={<DisclaimerPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+          <Route path="admin" element={<AdminPage />} />
+          <Route path="disclaimer" element={<DisclaimerPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   );
 };
 
