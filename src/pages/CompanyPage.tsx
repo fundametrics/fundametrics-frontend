@@ -1,6 +1,7 @@
 import { Fragment, Suspense, lazy, useEffect, useState, useRef } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { api } from '../utils/api';
+import { logger } from '../utils/logger';
 import { getMockCompanyData } from '../mocks/company';
 import ExplainabilityModal from '../components/ExplainabilityModal';
 import CompanyHeader from '../components/CompanyHeader';
@@ -161,7 +162,7 @@ const CompanyPage = () => {
       } catch (error) {
         if (!isMounted) return;
 
-        console.warn('API connection failed, attempting registry fallback...', error);
+        logger.warn('API connection failed, attempting registry fallback...', error);
 
         try {
           const statusRes = await api.getCompanyStatus(symbol);
@@ -177,7 +178,7 @@ const CompanyPage = () => {
           }
         } catch (statusErr) {
           if (!isMounted) return;
-          console.error('Registry check failed', statusErr);
+          logger.error('Registry check failed', statusErr);
           setState((prev) => ({
             ...prev,
             loading: false,

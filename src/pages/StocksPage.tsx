@@ -5,6 +5,7 @@ import {
   ChevronDown, ChevronUp, X, BarChart3, PieChart, Activity
 } from 'lucide-react';
 import { api } from '../utils/api';
+import { logger } from '../utils/logger';
 import SEO from '../components/SEO';
 
 interface CompanyListItem {
@@ -69,7 +70,7 @@ const StocksPage = () => {
         }
         setLoading(false);
       } catch (err) {
-        console.error("Failed to load initial data", err);
+        logger.error("Failed to load initial data", err);
         setLoading(false);
       }
     };

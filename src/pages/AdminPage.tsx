@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { api } from '../utils/api';
+import { logger } from '../utils/logger';
 import { Database, Search, Zap, Loader2, CheckCircle2, History, AlertCircle, Lock, ShieldCheck } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -71,7 +72,7 @@ const AdminPage = () => {
             // Track if there are more to load
             setHasMore(newCompanies.length === limit);
         } catch (err) {
-            console.error('Failed to load registry', err);
+            logger.error('Failed to load registry', err);
         } finally {
             setLoading(false);
         }
@@ -82,7 +83,7 @@ const AdminPage = () => {
             const data = await api.getAdminStats();
             setStats(data);
         } catch (err) {
-            console.error('Failed to load stats', err);
+            logger.error('Failed to load stats', err);
         }
     }, []);
 
@@ -111,7 +112,7 @@ const AdminPage = () => {
                 });
             }, 3000);
         } catch (err) {
-            console.error('Failed to trigger generation', err);
+            logger.error('Failed to trigger generation', err);
             setProcessing(prev => {
                 const next = { ...prev };
                 delete next[symbol];
