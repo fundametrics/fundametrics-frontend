@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, ArrowUpRight, Layers, TrendingUp, TrendingDown } from 'lucide-react';
 import { api } from '../utils/api';
+import { logger } from '../utils/logger';
 
 const MarketIndices = () => {
     const [indices, setIndices] = useState<any[]>([]);
@@ -13,7 +14,7 @@ const MarketIndices = () => {
                 const data = await api.getIndicesPrices();
                 setIndices(data);
             } catch (err) {
-                console.error("Failed to fetch index prices", err);
+                logger.error("Failed to fetch index prices", err);
             } finally {
                 setLoading(false);
             }

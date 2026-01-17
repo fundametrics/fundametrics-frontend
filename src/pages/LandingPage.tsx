@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
+import { logger } from '../utils/logger';
 import { Search, ArrowRight, ShieldCheck, Activity, TrendingUp, Zap, Database, Globe, ChevronRight } from 'lucide-react';
 import GlobalSearch from '../components/GlobalSearch';
 import MarketIndices from '../components/MarketIndices';
@@ -40,7 +41,7 @@ const LandingPage = () => {
           loading: false
         });
       } catch (err) {
-        console.error("Failed to load famous stocks", err);
+        logger.error("Failed to load famous stocks", err);
         setStats(s => ({ ...s, loading: false }));
       }
     };
