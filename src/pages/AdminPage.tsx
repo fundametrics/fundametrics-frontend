@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { api } from '../utils/api';
 import { Database, Search, Zap, Loader2, CheckCircle2, History, AlertCircle, Lock, ShieldCheck } from 'lucide-react';
@@ -38,13 +38,6 @@ const AdminPage = () => {
         }
     }, [location]);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            loadRegistry();
-            loadStats();
-        }
-    }, [isAuthenticated]);
-
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         if (password === ADMIN_TOKEN) {
@@ -61,7 +54,7 @@ const AdminPage = () => {
         setIsAuthenticated(false);
     };
 
-    const loadRegistry = async (append: boolean = false) => {
+    const loadRegistry = useCallback(async (append: boolean = false) => {
         try {
             if (!append) setLoading(true);
             const skip = append ? companies.length : 0;
@@ -82,16 +75,24 @@ const AdminPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [companies.length]);
 
-    const loadStats = async () => {
+    const loadStats = useCallback(async () => {
         try {
             const data = await api.getAdminStats();
             setStats(data);
         } catch (err) {
             console.error('Failed to load stats', err);
         }
-    };
+    }, []);
+
+    // Load data when authenticated (moved below function definitions)
+    useEffect(() => {
+        if (isAuthenticated) {
+            loadRegistry();
+            loadStats();
+        }
+    }, [isAuthenticated, loadRegistry, loadStats]);
 
     const handleGenerate = async (symbol: string) => {
         if (processing[symbol]) return;
