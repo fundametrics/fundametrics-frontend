@@ -23,6 +23,7 @@ const AdminPage = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [hasMore, setHasMore] = useState(true);
 
     const location = useLocation();
 
@@ -60,11 +61,22 @@ const AdminPage = () => {
         setIsAuthenticated(false);
     };
 
-    const loadRegistry = async () => {
+    const loadRegistry = async (append: boolean = false) => {
         try {
-            setLoading(true);
-            const response = await api.getRegistry(0, 3000);
-            setCompanies(response.companies as any || []);
+            if (!append) setLoading(true);
+            const skip = append ? companies.length : 0;
+            const limit = 200; // Load 200 at a time instead of 3000
+            const response = await api.getRegistry(skip, limit);
+            const newCompanies = response.companies as any || [];
+
+            if (append) {
+                setCompanies(prev => [...prev, ...newCompanies]);
+            } else {
+                setCompanies(newCompanies);
+            }
+
+            // Track if there are more to load
+            setHasMore(newCompanies.length === limit);
         } catch (err) {
             console.error('Failed to load registry', err);
         } finally {
@@ -300,6 +312,22 @@ const AdminPage = () => {
                             </tbody>
                         </table>
                     </div>
+
+                    {/* Load More Button */}
+                    {!loading && hasMore && filtered.length === companies.length && (
+                        <div className="mt-6 text-center">
+                            <button
+                                onClick={() => loadRegistry(true)}
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-slate-900 text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all shadow-lg shadow-indigo-100"
+                            >
+                                <Database size={14} />
+                                Load More Companies
+                            </button>
+                            <p className="text-xs text-slate-400 mt-2 font-medium">
+                                Showing {companies.length} companies. Click to load more.
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
