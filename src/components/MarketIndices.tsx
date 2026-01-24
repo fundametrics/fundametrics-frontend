@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Activity, ArrowUpRight, Layers, TrendingUp, TrendingDown } from 'lucide-react';
+import { Activity, ArrowUpRight, ChevronRight, TrendingUp, TrendingDown, Clock } from 'lucide-react';
 import { api } from '../utils/api';
 import { logger } from '../utils/logger';
 
@@ -20,76 +20,73 @@ const MarketIndices = () => {
             }
         };
         fetchPrices();
-        // Refresh every 2 minutes
-        const interval = setInterval(fetchPrices, 120000);
+        const interval = setInterval(fetchPrices, 60000); // Check every min
         return () => clearInterval(interval);
     }, []);
 
     if (loading && indices.length === 0) {
         return (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {[1, 2, 3].map(i => (
-                    <div key={i} className="h-40 bg-slate-50 rounded-2xl border border-slate-100" />
+                    <div key={i} className="h-32 bg-white border border-slate-200 rounded-xl animate-pulse" />
                 ))}
             </div>
         );
     }
 
     return (
-        <section className="space-y-6" id="indices">
-            <div className="flex items-end justify-between border-b border-slate-100 pb-4">
-                <div>
-                    <h2 className="text-xs font-black text-slate-900 uppercase tracking-[0.3em] flex items-center gap-2">
-                        <Layers size={14} className="text-indigo-600" />
-                        Core Indian Indices
-                    </h2>
-                </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Live Market Pulse
-                </div>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {(indices.length > 0 ? indices : [
+                { id: 'NIFTY 50', label: 'NIFTY 50', symbol: '^NSEI' },
+                { id: 'SENSEX', label: 'SENSEX', symbol: '^BSESN' },
+                { id: 'NIFTY BANK', label: 'NIFTY BANK', symbol: '^NSEBANK' }
+            ]).map((idx) => {
+                const isPositive = (idx.change || 0) >= 0;
 
-            <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-6">
-                {(indices.length > 0 ? indices : []).map((idx) => (
+                return (
                     <Link
                         key={idx.id}
                         to={`/indices/${encodeURIComponent(idx.id)}`}
-                        className="w-full bg-white border border-slate-200 p-6 rounded-2xl hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-50/50 transition-all text-left group block relative overflow-hidden"
+                        className="group bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-600 hover:shadow-xl hover:shadow-indigo-50 transition-all duration-300 relative overflow-hidden"
                     >
-                        <div className="flex justify-between items-start mb-6">
-                            <div className="w-10 h-10 rounded-xl bg-slate-50 group-hover:bg-indigo-50 flex items-center justify-center transition-colors">
-                                <Activity size={20} className="text-slate-400 group-hover:text-indigo-600" />
-                            </div>
-                            <div className="text-right">
-                                <div className="text-2xl font-black text-slate-900 tracking-tighter">
-                                    {idx.price ? idx.price.toLocaleString('en-IN') : '—'}
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{idx.label}</div>
+                                <div className="flex items-center gap-1.5">
+                                    <span className="text-2xl font-black tracking-tighter text-slate-900">
+                                        {idx.price ? idx.price.toLocaleString('en-IN') : '—'}
+                                    </span>
                                 </div>
-                                {idx.change !== undefined && (
-                                    <div className={`flex items-center justify-end gap-1 text-[11px] font-bold ${idx.change >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                                        {idx.change >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                                        {Math.abs(idx.change).toFixed(2)} ({Math.abs(idx.changePercent).toFixed(2)}%)
-                                    </div>
-                                )}
                             </div>
+                            {idx.price ? (
+                                <div className={`flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-black ${isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                                    {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                    {Math.abs(idx.changePercent || 0).toFixed(2)}%
+                                </div>
+                            ) : (
+                                <div className="px-2 py-1 bg-slate-50 text-slate-400 rounded-md text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
+                                    <Clock size={10} />
+                                    Wait Feed
+                                </div>
+                            )}
                         </div>
 
-                        <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight group-hover:text-indigo-600 transition-colors">{idx.label}</h3>
-                        <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mt-1">NSE Benchmark</p>
-
-                        <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-500">
-                            <span>View Constituents</span>
-                            <ArrowUpRight size={14} />
+                        <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-50">
+                            <div className="flex items-center gap-3">
+                                <div className={`w-1.5 h-1.5 rounded-full ${idx.price ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`} />
+                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                    {idx.price ? 'Live Trading' : 'Feed Offline'}
+                                </span>
+                            </div>
+                            <ChevronRight size={14} className="text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
                         </div>
 
-                        {/* Decorative background logo */}
-                        <div className="absolute -bottom-4 -right-4 opacity-[0.03] group-hover:scale-110 transition-transform duration-500">
-                            <Activity size={100} />
-                        </div>
+                        {/* Decorative accent */}
+                        <div className={`absolute top-0 right-0 w-1 h-full ${idx.price ? (isPositive ? 'bg-emerald-500' : 'bg-rose-500') : 'bg-slate-100'}`} />
                     </Link>
-                ))}
-            </div>
-        </section>
+                )
+            })}
+        </div>
     );
 };
 

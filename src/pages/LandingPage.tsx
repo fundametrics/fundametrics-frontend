@@ -128,76 +128,87 @@ const LandingPage = () => {
 
           {/* MARKET PULSE SECTION */}
           <section id="market-pulse">
-            <div className="flex items-center gap-4 mb-10 overflow-hidden">
-              <div className="flex items-center gap-2 pr-4 bg-[#F8FAFC] relative z-10">
-                <Activity size={16} className="text-indigo-600" />
-                <h2 className="text-sm font-black text-slate-900 uppercase tracking-[0.2em]">Market Pulse</h2>
+            <div className="flex items-center justify-between mb-10 overflow-hidden border-b border-slate-100 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 bg-indigo-600 rounded text-white shadow-sm shadow-indigo-200">
+                  <Activity size={14} />
+                </div>
+                <h2 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.25em]">Global Indices Overview</h2>
               </div>
-              <div className="h-px bg-slate-200 flex-1 relative -top-px" />
+              <div className="flex items-center gap-2 px-2 py-1 bg-emerald-50 rounded-md border border-emerald-100">
+                <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none">Market Pulse Live</span>
+              </div>
             </div>
             <MarketIndices />
           </section>
 
-          {/* MARKET LEADERS GRID */}
+          {/* MARKET LEADERS SECTION */}
           <section id="leaders">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-              <div>
-                <h2 className="text-4xl font-black tracking-tight text-slate-900 mb-2">Market Leaders</h2>
-                <p className="text-slate-500 font-medium tracking-tight">Real-time valuation snapshots for top index constituents.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-slate-100 text-slate-500 text-[9px] font-bold uppercase tracking-wider mb-2">
+                  <Zap size={10} className="text-amber-500" />
+                  Real-time Valuation
+                </div>
+                <h2 className="text-5xl font-black tracking-[calc(-0.02em)] text-slate-900 leading-none">Market Leaders</h2>
+                <p className="text-slate-500 font-medium tracking-tight text-sm">Real-time snapshots of Bluechip performance markers.</p>
               </div>
-              <Link to="/stocks" className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl text-[11px] font-black uppercase tracking-widest hover:bg-black transition-all">
-                Access All Markets <ArrowRight size={14} />
+              <Link to="/stocks" className="group flex items-center gap-3 px-8 py-4 bg-slate-900 shadow-xl shadow-slate-200 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:shadow-indigo-100 transition-all duration-300">
+                Access All Markets <ChevronRight size={16} className="group-hover:translate-x-1 duration-300" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {stats.loading ? (
                 Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className="h-44 bg-slate-100/50 rounded-2xl animate-pulse border border-slate-200/50" />
+                  <div key={i} className="h-44 bg-white rounded-2xl animate-pulse border border-slate-100" />
                 ))
               ) : (
                 stats.recentCompanies.map((company) => (
                   <Link
                     key={company.symbol}
                     to={`/stocks/${company.symbol}`}
-                    className="group relative bg-white border border-slate-200 p-6 rounded-2xl hover:border-indigo-600 hover:shadow-xl hover:shadow-indigo-50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-44 overflow-hidden"
+                    className="group relative bg-white border border-slate-200 p-6 rounded-[1.25rem] hover:border-indigo-600 hover:shadow-2xl hover:shadow-indigo-100/50 hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between h-48 overflow-hidden"
                   >
-                    {/* Background Subtle Logo */}
-                    <div className="absolute -top-4 -right-4 text-slate-100 group-hover:text-indigo-50 group-hover:scale-125 transition-all duration-500">
-                      <BarChart3 size={120} />
+                    {/* Background Visual Element */}
+                    <div className="absolute -bottom-6 -right-6 text-slate-400/5 group-hover:text-indigo-600 group-hover:scale-110 transition-all duration-700 pointer-events-none">
+                      <BarChart3 size={160} />
                     </div>
 
                     <div className="relative z-10 flex justify-between items-start">
                       <div className="space-y-1">
-                        <div className="text-2xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase">
-                          {company.symbol}
-                        </div>
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                        <div className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-1">
                           {company.sector}
+                        </div>
+                        <div className="text-2xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase leading-none">
+                          {company.symbol}
                         </div>
                       </div>
                       <div className="text-right">
                         {company.currentPrice ? (
-                          <>
-                            <div className="text-xl font-bold text-slate-900">₹{company.currentPrice.toLocaleString('en-IN')}</div>
-                            <div className="flex items-center justify-end gap-1 text-[10px] text-emerald-600 font-black uppercase mt-1 tracking-tighter">
+                          <div className="space-y-1 animate-in fade-in slide-in-from-right-4 duration-500">
+                            <div className="text-xl font-bold text-slate-900 tracking-tighter leading-none">₹{company.currentPrice.toLocaleString('en-IN')}</div>
+                            <div className="flex items-center justify-end gap-1.5 text-[9px] text-emerald-600 font-black uppercase tracking-tighter">
                               <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                               Active Live
                             </div>
-                          </>
+                          </div>
                         ) : (
-                          <div className="h-10 w-24 bg-slate-50 flex items-center justify-center rounded-lg">
-                            <div className="w-6 h-1 bg-slate-200 animate-pulse rounded-full" />
+                          <div className="h-10 w-24 bg-slate-50 flex items-center justify-center rounded-lg border border-slate-100 border-dashed">
+                            <div className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Awaiting Feed</div>
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="relative z-10 pt-4 flex justify-between items-center border-t border-slate-100">
-                      <div className="text-[11px] font-bold text-slate-500 truncate max-w-[200px]">
+                    <div className="relative z-10 pt-4 flex justify-between items-center border-t border-slate-50">
+                      <div className="text-[11px] font-semibold text-slate-400 truncate max-w-[200px] uppercase tracking-tight">
                         {company.name}
                       </div>
-                      <ArrowUpRight size={16} className="text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      <div className="p-2 bg-slate-50 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                        <ArrowUpRight size={14} />
+                      </div>
                     </div>
                   </Link>
                 ))
