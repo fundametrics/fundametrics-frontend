@@ -52,7 +52,8 @@ async function request<T>(endpoint: string, method: HttpMethod = 'GET', body?: u
 
 export const api = {
   getStocks: (skip: number = 0, limit: number = 50) => request<StocksResponse>(`/api/companies?skip=${skip}&limit=${limit}`),
-  getRegistry: (skip: number = 0, limit: number = 50) => request<StocksResponse>(`/companies/registry?skip=${skip}&limit=${limit}`),
+  getRegistry: (skip: number = 0, limit: number = 50, status?: string) => 
+    request<StocksResponse>(`/companies/registry?skip=${skip}&limit=${limit}${status ? `&status=${status}` : ''}`),
   getCompany: (symbol: string) => request<StockDetailResponse>(`/api/company/${symbol}`),
   getCompanyStatus: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/status`),
   generateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/generate`, 'POST'),

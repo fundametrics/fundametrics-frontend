@@ -25,6 +25,7 @@ const AdminPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [hasMore, setHasMore] = useState(true);
+    const [filterStatus, setFilterStatus] = useState<string>('pending'); // Default to pending
 
     const location = useLocation();
 
@@ -59,8 +60,8 @@ const AdminPage = () => {
         try {
             if (!append) setLoading(true);
             const skip = append ? companies.length : 0;
-            const limit = 200; // Load 200 at a time instead of 3000
-            const response = await api.getRegistry(skip, limit);
+            const limit = 200;
+            const response = await api.getRegistry(skip, limit, filterStatus);
             const newCompanies = response.companies as any || [];
 
             if (append) {
@@ -69,14 +70,13 @@ const AdminPage = () => {
                 setCompanies(newCompanies);
             }
 
-            // Track if there are more to load
             setHasMore(newCompanies.length === limit);
         } catch (err) {
             logger.error('Failed to load registry', err);
         } finally {
             setLoading(false);
         }
-    }, [companies.length]);
+    }, [companies.length, filterStatus]);
 
     const loadStats = useCallback(async () => {
         try {
@@ -223,15 +223,32 @@ const AdminPage = () => {
 
                 {/* List Section */}
                 <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
-                        <Search size={20} className="text-slate-400" />
-                        <input
-                            type="text"
-                            placeholder="Filter by symbol or name..."
-                            className="bg-transparent border-none focus:ring-0 text-sm font-medium text-slate-900 w-full placeholder:text-slate-400"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
+                    <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col md:flex-row items-center gap-6">
+                        <div className="flex items-center gap-2 bg-slate-200/50 p-1 rounded-xl shrink-0">
+                            <button
+                                onClick={() => setFilterStatus('pending')}
+                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${filterStatus === 'pending' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                            >
+                                Pending Only
+                            </button>
+                            <button
+                                onClick={() => setFilterStatus('')}
+                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${filterStatus === '' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                            >
+                                Show All
+                            </button>
+                        </div>
+
+                        <div className="flex-1 flex items-center gap-4 w-full">
+                            <Search size={20} className="text-slate-400" />
+                            <input
+                                type="text"
+                                placeholder="Search by symbol or name..."
+                                className="bg-transparent border-none focus:ring-0 text-sm font-medium text-slate-900 w-full placeholder:text-slate-400"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
                     </div>
 
                     <div className="overflow-x-auto">
