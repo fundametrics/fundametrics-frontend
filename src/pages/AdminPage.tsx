@@ -87,7 +87,7 @@ const AdminPage = () => {
         }
     }, []);
 
-    // Load data when authenticated (moved below function definitions)
+    // Load data when authenticated
     useEffect(() => {
         if (isAuthenticated) {
             loadRegistry();
@@ -95,22 +95,50 @@ const AdminPage = () => {
         }
     }, [isAuthenticated, loadRegistry, loadStats]);
 
+    // Phase 27: Smart Auto-Polling when active generations are occurring
+    useEffect(() => {
+        if (!isAuthenticated) return;
+
+        let pollInterval: any = null;
+
+        // Check if any company in the current list is in 'generating' status
+        const listHasGenerating = companies.some(c => c.status === 'generating');
+        const isGenerating = Object.keys(processing).length > 0 || listHasGenerating || (stats?.currently_generating > 0);
+
+        if (isGenerating) {
+            pollInterval = setInterval(() => {
+                loadStats();
+                loadRegistry();
+
+                // Clear local processing flags if status changed
+                setProcessing(prev => {
+                    const next = { ...prev };
+                    let changed = false;
+                    Object.keys(next).forEach(sym => {
+                        const comp = companies.find(c => c.symbol === sym);
+                        if (comp && comp.status !== 'not_available') {
+                            delete next[sym];
+                            changed = true;
+                        }
+                    });
+                    return changed ? next : prev;
+                });
+            }, 5000); // 5 second polling
+        }
+
+        return () => {
+            if (pollInterval) clearInterval(pollInterval);
+        };
+    }, [isAuthenticated, processing, companies, stats?.currently_generating, loadStats, loadRegistry]);
+
     const handleGenerate = async (symbol: string) => {
         if (processing[symbol]) return;
 
         setProcessing(prev => ({ ...prev, [symbol]: true }));
         try {
             await api.adminGenerateCompanyData(symbol);
-            // Wait then refresh
-            setTimeout(() => {
-                loadRegistry();
-                loadStats();
-                setProcessing(prev => {
-                    const next = { ...prev };
-                    delete next[symbol];
-                    return next;
-                });
-            }, 3000);
+            // Refresh stats immediately to show "1 generating"
+            loadStats();
         } catch (err) {
             logger.error('Failed to trigger generation', err);
             setProcessing(prev => {
