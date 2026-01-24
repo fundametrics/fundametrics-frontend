@@ -110,20 +110,21 @@ const AdminPage = () => {
                 loadStats();
                 loadRegistry();
 
-                // Clear local processing flags if status changed
+                // Clear local processing flags 
                 setProcessing(prev => {
                     const next = { ...prev };
                     let changed = false;
                     Object.keys(next).forEach(sym => {
                         const comp = companies.find(c => c.symbol === sym);
-                        if (comp && comp.status !== 'not_available') {
+                        // Clear if company updated status OR disappeared from the list (if in pending filter)
+                        if (!comp || comp.status !== 'not_available') {
                             delete next[sym];
                             changed = true;
                         }
                     });
                     return changed ? next : prev;
                 });
-            }, 5000); // 5 second polling
+            }, 3000); // Increased frequency for "immediate" feel
         }
 
         return () => {
