@@ -73,52 +73,33 @@ const LandingPage = () => {
         <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
 
         {/* Hero Dashboard Section */}
-        <header className="relative z-10 px-6 pt-12 pb-16 max-w-[1920px] mx-auto overflow-hidden">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="max-w-3xl space-y-8 animate-in fade-in slide-in-from-left duration-700">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-600/5 border border-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse" />
-                Institutional Data Feed Active
-              </div>
-
-              <h1 className="text-6xl sm:text-7xl font-black tracking-tight leading-[0.9] text-slate-900">
-                Pulse of the <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-800">
-                  Indian Market.
-                </span>
-              </h1>
-
-              <p className="text-lg text-slate-500 max-w-xl leading-relaxed font-medium">
-                The most transparent financial terminal for retail investors.
-                <span className="text-slate-900 font-bold"> Clean facts. No bias.</span>
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <div className="w-full max-w-md group">
-                  <div className="relative bg-white border border-slate-200 rounded-xl shadow-xl shadow-indigo-100 p-1.5 focus-within:border-indigo-500 transition-all duration-300">
-                    <GlobalSearch variant="minimal" />
-                  </div>
-                </div>
-              </div>
+        <header className="relative z-10 px-6 pt-20 pb-24 max-w-[1920px] mx-auto overflow-hidden text-center flex flex-col items-center">
+          <div className="max-w-4xl space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-600/5 border border-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse" />
+              Institutional Data Feed Active
             </div>
 
-            {/* Quick Stats Sidebar */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">
-              <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600"><Database size={20} /></div>
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Database Coverage</div>
-                </div>
-                <div className="text-3xl font-black text-slate-900">638+</div>
-                <div className="text-[11px] font-bold text-slate-400 mt-2">Active NSE Symbols</div>
+            <h1 className="text-6xl sm:text-8xl font-black tracking-tighter leading-[0.85] text-slate-900">
+              The Financial Terminal <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-800">
+                For Modern India.
+              </span>
+            </h1>
+
+            <p className="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
+              Real-time institutional-grade intelligence for retail investors.
+              <span className="text-slate-900 font-bold"> Pure facts. No noise.</span>
+            </p>
+
+            <div className="w-full max-w-2xl mx-auto pt-4 group">
+              <div className="relative bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-indigo-200/20 p-2 focus-within:border-indigo-500 focus-within:shadow-indigo-200/40 transition-all duration-500">
+                <GlobalSearch variant="minimal" />
               </div>
-              <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600"><ShieldCheck size={20} /></div>
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Trust Engine</div>
-                </div>
-                <div className="text-3xl font-black text-slate-900">100%</div>
-                <div className="text-[11px] font-bold text-slate-400 mt-2">Verified Audit Trail</div>
+              <div className="mt-8 flex flex-wrap justify-center gap-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <div className="flex items-center gap-2"><Database size={14} className="text-indigo-600" /> Audit Traceable</div>
+                <div className="flex items-center gap-2"><Zap size={14} className="text-amber-500" /> Real-time Compute</div>
+                <div className="flex items-center gap-2"><ShieldCheck size={14} className="text-emerald-500" /> Verified Sourcing</div>
               </div>
             </div>
           </div>
