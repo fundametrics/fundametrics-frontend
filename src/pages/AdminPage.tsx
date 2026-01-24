@@ -313,6 +313,11 @@ const AdminPage = () => {
                                                         <Loader2 size={14} className="animate-spin" />
                                                         <span className="text-[10px] font-black uppercase tracking-widest">Generating...</span>
                                                     </div>
+                                                ) : company.status === 'failed' ? (
+                                                    <div className="flex items-center gap-1.5 text-rose-500">
+                                                        <AlertCircle size={14} />
+                                                        <span className="text-[10px] font-black uppercase tracking-widest">Failed</span>
+                                                    </div>
                                                 ) : (
                                                     <div className="flex items-center gap-1.5 text-slate-400">
                                                         <AlertCircle size={14} />
@@ -321,13 +326,15 @@ const AdminPage = () => {
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                {company.status === 'not_available' ? (
+                                                {company.status === 'not_available' || company.status === 'failed' ? (
                                                     <button
                                                         onClick={() => handleGenerate(company.symbol)}
                                                         disabled={processing[company.symbol]}
                                                         className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${processing[company.symbol]
                                                             ? 'bg-amber-100 text-amber-600 cursor-wait'
-                                                            : 'bg-indigo-600 hover:bg-slate-900 text-white shadow-lg shadow-indigo-100'}`}
+                                                            : company.status === 'failed'
+                                                                ? 'bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white border border-rose-100'
+                                                                : 'bg-indigo-600 hover:bg-slate-900 text-white shadow-lg shadow-indigo-100'}`}
                                                     >
                                                         {processing[company.symbol] ? (
                                                             <>
@@ -337,7 +344,7 @@ const AdminPage = () => {
                                                         ) : (
                                                             <>
                                                                 <Zap size={12} />
-                                                                Generate Data
+                                                                {company.status === 'failed' ? 'Retry Data' : 'Generate Data'}
                                                             </>
                                                         )}
                                                     </button>
