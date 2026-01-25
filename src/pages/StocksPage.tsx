@@ -46,21 +46,33 @@ const StocksPage = () => {
   // UI State
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
-  // Fetch initial data once (larger set for client-side filtering)
+  // Fetch data with server-side sorting and ADAVANCED filtering (Phase 6)
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        // Fetch a large initial set to make client-side filtering meaningful
-        const response = await api.getStocks(0, 200).catch(err => {
+        // Map sortDirection to MongoDB order (1 for asc, -1 for desc)
+        const order = sortDirection === 'asc' ? 1 : -1;
+
+        // Pass current filters to the API
+        const filters = {
+          sector: selectedSector,
+          minCap,
+          maxCap,
+          minROE,
+          maxPE
+        };
+
+        // Fetch from optimized, filter-aware API
+        const response = await api.getStocks(0, 200, sortField, order, filters).catch(err => {
           logger.error("API call failed", err);
-          return { companies: [], total: 0 }; // Fallback
+          return { companies: [], total: 0 };
         });
 
         if (response && Array.isArray(response.companies)) {
           const mapped = response.companies.map((c: any) => ({
             symbol: c.symbol,
-            name: c.name || c.company || c.symbol,
+            name: c.name || c.symbol,
             sector: c.sector || 'General',
             marketCap: c.marketCap || undefined,
             roe: c.roe || undefined,
@@ -76,13 +88,19 @@ const StocksPage = () => {
         }
         setLoading(false);
       } catch (err) {
-        logger.error("Failed to load initial data", err);
-        setCompanies([]); // Ensure valid state
+        logger.error("Failed to load data", err);
+        setCompanies([]);
         setLoading(false);
       }
     };
-    fetchInitialData();
-  }, []);
+
+    // De-bounce for rapid filter changes
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [sortField, sortDirection, selectedSector, minCap, maxCap, minROE, maxPE]); // Refetch when filters change
 
   // Update URL search params whenever filters change
   useEffect(() => {
@@ -99,11 +117,11 @@ const StocksPage = () => {
     setSearchParams(params, { replace: true });
   }, [searchQuery, selectedSector, minCap, maxCap, minROE, maxPE, sortField, sortDirection, setSearchParams]);
 
-  // Client-side filtering and sorting
+  // Client-side filtering (sorting is now done on server for initial load)
   const filteredCompanies = useMemo(() => {
     let result = [...companies];
 
-    // Search Query
+    // Search Query (Internal)
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter(c =>
@@ -128,7 +146,8 @@ const StocksPage = () => {
     // PE Ratio
     if (maxPE) result = result.filter(c => (c.pe || 0) <= parseFloat(maxPE));
 
-    // Sort
+    // Secondary Sort (Client-side) for the current displayed batch
+    // This handles the direction correctly if already fetched
     result.sort((a, b) => {
       let aVal = a[sortField];
       let bVal = b[sortField];

@@ -13,6 +13,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 const AboutDataPage = lazy(() => import('./pages/AboutDataPage'));
 const DisclaimerPage = lazy(() => import('./pages/DisclaimerPage'));
+const MethodologyPage = lazy(() => import('./pages/MethodologyPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const DataSourcesPage = lazy(() => import('./pages/DataSourcesPage'));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
@@ -43,6 +44,7 @@ const App = () => {
 
           <Route path="admin" element={<AdminPage />} />
           <Route path="disclaimer" element={<DisclaimerPage />} />
+          <Route path="methodology" element={<MethodologyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

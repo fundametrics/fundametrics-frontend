@@ -19,6 +19,9 @@ import {
   TrendingUp, Scale, Wallet, LineChart as LineChartIcon,
   Info, Newspaper
 } from 'lucide-react';
+import { useRecentActivity } from '../hooks/useRecentActivity';
+import { addToRecent } from '../utils/recentActivity';
+import { useWatchlist } from '../hooks/useWatchlist';
 
 const OverviewSection = lazy(() => import('../components/OverviewSection'));
 const FinancialsSection = lazy(() => import('../components/FinancialsSection'));
@@ -144,6 +147,11 @@ const CompanyPage = () => {
 
         // Update state with primary data immediately
         setState(prev => ({ ...prev, company: companyData, loading: false }));
+
+        // Track view (Phase 7)
+        if (symbol) {
+          addToRecent(symbol);
+        }
 
         // Fetch supplementary data in background
         Promise.allSettled([

@@ -51,8 +51,22 @@ async function request<T>(endpoint: string, method: HttpMethod = 'GET', body?: u
 }
 
 export const api = {
-  getStocks: (skip: number = 0, limit: number = 50) => request<StocksResponse>(`/api/companies?skip=${skip}&limit=${limit}`),
-  getRegistry: (skip: number = 0, limit: number = 50, status?: string) => 
+  getStocks: (skip: number = 0, limit: number = 50, sort_by: string = 'symbol', order: number = 1, filters: any = {}) => {
+    const params = new URLSearchParams({
+      skip: skip.toString(),
+      limit: limit.toString(),
+      sort_by,
+      order: order.toString()
+    });
+    if (filters.sector && filters.sector !== 'all') params.append('sector', filters.sector);
+    if (filters.minCap) params.append('min_market_cap', filters.minCap);
+    if (filters.maxCap) params.append('max_market_cap', filters.maxCap);
+    if (filters.minROE) params.append('min_roe', filters.minROE);
+    if (filters.maxPE) params.append('max_pe', filters.maxPE);
+
+    return request<StocksResponse>(`/api/companies?${params.toString()}`);
+  },
+  getRegistry: (skip: number = 0, limit: number = 50, status?: string) =>
     request<StocksResponse>(`/companies/registry?skip=${skip}&limit=${limit}${status ? `&status=${status}` : ''}`),
   getCompany: (symbol: string) => request<StockDetailResponse>(`/api/company/${symbol}`),
   getCompanyStatus: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/status`),

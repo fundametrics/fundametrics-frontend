@@ -22,6 +22,8 @@ import GlobalSearch from '../components/GlobalSearch';
 import MarketIndices from '../components/MarketIndices';
 import TickerTape from '../components/TickerTape';
 import SEO from '../components/SEO';
+import { useWatchlist } from '../hooks/useWatchlist';
+import { useRecentActivity } from '../hooks/useRecentActivity';
 
 interface CompanySummary {
   symbol: string;
@@ -31,6 +33,9 @@ interface CompanySummary {
 }
 
 const LandingPage = () => {
+  const { watchlist } = useWatchlist();
+  const { recentStocks } = useRecentActivity();
+
   const [stats, setStats] = useState({
     recentCompanies: [] as CompanySummary[],
     loading: true
@@ -104,6 +109,48 @@ const LandingPage = () => {
             </div>
           </div>
         </header>
+
+        {/* Personal Dashboard Shortcut (Phase 7) */}
+        {(watchlist.length > 0 || recentStocks.length > 0) && (
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-700">
+            <div className="bg-indigo-600 rounded-3xl p-8 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-2xl shadow-indigo-200">
+              {/* Aesthetic Backdrop */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20" />
+
+              <div className="relative z-10 flex-1 text-center md:text-left">
+                <h3 className="text-2xl font-black tracking-tight mb-2 uppercase italic leading-none">Welcome back to your terminal</h3>
+                <p className="text-indigo-100 font-medium opacity-90">Quick access to your curated market insights.</p>
+              </div>
+
+              <div className="relative z-10 flex flex-wrap justify-center gap-4">
+                {watchlist.length > 0 && (
+                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[140px]">
+                    <div className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Watchlist</div>
+                    <div className="flex -space-x-2">
+                      {watchlist.slice(0, 3).map(s => (
+                        <Link key={s} to={`/company/${s}`} className="w-8 h-8 rounded-full bg-white text-indigo-600 flex items-center justify-center text-[10px] font-black border-2 border-indigo-600 hover:scale-110 transition-transform">{s[0]}</Link>
+                      ))}
+                      {watchlist.length > 3 && (
+                        <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-[10px] font-black border-2 border-indigo-600">+{watchlist.length - 3}</div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {recentStocks.length > 0 && (
+                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[140px]">
+                    <div className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Recents</div>
+                    <div className="flex gap-2">
+                      {recentStocks.slice(0, 5).map(s => (
+                        <Link key={s} to={`/company/${s}`} className="text-xs font-bold hover:underline opacity-80">{s}</Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <main className="relative z-10 px-6 max-w-[1920px] mx-auto space-y-24 pb-32">
 

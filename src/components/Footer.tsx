@@ -52,6 +52,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h5 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em]">Compliance</h5>
             <ul className="space-y-2">
+              <li><Link to="/methodology" className="text-xs font-bold text-slate-500 hover:text-indigo-600 transition-colors uppercase tracking-tight">Methodology</Link></li>
               <li><Link to="/disclaimer" className="text-xs font-bold text-slate-500 hover:text-indigo-600 transition-colors uppercase tracking-tight">Disclaimer</Link></li>
               <li><Link to="/admin" className="text-xs font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-tight italic border-t border-slate-50 pt-2">System Terminal</Link></li>
             </ul>
