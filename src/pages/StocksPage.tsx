@@ -52,9 +52,12 @@ const StocksPage = () => {
       try {
         setLoading(true);
         // Fetch a large initial set to make client-side filtering meaningful
-        const response = await api.getStocks(0, 200);
+        const response = await api.getStocks(0, 200).catch(err => {
+          logger.error("API call failed", err);
+          return { companies: [], total: 0 }; // Fallback
+        });
 
-        if (response.companies) {
+        if (response && Array.isArray(response.companies)) {
           const mapped = response.companies.map((c: any) => ({
             symbol: c.symbol,
             name: c.name || c.company || c.symbol,
@@ -67,10 +70,14 @@ const StocksPage = () => {
           }));
           setCompanies(mapped);
           setTotal(response.total || mapped.length);
+        } else {
+          setCompanies([]);
+          setTotal(0);
         }
         setLoading(false);
       } catch (err) {
         logger.error("Failed to load initial data", err);
+        setCompanies([]); // Ensure valid state
         setLoading(false);
       }
     };

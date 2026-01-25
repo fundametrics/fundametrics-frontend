@@ -29,8 +29,12 @@ const WatchlistPage = () => {
 
     const loadWatchlistData = async () => {
         try {
-            const response = await api.getRegistry(0, 100);
-            if (response.companies) {
+            const response = await api.getRegistry(0, 100).catch(err => {
+                console.error('API call failed for watchlist', err);
+                return { companies: [] };
+            });
+
+            if (response && Array.isArray(response.companies)) {
                 const watchlistData = response.companies
                     .filter(c => watchlist.includes(c.symbol))
                     .map(c => ({
@@ -42,6 +46,8 @@ const WatchlistPage = () => {
                         pe: c.pe || 0,
                     }));
                 setCompanies(watchlistData);
+            } else {
+                setCompanies([]);
             }
             setLoading(false);
         } catch (error) {

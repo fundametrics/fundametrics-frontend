@@ -27,12 +27,13 @@ const TickerTape = () => {
         return ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY BANK', 'NIFTY IT', 'BSE SENSEX'].includes(label);
     });
     // Strict filter: usage of validIndices ONLY. Never fallback to full list.
-    const displayIndices = [...validIndices, ...validIndices, ...validIndices];
+    const indianIndices = [...validIndices, ...validIndices, ...validIndices];
+    console.log('[Ticker] Filtered:', indianIndices.length, 'Total:', indices.length);
 
     return (
         <div className="w-full bg-slate-900 overflow-hidden py-2 border-b border-slate-800 relative z-50">
             <div className="flex animate-ticker whitespace-nowrap">
-                {displayIndices.map((idx, i) => (
+                {indianIndices.map((idx, i) => (
                     <div key={`${idx.id}-${i}`} className="inline-flex items-center gap-4 px-8 border-r border-slate-800">
                         <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">{idx.label}</span>
                         <span className="text-xs font-black text-white ml-1">
