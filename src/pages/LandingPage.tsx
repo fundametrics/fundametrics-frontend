@@ -73,30 +73,30 @@ const LandingPage = () => {
         <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
 
         {/* Hero Dashboard Section */}
-        <header className="relative z-10 px-6 pt-20 pb-24 max-w-[1920px] mx-auto overflow-hidden text-center flex flex-col items-center">
-          <div className="max-w-4xl space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-600/5 border border-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm">
+        <header className="relative z-10 px-4 sm:px-6 pt-12 sm:pt-20 pb-16 sm:pb-24 max-w-[1920px] mx-auto overflow-hidden text-center flex flex-col items-center">
+          <div className="max-w-4xl space-y-6 sm:space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-600/5 border border-indigo-100 text-indigo-700 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse" />
               Institutional Data Feed Active
             </div>
 
-            <h1 className="text-6xl sm:text-8xl font-black tracking-tighter leading-[0.85] text-slate-900">
+            <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] sm:leading-[0.85] text-slate-900 px-2">
               The Financial Terminal <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-800">
                 For Modern India.
               </span>
             </h1>
 
-            <p className="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
+            <p className="text-base sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium px-4">
               Real-time institutional-grade intelligence for retail investors.
               <span className="text-slate-900 font-bold"> Pure facts. No noise.</span>
             </p>
 
-            <div className="w-full max-w-2xl mx-auto pt-4 group">
+            <div className="w-full max-w-2xl mx-auto pt-4 group px-4">
               <div className="relative bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-indigo-200/20 p-2 focus-within:border-indigo-500 focus-within:shadow-indigo-200/40 transition-all duration-500">
                 <GlobalSearch variant="minimal" />
               </div>
-              <div className="mt-8 flex flex-wrap justify-center gap-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-4 sm:gap-8 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">
                 <div className="flex items-center gap-2"><Database size={14} className="text-indigo-600" /> Audit Traceable</div>
                 <div className="flex items-center gap-2"><Zap size={14} className="text-amber-500" /> Real-time Compute</div>
                 <div className="flex items-center gap-2"><ShieldCheck size={14} className="text-emerald-500" /> Verified Sourcing</div>
@@ -126,16 +126,16 @@ const LandingPage = () => {
 
           {/* MARKET LEADERS SECTION */}
           <section id="leaders">
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 sm:mb-10 gap-4 sm:gap-6">
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-slate-100 text-slate-500 text-[9px] font-bold uppercase tracking-wider mb-2">
                   <Zap size={10} className="text-amber-500" />
                   Real-time Valuation
                 </div>
-                <h2 className="text-5xl font-black tracking-[calc(-0.02em)] text-slate-900 leading-none">Market Leaders</h2>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-[calc(-0.02em)] text-slate-900 leading-none">Market Leaders</h2>
                 <p className="text-slate-500 font-medium tracking-tight text-sm">Real-time snapshots of Bluechip performance markers.</p>
               </div>
-              <Link to="/stocks" className="group flex items-center gap-3 px-8 py-4 bg-slate-900 shadow-xl shadow-slate-200 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:shadow-indigo-100 transition-all duration-300">
+              <Link to="/stocks" className="group flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 shadow-xl shadow-slate-200 text-white rounded-2xl text-[10px] sm:text-[11px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:shadow-indigo-100 transition-all duration-300">
                 Access All Markets <ChevronRight size={16} className="group-hover:translate-x-1 duration-300" />
               </Link>
             </div>
