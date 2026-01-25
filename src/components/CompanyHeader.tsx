@@ -140,17 +140,16 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
           </div>
 
           {/* Price Moved Here (Phase 21B Refinement) */}
-          {formattedPrice && (
-            <div className="flex items-center gap-4 py-1 px-3 bg-slate-50 rounded-full border border-slate-100">
-              <div className="text-sm font-black font-mono text-slate-900 tracking-tight">
-                {formattedPrice}
-              </div>
-              <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
-                <Clock size={12} className="text-slate-400" />
-                <span className="text-[10px] font-bold text-slate-600 font-mono">{(priceDelayMinutes || 15)}M Delay</span>
-              </div>
+          {/* Price Moved Here (Phase 21B Refinement) */}
+          <div className="flex items-center gap-4 py-1 px-3 bg-slate-50 rounded-full border border-slate-100 min-w-[140px] justify-between">
+            <div className="text-sm font-black font-mono text-slate-900 tracking-tight">
+              {formattedPrice || <span className="text-xs text-slate-400 font-bold uppercase tracking-wide">Update Pending</span>}
             </div>
-          )}
+            <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
+              <Clock size={12} className="text-slate-400" />
+              <span className="text-[10px] font-bold text-slate-600 font-mono">{(priceDelayMinutes || 15)}M Delay</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

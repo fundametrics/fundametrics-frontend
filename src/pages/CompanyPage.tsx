@@ -324,10 +324,20 @@ const CompanyPage = () => {
 
   const marketPrice = (state as any).market?.current_price || (state as any).market?.price;
 
-  const displayPrice = marketPrice
-    ? { value: Number(marketPrice), currency: 'INR' }
-    : priceMetric
-      ? { value: Number(priceMetric.value), currency: 'INR' }
+  // Helper to safe parse price
+  const parsePrice = (val: any) => {
+    if (typeof val === 'number') return val;
+    if (typeof val === 'string') return Number(val.replace(/,/g, ''));
+    return null;
+  };
+
+  const safeMarketPrice = parsePrice(marketPrice);
+  const safeMetricPrice = priceMetric ? parsePrice(priceMetric.value) : null;
+
+  const displayPrice = safeMarketPrice !== null
+    ? { value: safeMarketPrice, currency: 'INR' }
+    : safeMetricPrice !== null
+      ? { value: safeMetricPrice, currency: 'INR' }
       : null;
 
   return (

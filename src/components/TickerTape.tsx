@@ -21,8 +21,10 @@ const TickerTape = () => {
 
     if (indices.length === 0) return null;
 
-    // Double the indices to create a seamless loop
-    const displayIndices = [...indices, ...indices, ...indices];
+    // Double the indices to create a seamless loop (Filtered for Indian Markets)
+    const validIndices = indices.filter((i: any) => ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY IT'].includes(i.id || i.label));
+    const finalIndices = validIndices.length > 0 ? validIndices : indices;
+    const displayIndices = [...finalIndices, ...finalIndices, ...finalIndices];
 
     return (
         <div className="w-full bg-slate-900 overflow-hidden py-2 border-b border-slate-800 relative z-50">
