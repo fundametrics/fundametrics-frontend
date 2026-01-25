@@ -285,7 +285,7 @@ const OwnershipSection: FC<OwnershipSectionProps> = ({ shareholding, periodLabel
             <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-widest leading-none">Shareholding History Table</h3>
           </div>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/80 border-b border-slate-200">
