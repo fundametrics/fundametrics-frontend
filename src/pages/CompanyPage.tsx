@@ -497,23 +497,11 @@ const CompanyPage = () => {
               <SectionHeader title="Financial Overview" icon={ShieldCheck} id="insights" />
 
               {/* AI Narrative Brief */}
-              {state.company?.ai_summary?.paragraphs && reliability && reliability.coverage_score >= 0.5 && (
-                <div className={`premium-card p-8 border rounded-3xl mb-8 ${reliability.coverage_score < 0.8 ? 'bg-amber-50/50 border-amber-100' : 'bg-indigo-50/30 border-indigo-100'}`}>
+              {state.company?.ai_summary?.paragraphs && state.company.ai_summary.paragraphs.length > 0 && (
+                <div className="premium-card p-8 border rounded-3xl mb-8 bg-indigo-50/30 border-indigo-100">
                   <div className="flex items-center justify-between mb-4">
-                    <span className={`text-[10px] font-black uppercase tracking-widest block ${reliability.coverage_score < 0.8 ? 'text-amber-600' : 'text-indigo-600'}`}>Company Summary</span>
-                    {reliability.coverage_score < 0.8 && (
-                      <span className="text-[9px] font-bold text-amber-600 bg-amber-100 px-2 py-0.5 rounded">Partial Data</span>
-                    )}
+                    <span className="text-[10px] font-black uppercase tracking-widest block text-indigo-600">Company Summary</span>
                   </div>
-
-                  {reliability.coverage_score < 0.8 && (
-                    <div className="flex items-center gap-2 mb-4 p-3 bg-amber-100/50 rounded-xl border border-amber-200">
-                      <Info size={14} className="text-amber-600 shrink-0" />
-                      <p className="text-[11px] font-bold text-amber-800 leading-tight">
-                        This narrative is generated from partial financial disclosures and may not reflect the complete picture. {reliability.is_stale && "Note: Some source data is stale."}
-                      </p>
-                    </div>
-                  )}
 
                   <div className="space-y-4">
                     {state.company.ai_summary.paragraphs.map((p, i) => (
@@ -525,22 +513,16 @@ const CompanyPage = () => {
                 </div>
               )}
 
-              {reliability && reliability.coverage_score < 0.5 && (
-                <div className="premium-card p-8 bg-slate-50 border border-slate-200 border-dashed rounded-3xl mb-8 text-center">
-                  <Database size={24} className="mx-auto text-slate-300 mb-3" />
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Insufficient Data Coverage for Synthesis</p>
-                </div>
-              )}
-
+              {/* Show metrics if they exist, regardless of coverage_score */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {fundametricsMetrics.filter((m: any) => m.value !== null).length > 0 ? (
-                  fundametricsMetrics.filter((m: any) => m.value !== null).slice(0, 8).map((m: any, idx: number) => (
+                {fundametricsMetrics.filter((m: any) => m.value !== null && m.value !== undefined).length > 0 ? (
+                  fundametricsMetrics.filter((m: any) => m.value !== null && m.value !== undefined).slice(0, 8).map((m: any, idx: number) => (
                     <InsightTile key={idx} metric={m} onExplore={handleExplainMetric} />
                   ))
                 ) : (
                   <div className="col-span-full p-8 bg-slate-50 border border-slate-200 border-dashed rounded-2xl text-center">
-                    <FileText className="mx-auto text-slate-300 mb-2" size={24} />
-                    <p className="text-sm font-bold text-slate-400">No computed metrics available for this period.</p>
+                    <Database size={24} className="mx-auto text-slate-300 mb-3" />
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Insufficient Data Coverage for Synthesis</p>
                   </div>
                 )}
               </div>

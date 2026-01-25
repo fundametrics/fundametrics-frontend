@@ -30,10 +30,7 @@ const getInsightNarrative = (metric: ComputedMetric) => {
         return { headline: "Reasonable Valuation", sub: "Market pricing is aligned with current earnings run-rate." };
     }
 
-    if (drift?.drift_flag) {
-        return { headline: "Structural Drift Detected", sub: "Internal data variance detected in recent filings." };
-    }
-
+    // Show actual value-based insights instead of drift warnings
     return { headline: "Stable Trajectory", sub: "Metric is within historical standard deviation ranges." };
 };
 
