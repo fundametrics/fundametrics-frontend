@@ -22,7 +22,10 @@ const TickerTape = () => {
     if (indices.length === 0) return null;
 
     // Double the indices to create a seamless loop (Filtered for Indian Markets)
-    const validIndices = indices.filter((i: any) => ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY IT'].includes(i.id || i.label));
+    const validIndices = indices.filter((i: any) => {
+        const label = (i.id || i.label || '').toString().toUpperCase().trim();
+        return ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY BANK', 'NIFTY IT', 'BSE SENSEX'].includes(label);
+    });
     const finalIndices = validIndices.length > 0 ? validIndices : indices;
     const displayIndices = [...finalIndices, ...finalIndices, ...finalIndices];
 

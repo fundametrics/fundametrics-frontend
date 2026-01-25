@@ -36,7 +36,10 @@ const MarketIndices = () => {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {(indices.length > 0 ? indices.filter((i: any) => ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY IT'].includes(i.id || i.label)) : [
+            {(indices.length > 0 ? indices.filter((i: any) => {
+                const label = (i.id || i.label || '').toString().toUpperCase().trim();
+                return ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY BANK', 'NIFTY IT', 'BSE SENSEX'].includes(label);
+            }) : [
                 { id: 'NIFTY 50', label: 'NIFTY 50', symbol: '^NSEI' },
                 { id: 'SENSEX', label: 'SENSEX', symbol: '^BSESN' },
                 { id: 'BANK NIFTY', label: 'BANK NIFTY', symbol: '^NSEBANK' }
