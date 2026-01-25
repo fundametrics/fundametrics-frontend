@@ -317,14 +317,18 @@ const CompanyPage = () => {
     ]
   };
 
-  // Price Fallback Logic (Phase 24 Fix)
+  // Price Fallback Logic: Prefer Live Market Data > Static Snapshot > Default
   const priceMetric = state.company?.fundametrics_metrics?.find(
     m => m.metric_name === "Current Price" || m.metric_name === "Price" || m.metric_name === "Close Price"
   );
 
-  const displayPrice = priceMetric
-    ? { value: Number(priceMetric.value), currency: 'INR' }
-    : (state.company as any)?.market?.current_price;
+  const marketPrice = (state as any).market?.current_price || (state as any).market?.price;
+
+  const displayPrice = marketPrice
+    ? { value: Number(marketPrice), currency: 'INR' }
+    : priceMetric
+      ? { value: Number(priceMetric.value), currency: 'INR' }
+      : null;
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
