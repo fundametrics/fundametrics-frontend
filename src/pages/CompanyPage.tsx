@@ -416,9 +416,16 @@ const CompanyPage = () => {
         </aside>
 
         {/* Main Content Area */}
-        {/* Main Content Area */}
-        {isNotAnalyzed ? (
+        {state.loading ? (
+          <main className="flex-1 px-4 lg:px-8 py-8 space-y-12">
+            <div className="flex flex-col items-center justify-center min-h-[400px]">
+              <Activity className="text-indigo-600 animate-spin mb-4" size={32} />
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Hydrating Intelligence...</p>
+            </div>
+          </main>
+        ) : isNotAnalyzed ? (
           <main className="flex-1 px-4 lg:px-8 py-20 flex items-center justify-center">
+            {/* Fallback Screen */}
             <div className="max-w-xl w-full bg-white rounded-[2.5rem] border border-slate-200 p-12 text-center shadow-xl shadow-slate-100">
               <div className="w-20 h-20 bg-amber-50 rounded-3xl flex items-center justify-center mx-auto mb-8">
                 <ShieldCheck size={40} className="text-amber-500" />
