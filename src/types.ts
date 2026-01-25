@@ -3,6 +3,8 @@ export interface MarketFacts {
   market: {
     price: {
       value: number | null;
+      change?: number | null;
+      change_percent?: number | null;
       currency: string;
       delay_minutes: number | null;
     };
@@ -280,5 +282,8 @@ export interface StockDetailResponse {
     as_of_date?: string;
     financial_period_label?: string;
     yearly_period_label?: string;
+    constants?: {
+      share_price: number | null;
+    };
   };
 }

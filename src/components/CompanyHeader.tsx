@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import type { CoverageSummary, Reliability } from '../types';
-import { ShieldCheck, Database, Clock, Bookmark } from 'lucide-react';
+import type { CoverageSummary } from '../types';
+import { Clock, Bookmark, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { useWatchlist } from '../hooks/useWatchlist';
 
 interface CompanyHeaderProps {
@@ -10,6 +10,8 @@ interface CompanyHeaderProps {
   metadataAsOfDate?: string | null;
   price?: {
     value: number | null;
+    change?: number | null;
+    changePercent?: number | null;
     currency?: string | null;
   } | null;
   priceDelayMinutes?: number | null;
@@ -23,12 +25,8 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
   name,
   symbol,
   sector,
-  metadataAsOfDate,
   price,
   priceDelayMinutes,
-  coverage,
-  trustGrade = 'A',
-  statementScope = 'FY24 Consolidated',
   isPsu = false,
 }) => {
   const { toggleWatchlist, isInWatchlist } = useWatchlist();
@@ -42,14 +40,15 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
     }).format(price.value)
     : null;
 
-  // Identity & Integrity Header
-  const coveragePercent = (coverage as any)?.coverage_ratio || (coverage as any)?.score || 92;
+  const priceChange = price?.change ?? 0;
+  const priceChangePercent = price?.changePercent ?? 0;
+  const isPositive = priceChange >= 0;
 
   return (
-    <div className="sticky top-16 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-sm">
+    <div className="sticky top-16 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-sm transition-all duration-300">
       <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
 
-        {/* Mobile: Stacked Identity & Trust (Phase 21B) */}
+        {/* Mobile: Stacked Identity (Refined for Phase 21B) */}
         <div className="flex flex-col gap-3 sm:hidden">
           <div className="flex items-start justify-between">
             <div>
@@ -71,23 +70,26 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
             </button>
           </div>
 
-          {/* Mobile Trust Row - Always Visible */}
-          <div className="flex items-center justify-between border-t border-slate-100 pt-2">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-indigo-50 px-2 py-1 rounded">
-                <ShieldCheck size={12} className="text-indigo-600" />
-                <span className="text-[10px] font-black text-indigo-700 uppercase tracking-widest">Trust {trustGrade}</span>
+          <div className="flex items-end justify-between border-t border-slate-100 pt-3">
+            <div className="flex flex-col">
+              <div className="text-2xl font-black font-mono text-slate-900 leading-none">
+                {formattedPrice || "--"}
               </div>
-              <span className="text-[10px] font-bold text-slate-400">{coveragePercent}% Coverage</span>
+              <div className={`flex items-center gap-1 text-xs font-bold mt-1 ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                {isPositive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
+                <span>
+                  {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercent.toFixed(2)}%)
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Database size={10} className="text-slate-400" />
-              <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wide">Filing Proof</span>
+            <div className="flex items-center gap-1.5 mb-1">
+              <Clock size={12} className="text-slate-400" />
+              <span className="text-[10px] font-bold text-slate-500">{(priceDelayMinutes || 15)}M Delay</span>
             </div>
           </div>
         </div>
 
-        {/* Desktop Layout - Realigned to match visual reference (Trust/Coverage in top row) */}
+        {/* Desktop Layout */}
         <div className="hidden sm:flex items-center justify-between pb-2 border-b border-slate-100/50">
           <div className="flex items-center gap-4">
             <button
@@ -111,19 +113,29 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
             </div>
           </div>
 
-          {/* Desktop Trust & Coverage (Moved to top row) */}
-          <div className="flex items-center gap-4 shrink-0">
-            <div className="flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg shadow-sm">
-              <ShieldCheck size={14} className="text-indigo-400" />
-              <span className="text-[11px] font-black uppercase tracking-widest leading-none">Trust {trustGrade}</span>
+          {/* Desktop Right: Price Section - Elevated */}
+          <div className="flex items-center gap-6">
+            <div className="flex flex-col items-end">
+              <div className="text-3xl font-black font-mono text-slate-900 tracking-tighter leading-none">
+                {formattedPrice || <span className="text-sm text-slate-400">Update Pending</span>}
+              </div>
+              {formattedPrice && (
+                <div className={`flex items-center gap-1.5 text-sm font-bold mt-1 ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  {isPositive ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
+                  <span>
+                    {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercent.toFixed(2)}%)
+                  </span>
+                </div>
+              )}
             </div>
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em]">
-              Data Coverage <span className="text-slate-600">{coveragePercent}%</span>
+            <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-2 rounded-xl border border-slate-100 self-start mt-1">
+              <Clock size={14} className="text-slate-400" />
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{(priceDelayMinutes || 15)}M Delay</span>
             </div>
           </div>
         </div>
 
-        {/* Intelligence Strip - Price & Sector */}
+        {/* Intelligence Strip - Sector & Status */}
         <div className="hidden sm:flex items-center justify-between pt-2 gap-4">
           <div className="flex items-center gap-6 text-[11px] font-medium text-slate-500 shrink-0">
             <div className="flex items-center gap-1.5">
@@ -139,22 +151,13 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
             </div>
           </div>
 
-          {/* Price Moved Here (Phase 21B Refinement) */}
-          {/* Price Moved Here (Phase 21B Refinement) */}
-          <div className="flex items-center gap-4 py-1 px-3 bg-slate-50 rounded-full border border-slate-100 min-w-[140px] justify-between">
-            <div className="text-sm font-black font-mono text-slate-900 tracking-tight">
-              {formattedPrice || <span className="text-xs text-slate-400 font-bold uppercase tracking-wide">Update Pending</span>}
-            </div>
-            <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
-              <Clock size={12} className="text-slate-400" />
-              <span className="text-[10px] font-bold text-slate-600 font-mono">{(priceDelayMinutes || 15)}M Delay</span>
-            </div>
+          <div className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+            Terminal Session Verified <span className="text-slate-900 ml-1">Live Mode</span>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 
 export default CompanyHeader;

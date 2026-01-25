@@ -348,7 +348,12 @@ const CompanyPage = () => {
   const safeMetricPrice = priceMetric ? parsePrice(priceMetric.value) : null;
 
   const displayPrice = safeMarketPrice !== null
-    ? { value: safeMarketPrice, currency: 'INR' }
+    ? {
+      value: safeMarketPrice,
+      currency: 'INR',
+      change: marketData?.current_change || marketData?.price?.change,
+      changePercent: marketData?.change_percent || marketData?.price?.change_percent
+    }
     : safeConstantsPrice !== null
       ? { value: safeConstantsPrice, currency: 'INR' }
       : safeMetricPrice !== null
