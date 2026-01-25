@@ -26,8 +26,8 @@ const TickerTape = () => {
         const label = (i.id || i.label || '').toString().toUpperCase().trim();
         return ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY BANK', 'NIFTY IT', 'BSE SENSEX'].includes(label);
     });
-    const finalIndices = validIndices.length > 0 ? validIndices : indices;
-    const displayIndices = [...finalIndices, ...finalIndices, ...finalIndices];
+    // Strict filter: usage of validIndices ONLY. Never fallback to full list.
+    const displayIndices = [...validIndices, ...validIndices, ...validIndices];
 
     return (
         <div className="w-full bg-slate-900 overflow-hidden py-2 border-b border-slate-800 relative z-50">

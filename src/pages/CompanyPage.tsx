@@ -322,7 +322,7 @@ const CompanyPage = () => {
     m => m.metric_name === "Current Price" || m.metric_name === "Price" || m.metric_name === "Close Price"
   );
 
-  const marketData = (state as any).market;
+  const marketData = (state as any)?.market;
   const marketPrice = marketData?.current_price || marketData?.price?.value || marketData?.price;
 
   // Helper to safe parse price
