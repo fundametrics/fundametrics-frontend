@@ -160,52 +160,51 @@ const LandingPage = () => {
                       <BarChart3 size={180} strokeWidth={1} />
                     </div>
 
-                    <div className="relative z-10 flex justify-between items-start">
-                      <div className="space-y-2">
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-[9px] font-black text-indigo-600 uppercase tracking-[0.15em]">
-                          <span className="w-1 h-1 rounded-full bg-indigo-500" />
-                          {company.sector}
-                        </div>
-                        <div className="text-3xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase leading-none">
-                          {company.symbol}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="relative z-10 space-y-3">
-                      {company.currentPrice ? (
-                        <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-black text-slate-900 tracking-tight leading-none">₹{company.currentPrice.toLocaleString('en-IN')}</span>
+                    <div className="relative z-10 flex flex-col h-full justify-between">
+                      {/* Top Section: Identity */}
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-3">
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-[10px] font-black text-indigo-600 uppercase tracking-[0.15em]">
+                            {company.sector}
                           </div>
-                          <div className="flex items-center gap-2 text-[10px] text-emerald-600 font-black uppercase tracking-wider">
-                            <span className="flex items-center gap-1">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              Live
-                            </span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="h-12 flex items-center">
-                          <div className="px-3 py-2 bg-amber-50 rounded-xl border-2 border-amber-200/60">
-                            <div className="text-[9px] font-black text-amber-600 uppercase tracking-widest flex items-center gap-1.5">
-                              <span className="w-1 h-1 rounded-full bg-amber-500 animate-pulse" />
-                              Updating...
+                          <div>
+                            <div className="text-3xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase leading-none mb-1">
+                              {company.symbol}
+                            </div>
+                            <div className="text-[11px] font-bold text-slate-400 truncate max-w-[180px] tracking-tight">
+                              {company.name}
                             </div>
                           </div>
                         </div>
-                      )}
 
-                      <div className="pt-3 flex justify-between items-center border-t-2 border-slate-100 group-hover:border-indigo-100 transition-colors">
-                        <div className="text-[11px] font-bold text-slate-500 truncate max-w-[180px] tracking-tight">
-                          {company.name}
+                        <div className="p-2 bg-slate-50 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                          <ArrowUpRight size={18} strokeWidth={2.5} />
                         </div>
-                        <div className="p-2.5 bg-slate-100 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 group-hover:scale-110">
-                          <ArrowUpRight size={16} strokeWidth={2.5} />
-                        </div>
+                      </div>
+
+                      {/* Bottom Section: Data */}
+                      <div className="border-t border-slate-100 pt-4 mt-2">
+                        {company.currentPrice ? (
+                          <div className="flex items-end justify-between animate-in fade-in slide-in-from-bottom-2 duration-500">
+                            <div>
+                              <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Price</div>
+                              <div className="text-3xl font-black text-slate-900 tracking-tighter leading-none">₹{company.currentPrice.toLocaleString('en-IN')}</div>
+                            </div>
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-emerald-50 rounded text-[9px] text-emerald-700 font-black uppercase tracking-wider border border-emerald-100/50">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                              Live
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2 px-3 py-2 bg-amber-50/50 rounded-xl border border-amber-100/50 w-full">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                            <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">Updating Price...</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </Link>
+
                 ))
               )}
             </div>
@@ -251,9 +250,9 @@ const LandingPage = () => {
           </section>
 
 
-        </main>
-      </div>
-    </div>
+        </main >
+      </div >
+    </div >
   );
 };
 
