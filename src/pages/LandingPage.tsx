@@ -140,118 +140,111 @@ const LandingPage = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {stats.loading ? (
                 Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className="h-56 bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl animate-pulse border border-slate-200" />
+                  <div key={i} className="h-48 bg-white rounded-2xl animate-pulse border border-slate-200" />
                 ))
               ) : (
                 stats.recentCompanies.map((company) => (
                   <Link
                     key={company.symbol}
                     to={`/stocks/${company.symbol}`}
-                    className="group relative bg-gradient-to-br from-white via-white to-slate-50/30 border-2 border-slate-200/60 p-7 rounded-3xl hover:border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between h-56 overflow-hidden backdrop-blur-sm"
+                    className="group relative bg-white border border-slate-200 rounded-2xl p-5 hover:border-indigo-500 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 flex flex-col justify-between h-48"
                   >
-                    {/* Animated Background Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/0 via-indigo-50/0 to-indigo-100/0 group-hover:from-indigo-50/50 group-hover:via-indigo-50/30 group-hover:to-indigo-100/20 transition-all duration-700 pointer-events-none" />
-
-                    {/* Background Visual Element */}
-                    <div className="absolute -bottom-8 -right-8 text-slate-200/40 group-hover:text-indigo-200/60 group-hover:scale-125 transition-all duration-700 pointer-events-none">
-                      <BarChart3 size={180} strokeWidth={1} />
+                    {/* Sector Badge */}
+                    <div className="flex items-start justify-between mb-4">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-600 text-[9px] font-bold uppercase tracking-wider">
+                        {company.sector}
+                      </span>
+                      <div className="p-1.5 rounded-lg bg-slate-50 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                        <ArrowUpRight size={14} strokeWidth={2.5} />
+                      </div>
                     </div>
 
-                    <div className="relative z-10 flex flex-col h-full justify-between">
-                      {/* Top Section: Identity */}
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-3">
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-[10px] font-black text-indigo-600 uppercase tracking-[0.15em]">
-                            {company.sector}
-                          </div>
+                    {/* Company Info */}
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-black text-slate-900 tracking-tight uppercase mb-1 group-hover:text-indigo-600 transition-colors">
+                        {company.symbol}
+                      </h3>
+                      <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wide truncate">
+                        {company.name}
+                      </p>
+                    </div>
+
+                    {/* Price Section */}
+                    <div className="border-t border-slate-100 pt-3 mt-3">
+                      {company.currentPrice ? (
+                        <div className="flex items-end justify-between">
                           <div>
-                            <div className="text-3xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase leading-none mb-1">
-                              {company.symbol}
+                            <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Current Price</div>
+                            <div className="text-2xl font-black text-slate-900 tracking-tight">
+                              ₹{company.currentPrice.toLocaleString('en-IN')}
                             </div>
-                            <div className="text-[11px] font-bold text-slate-400 truncate max-w-[180px] tracking-tight">
-                              {company.name}
-                            </div>
+                          </div>
+                          <div className="flex items-center gap-1 px-2 py-1 bg-emerald-50 rounded text-[8px] text-emerald-600 font-bold uppercase">
+                            <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                            Live
                           </div>
                         </div>
-
-                        <div className="p-2 bg-slate-50 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-sm">
-                          <ArrowUpRight size={18} strokeWidth={2.5} />
+                      ) : (
+                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg">
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                          <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">Updating Price...</span>
                         </div>
-                      </div>
-
-                      {/* Bottom Section: Data */}
-                      <div className="border-t border-slate-100 pt-4 mt-2">
-                        {company.currentPrice ? (
-                          <div className="flex items-end justify-between animate-in fade-in slide-in-from-bottom-2 duration-500">
-                            <div>
-                              <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Price</div>
-                              <div className="text-3xl font-black text-slate-900 tracking-tighter leading-none">₹{company.currentPrice.toLocaleString('en-IN')}</div>
-                            </div>
-                            <div className="flex items-center gap-1.5 px-2 py-1 bg-emerald-50 rounded text-[9px] text-emerald-700 font-black uppercase tracking-wider border border-emerald-100/50">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              Live
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2 px-3 py-2 bg-amber-50/50 rounded-xl border border-amber-100/50 w-full">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                            <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">Updating Price...</span>
-                          </div>
-                        )}
-                      </div>
+                      )}
                     </div>
+                  </div>
                   </Link>
 
-                ))
+            ))
               )}
-            </div>
-          </section>
+          </div>
+        </section>
 
-          {/* SECTOR INTELLIGENCE */}
-          <section id="sectors">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 p-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white relative overflow-hidden shadow-2xl">
-                <div className="absolute top-0 right-0 p-12 opacity-10"><Globe size={200} /></div>
-                <div className="relative z-10 h-full flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-4xl font-black tracking-tight mb-4 leading-tight">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
-                    <p className="text-slate-300 font-medium leading-relaxed mb-8">
-                      Deep-dive into specialized market sectors with real-time performance tracking and growth metrics.
-                    </p>
-                  </div>
-                  <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400 transition-colors">
-                    Explore Heatmaps <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
+        {/* SECTOR INTELLIGENCE */}
+        <section id="sectors">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1 p-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white relative overflow-hidden shadow-2xl">
+              <div className="absolute top-0 right-0 p-12 opacity-10"><Globe size={200} /></div>
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="text-4xl font-black tracking-tight mb-4 leading-tight">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
+                  <p className="text-slate-300 font-medium leading-relaxed mb-8">
+                    Deep-dive into specialized market sectors with real-time performance tracking and growth metrics.
+                  </p>
                 </div>
-              </div>
-
-              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-5">
-                {[
-                  { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" />, gradient: 'from-blue-50 to-blue-100/50' },
-                  { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" />, gradient: 'from-amber-50 to-amber-100/50' },
-                  { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" />, gradient: 'from-emerald-50 to-emerald-100/50' },
-                  { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" />, gradient: 'from-rose-50 to-rose-100/50' },
-                  { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" />, gradient: 'from-indigo-50 to-indigo-100/50' },
-                  { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" />, gradient: 'from-orange-50 to-orange-100/50' },
-                ].map((sector) => (
-                  <div key={sector.name} className={`p-7 bg-gradient-to-br ${sector.gradient} border-2 border-slate-200 rounded-3xl hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group`}>
-                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg transition-all">
-                      {sector.icon}
-                    </div>
-                    <div className="text-xl font-black text-slate-900 mb-1.5 tracking-tight">{sector.name}</div>
-                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{sector.tag}</div>
-                  </div>
-                ))}
+                <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400 transition-colors">
+                  Explore Heatmaps <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
             </div>
-          </section>
+
+            <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-5">
+              {[
+                { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" />, gradient: 'from-blue-50 to-blue-100/50' },
+                { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" />, gradient: 'from-amber-50 to-amber-100/50' },
+                { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" />, gradient: 'from-emerald-50 to-emerald-100/50' },
+                { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" />, gradient: 'from-rose-50 to-rose-100/50' },
+                { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" />, gradient: 'from-indigo-50 to-indigo-100/50' },
+                { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" />, gradient: 'from-orange-50 to-orange-100/50' },
+              ].map((sector) => (
+                <div key={sector.name} className={`p-7 bg-gradient-to-br ${sector.gradient} border-2 border-slate-200 rounded-3xl hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group`}>
+                  <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg transition-all">
+                    {sector.icon}
+                  </div>
+                  <div className="text-xl font-black text-slate-900 mb-1.5 tracking-tight">{sector.name}</div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{sector.tag}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
 
-        </main >
-      </div >
+      </main >
+    </div >
     </div >
   );
 };
