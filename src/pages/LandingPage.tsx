@@ -195,56 +195,55 @@ const LandingPage = () => {
                         </div>
                       )}
                     </div>
-                  </div>
                   </Link>
 
-            ))
+                ))
               )}
-          </div>
-        </section>
+            </div>
+          </section>
 
-        {/* SECTOR INTELLIGENCE */}
-        <section id="sectors">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1 p-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white relative overflow-hidden shadow-2xl">
-              <div className="absolute top-0 right-0 p-12 opacity-10"><Globe size={200} /></div>
-              <div className="relative z-10 h-full flex flex-col justify-between">
-                <div>
-                  <h3 className="text-4xl font-black tracking-tight mb-4 leading-tight">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
-                  <p className="text-slate-300 font-medium leading-relaxed mb-8">
-                    Deep-dive into specialized market sectors with real-time performance tracking and growth metrics.
-                  </p>
+          {/* SECTOR INTELLIGENCE */}
+          <section id="sectors">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-1 p-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white relative overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 p-12 opacity-10"><Globe size={200} /></div>
+                <div className="relative z-10 h-full flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-4xl font-black tracking-tight mb-4 leading-tight">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
+                    <p className="text-slate-300 font-medium leading-relaxed mb-8">
+                      Deep-dive into specialized market sectors with real-time performance tracking and growth metrics.
+                    </p>
+                  </div>
+                  <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400 transition-colors">
+                    Explore Heatmaps <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
-                <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400 transition-colors">
-                  Explore Heatmaps <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+              </div>
+
+              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-5">
+                {[
+                  { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" />, gradient: 'from-blue-50 to-blue-100/50' },
+                  { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" />, gradient: 'from-amber-50 to-amber-100/50' },
+                  { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" />, gradient: 'from-emerald-50 to-emerald-100/50' },
+                  { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" />, gradient: 'from-rose-50 to-rose-100/50' },
+                  { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" />, gradient: 'from-indigo-50 to-indigo-100/50' },
+                  { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" />, gradient: 'from-orange-50 to-orange-100/50' },
+                ].map((sector) => (
+                  <div key={sector.name} className={`p-7 bg-gradient-to-br ${sector.gradient} border-2 border-slate-200 rounded-3xl hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group`}>
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg transition-all">
+                      {sector.icon}
+                    </div>
+                    <div className="text-xl font-black text-slate-900 mb-1.5 tracking-tight">{sector.name}</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{sector.tag}</div>
+                  </div>
+                ))}
               </div>
             </div>
-
-            <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-5">
-              {[
-                { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" />, gradient: 'from-blue-50 to-blue-100/50' },
-                { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" />, gradient: 'from-amber-50 to-amber-100/50' },
-                { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" />, gradient: 'from-emerald-50 to-emerald-100/50' },
-                { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" />, gradient: 'from-rose-50 to-rose-100/50' },
-                { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" />, gradient: 'from-indigo-50 to-indigo-100/50' },
-                { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" />, gradient: 'from-orange-50 to-orange-100/50' },
-              ].map((sector) => (
-                <div key={sector.name} className={`p-7 bg-gradient-to-br ${sector.gradient} border-2 border-slate-200 rounded-3xl hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group`}>
-                  <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg transition-all">
-                    {sector.icon}
-                  </div>
-                  <div className="text-xl font-black text-slate-900 mb-1.5 tracking-tight">{sector.name}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{sector.tag}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          </section>
 
 
-      </main >
-    </div >
+        </main >
+      </div >
     </div >
   );
 };
