@@ -229,8 +229,8 @@ const StocksPage = () => {
               <h1 className="text-4xl font-black text-slate-900 tracking-tight">
                 Corporate Registry
               </h1>
-              <p className="text-slate-500 mt-2 max-w-xl">
-                Real-time factual disclosures for <span className="text-slate-900 font-bold">{filteredCompanies.length}</span> of <span className="text-slate-900 font-bold">{total}</span> Indian public companies.
+              <p className="text-slate-500 mt-2 max-w-xl font-medium">
+                Real-time factual disclosures for Indian public companies.
               </p>
             </div>
 
