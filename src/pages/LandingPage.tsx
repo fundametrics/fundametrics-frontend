@@ -140,55 +140,66 @@ const LandingPage = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {stats.loading ? (
                 Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className="h-44 bg-white rounded-2xl animate-pulse border border-slate-100" />
+                  <div key={i} className="h-56 bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl animate-pulse border border-slate-200" />
                 ))
               ) : (
                 stats.recentCompanies.map((company) => (
                   <Link
                     key={company.symbol}
                     to={`/stocks/${company.symbol}`}
-                    className="group relative bg-white border border-slate-200 p-6 rounded-[1.25rem] hover:border-indigo-600 hover:shadow-2xl hover:shadow-indigo-100/50 hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between h-48 overflow-hidden"
+                    className="group relative bg-gradient-to-br from-white via-white to-slate-50/30 border-2 border-slate-200/60 p-7 rounded-3xl hover:border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between h-56 overflow-hidden backdrop-blur-sm"
                   >
+                    {/* Animated Background Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/0 via-indigo-50/0 to-indigo-100/0 group-hover:from-indigo-50/50 group-hover:via-indigo-50/30 group-hover:to-indigo-100/20 transition-all duration-700 pointer-events-none" />
+
                     {/* Background Visual Element */}
-                    <div className="absolute -bottom-6 -right-6 text-slate-400/5 group-hover:text-indigo-600 group-hover:scale-110 transition-all duration-700 pointer-events-none">
-                      <BarChart3 size={160} />
+                    <div className="absolute -bottom-8 -right-8 text-slate-200/40 group-hover:text-indigo-200/60 group-hover:scale-125 transition-all duration-700 pointer-events-none">
+                      <BarChart3 size={180} strokeWidth={1} />
                     </div>
 
                     <div className="relative z-10 flex justify-between items-start">
-                      <div className="space-y-1">
-                        <div className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-1">
+                      <div className="space-y-2">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-[9px] font-black text-indigo-600 uppercase tracking-[0.15em]">
+                          <span className="w-1 h-1 rounded-full bg-indigo-500" />
                           {company.sector}
                         </div>
-                        <div className="text-2xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase leading-none">
+                        <div className="text-3xl font-black tracking-tighter text-slate-900 group-hover:text-indigo-600 transition-colors uppercase leading-none">
                           {company.symbol}
                         </div>
                       </div>
-                      <div className="text-right">
-                        {company.currentPrice ? (
-                          <div className="space-y-1 animate-in fade-in slide-in-from-right-4 duration-500">
-                            <div className="text-xl font-bold text-slate-900 tracking-tighter leading-none">₹{company.currentPrice.toLocaleString('en-IN')}</div>
-                            <div className="flex items-center justify-end gap-1.5 text-[9px] text-emerald-600 font-black uppercase tracking-tighter">
-                              <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                              Active Live
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="h-10 w-24 bg-slate-50 flex items-center justify-center rounded-lg border border-slate-100 border-dashed">
-                            <div className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Awaiting Feed</div>
-                          </div>
-                        )}
-                      </div>
                     </div>
 
-                    <div className="relative z-10 pt-4 flex justify-between items-center border-t border-slate-50">
-                      <div className="text-[11px] font-semibold text-slate-400 truncate max-w-[200px] uppercase tracking-tight">
-                        {company.name}
-                      </div>
-                      <div className="p-2 bg-slate-50 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
-                        <ArrowUpRight size={14} />
+                    <div className="relative z-10 space-y-3">
+                      {company.currentPrice ? (
+                        <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-black text-slate-900 tracking-tight leading-none">₹{company.currentPrice.toLocaleString('en-IN')}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[10px] text-emerald-600 font-black uppercase tracking-wider">
+                            <span className="flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                              Live
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="h-12 flex items-center">
+                          <div className="px-3 py-2 bg-slate-100 rounded-xl border-2 border-slate-200 border-dashed">
+                            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Price Updating...</div>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="pt-3 flex justify-between items-center border-t-2 border-slate-100 group-hover:border-indigo-100 transition-colors">
+                        <div className="text-[11px] font-bold text-slate-500 truncate max-w-[180px] tracking-tight">
+                          {company.name}
+                        </div>
+                        <div className="p-2.5 bg-slate-100 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 group-hover:scale-110">
+                          <ArrowUpRight size={16} strokeWidth={2.5} />
+                        </div>
                       </div>
                     </div>
                   </Link>
@@ -200,86 +211,42 @@ const LandingPage = () => {
           {/* SECTOR INTELLIGENCE */}
           <section id="sectors">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 p-8 bg-slate-900 rounded-3xl text-white relative overflow-hidden">
+              <div className="lg:col-span-1 p-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white relative overflow-hidden shadow-2xl">
                 <div className="absolute top-0 right-0 p-12 opacity-10"><Globe size={200} /></div>
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
-                    <h3 className="text-3xl font-black tracking-tight mb-4">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
-                    <p className="text-slate-400 font-medium leading-relaxed mb-8">
+                    <h3 className="text-4xl font-black tracking-tight mb-4 leading-tight">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
+                    <p className="text-slate-300 font-medium leading-relaxed mb-8">
                       Deep-dive into specialized market sectors with real-time performance tracking and growth metrics.
                     </p>
                   </div>
-                  <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400">
+                  <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400 transition-colors">
                     Explore Heatmaps <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
 
-              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-5">
                 {[
-                  { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" /> },
-                  { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" /> },
-                  { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" /> },
-                  { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" /> },
-                  { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" /> },
-                  { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" /> },
+                  { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" />, gradient: 'from-blue-50 to-blue-100/50' },
+                  { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" />, gradient: 'from-amber-50 to-amber-100/50' },
+                  { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" />, gradient: 'from-emerald-50 to-emerald-100/50' },
+                  { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" />, gradient: 'from-rose-50 to-rose-100/50' },
+                  { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" />, gradient: 'from-indigo-50 to-indigo-100/50' },
+                  { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" />, gradient: 'from-orange-50 to-orange-100/50' },
                 ].map((sector) => (
-                  <div key={sector.name} className="p-6 bg-white border border-slate-200 rounded-2xl hover:border-indigo-400 transition-all cursor-pointer group shadow-sm hover:shadow-lg">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <div key={sector.name} className={`p-7 bg-gradient-to-br ${sector.gradient} border-2 border-slate-200 rounded-3xl hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group`}>
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg transition-all">
                       {sector.icon}
                     </div>
-                    <div className="text-lg font-black text-slate-900 mb-1">{sector.name}</div>
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{sector.tag}</div>
+                    <div className="text-xl font-black text-slate-900 mb-1.5 tracking-tight">{sector.name}</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{sector.tag}</div>
                   </div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* VERIFIED AUDIT TRAIL */}
-          <section id="trust">
-            <div className="bg-indigo-600 rounded-[3rem] p-12 lg:p-20 text-white relative overflow-hidden shadow-2xl shadow-indigo-200">
-              <div className="absolute bottom-0 right-0 p-24 opacity-10 rotate-12 bg-white rounded-full blur-3xl scale-150" />
-              <div className="relative z-10 flex flex-col lg:flex-row items-center gap-16">
-                <div className="lg:w-1/2 space-y-8">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest">
-                    Fundametrics Verified
-                  </div>
-                  <h2 className="text-5xl sm:text-6xl font-black tracking-tight leading-[0.9]">
-                    Pure Data. <br />
-                    <span className="text-indigo-200 italic">No Overrides.</span>
-                  </h2>
-                  <p className="text-lg text-indigo-100 leading-relaxed font-normal">
-                    Every fundamental data point on this dashboard is derived from verifiable institutional sources.
-                    We don't use manual adjustments or overrides—ensuring you see the market exactly as it is.
-                  </p>
-                  <div className="flex items-center gap-8 pt-4">
-                    <div>
-                      <div className="text-3xl font-black mb-1">0.0%</div>
-                      <div className="text-[10px] font-black text-indigo-200 uppercase tracking-widest">Manual Edits</div>
-                    </div>
-                    <div className="w-px h-12 bg-white/20" />
-                    <div>
-                      <div className="text-3xl font-black mb-1">Verified</div>
-                      <div className="text-[10px] font-black text-indigo-200 uppercase tracking-widest">Fact Sourcing</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
-                  <div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 space-y-3">
-                    <ShieldAlert size={20} className="text-indigo-200" />
-                    <h4 className="text-sm font-black uppercase tracking-tighter">Conflict Guard</h4>
-                    <p className="text-[11px] text-indigo-50 font-medium">Automatic detection of conflicting financial statements.</p>
-                  </div>
-                  <div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 space-y-3">
-                    <LayoutDashboard size={20} className="text-indigo-200" />
-                    <h4 className="text-sm font-black uppercase tracking-tighter">Drill-Down</h4>
-                    <p className="text-[11px] text-indigo-50 font-medium">Click any metric to see the original source filing path.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
 
         </main>
       </div>
