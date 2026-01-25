@@ -317,13 +317,16 @@ const CompanyPage = () => {
     ]
   };
 
-  // Price Fallback Logic: Prefer Live Market Data > Static Snapshot > Default
+  // Price Fallback Logic: Live Market > Metadata Constants > Metrics > Null
   const priceMetric = state.company?.fundametrics_metrics?.find(
     m => m.metric_name === "Current Price" || m.metric_name === "Price" || m.metric_name === "Close Price"
   );
 
   const marketData = (state as any)?.market;
   const marketPrice = marketData?.current_price || marketData?.price?.value || marketData?.price;
+
+  // NEW: Try metadata constants as fallback
+  const constantsPrice = state.company?.metadata?.constants?.share_price;
 
   // Helper to safe parse price
   const parsePrice = (val: any) => {
@@ -333,13 +336,16 @@ const CompanyPage = () => {
   };
 
   const safeMarketPrice = parsePrice(marketPrice);
+  const safeConstantsPrice = parsePrice(constantsPrice);
   const safeMetricPrice = priceMetric ? parsePrice(priceMetric.value) : null;
 
   const displayPrice = safeMarketPrice !== null
     ? { value: safeMarketPrice, currency: 'INR' }
-    : safeMetricPrice !== null
-      ? { value: safeMetricPrice, currency: 'INR' }
-      : null;
+    : safeConstantsPrice !== null
+      ? { value: safeConstantsPrice, currency: 'INR' }
+      : safeMetricPrice !== null
+        ? { value: safeMetricPrice, currency: 'INR' }
+        : null;
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
