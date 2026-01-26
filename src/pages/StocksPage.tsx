@@ -410,8 +410,16 @@ const StocksPage = () => {
                       </td>
                       <td className="px-6 py-5 text-right">
                         <div className="flex justify-end">
-                          <div className="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all">
-                            <Activity size={16} />
+                          <div className={`w-10 h-8 rounded-lg flex items-center justify-center transition-all ${(company.changePercent || 0) > 0 ? 'bg-emerald-50 text-emerald-600' :
+                              (company.changePercent || 0) < 0 ? 'bg-rose-50 text-rose-600' :
+                                'bg-slate-50 text-slate-400'
+                            }`}>
+                            <div className="flex flex-col items-center">
+                              <Activity size={14} className={company.changePercent ? 'animate-pulse' : ''} />
+                              {company.changePercent !== undefined && Math.abs(company.changePercent) > 0.01 && (
+                                <span className="text-[7px] font-black mt-0.5">{company.changePercent > 0 ? '+' : ''}{company.changePercent.toFixed(1)}%</span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </td>
