@@ -219,26 +219,30 @@ const LandingPage = () => {
                       </p>
                     </div>
 
-                    {/* Price Section */}
+                    {/* Price Section (Phase 15: Zero-Blank UI) */}
                     <div className="border-t border-slate-100 pt-3 mt-3">
                       {company.currentPrice ? (
                         <div className="flex items-end justify-between">
                           <div>
-                            <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Current Price</div>
+                            <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Market Value</div>
                             <div className="text-2xl font-black text-slate-900 tracking-tight">
                               ₹{company.currentPrice.toLocaleString('en-IN')}
                             </div>
                           </div>
-                          <div className="flex items-center gap-1 px-2 py-1 bg-emerald-50 rounded text-[8px] text-emerald-600 font-bold uppercase">
-                            <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                            Live
+                          <div className="flex items-center gap-1 px-2 py-1 bg-indigo-50 rounded text-[8px] text-indigo-600 font-bold uppercase tracking-tighter">
+                            <span className="w-1 h-1 rounded-full bg-indigo-500 animate-pulse" />
+                            Verified
                           </div>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-pulse" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                          <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">Updating Price...</span>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="text-[8px] font-bold text-slate-300 uppercase tracking-widest mb-0.5">Market Value</div>
+                            <div className="text-sm font-black text-slate-400 uppercase tracking-widest">Awaiting Feed</div>
+                          </div>
+                          <div className="px-2 py-1 bg-slate-50 rounded text-[8px] text-slate-400 font-bold uppercase tracking-tighter">
+                            Registry Record
+                          </div>
                         </div>
                       )}
                     </div>
