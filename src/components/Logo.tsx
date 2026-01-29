@@ -11,11 +11,13 @@ const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
 
     return (
         <div className={`flex items-center gap-3 ${className}`}>
-            <img
-                src="/brand-logo-v2.png"
-                alt="Fundametrics Logo"
-                className={`${dimensions} w-auto object-contain flex-shrink-0 transition-all hover:scale-105 duration-300`}
-            />
+            <div className={`${dimensions} flex items-center justify-center overflow-hidden`}>
+                <img
+                    src="/brand-logo-v3.png"
+                    alt="Fundametrics Logo"
+                    className="h-full w-auto object-contain transition-all hover:scale-110 duration-300 scale-[2.0]"
+                />
+            </div>
         </div>
     );
 };
