@@ -7,8 +7,8 @@ interface LogoProps {
 
 const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const isSmall = size === 'sm';
-    // Increased base heights because the v3 image has significant whitespace padding
-    const dimensions = isSmall ? 'h-12' : size === 'lg' ? 'h-24' : 'h-16';
+    // Doubling heights to compensate for the whitespace padding in brand-logo-v3.png
+    const dimensions = isSmall ? 'h-24' : size === 'lg' ? 'h-48' : 'h-32';
 
     return (
         <div className={`flex items-center ${className}`}>
