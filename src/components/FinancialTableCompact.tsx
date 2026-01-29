@@ -162,7 +162,7 @@ const FinancialTableCompact: FC<FinancialTableCompactProps> = ({
                                                 className={`px-6 py-4 text-right font-mono text-[13px] border-l border-slate-100/50 cursor-help group/cell ${val === null || val === undefined ? 'text-slate-300' : 'text-slate-900 font-bold'
                                                     }`}
                                                 title={metricDetail && typeof metricDetail.confidence === 'number' && !isNaN(metricDetail.confidence)
-                                                    ? `Confidence: ${(metricDetail.confidence * 100).toFixed(0)}% | Source: ${metricDetail.source_provenance?.calculation_agent || 'Internal'}`
+                                                    ? `Confidence: ${((metricDetail.confidence ?? 0) * 100).toFixed(0)}% | Source: ${metricDetail.source_provenance?.calculation_agent || 'Internal'}`
                                                     : undefined}
                                                 onClick={() => metricDetail && onExplain?.(metricDetail)}
                                             >
@@ -171,8 +171,8 @@ const FinancialTableCompact: FC<FinancialTableCompactProps> = ({
                                                     {metricDetail?.confidence !== undefined && (
                                                         <div className="h-0.5 w-12 bg-slate-100 mt-1 rounded-full overflow-hidden opacity-0 group-hover/cell:opacity-100 transition-opacity">
                                                             <div
-                                                                className={`h-full ${metricDetail.confidence > 0.8 ? 'bg-emerald-400' : 'bg-amber-400'}`}
-                                                                style={{ width: `${(metricDetail.confidence || 0) * 100}%` }}
+                                                                className={`h-full ${(metricDetail.confidence ?? 0) > 0.8 ? 'bg-emerald-400' : 'bg-amber-400'}`}
+                                                                style={{ width: `${(metricDetail.confidence ?? 0) * 100}%` }}
                                                             />
                                                         </div>
                                                     )}
