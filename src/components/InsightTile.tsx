@@ -19,15 +19,35 @@ const getInsightNarrative = (metric: ComputedMetric) => {
     const drift = metric.drift;
 
     if (name.includes('roe')) {
-        if (val > 20) return { headline: "Superior Capital Efficiency", sub: "Delivering top-tier returns on equity capital." };
-        if (val > 12) return { headline: "Healthy Capital Usage", sub: "Stable returns relative to shareholders equity." };
-        return { headline: "Low Capital Efficiency", sub: "Underperforming peers in generating equity returns." };
+        if (val > 25) return { headline: "Elite Capital Efficiency", sub: "Exceptional returns relative to equity base." };
+        if (val > 15) return { headline: "Strong Capital Usage", sub: "Efficiently deploying shareholder capital for growth." };
+        if (val > 10) return { headline: "Stable Capital Efficiency", sub: "Generating consistent but moderate equity returns." };
+        return { headline: "Sub-par Efficiency", sub: "Equity returns are currently below institutional benchmarks." };
     }
 
     if (name.includes('pe ratio') || name.includes('p/e')) {
-        if (val > 50) return { headline: "Aggressive Market Pricing", sub: "Valuation implies extremely high growth expectations." };
-        if (val > 25) return { headline: "Premium Valuation", sub: "Trading at a premium relative to historical earnings." };
-        return { headline: "Reasonable Valuation", sub: "Market pricing is aligned with current earnings run-rate." };
+        if (val > 60) return { headline: "Hyper-Growth Pricing", sub: "Valuation requires sustained exceptional earnings growth." };
+        if (val > 35) return { headline: "Premium Growth Valuation", sub: "Trading at a significant premium to broad market averages." };
+        if (val > 15) return { headline: "Standard Market Pricing", sub: "Valuation is aligned with moderate growth expectations." };
+        return { headline: "Undervalued / Conservative", sub: "Trading at a discount, potentially reflecting market caution." };
+    }
+
+    if (name.includes('debt to equity') || name.includes('d/e')) {
+        if (val > 2) return { headline: "High Leverage Profile", sub: "Heavy reliance on debt capital; monitor interest coverage." };
+        if (val > 1) return { headline: "Moderate Leverage", sub: "Balanced mix of debt and equity financing." };
+        return { headline: "Conservative Capital Structure", sub: "Strong balance sheet with minimal reliance on external debt." };
+    }
+
+    if (name.includes('current ratio')) {
+        if (val > 2) return { headline: "Robust Liquidity", sub: "Ample short-term assets to cover all maturing liabilities." };
+        if (val > 1) return { headline: "Adequate Liquidity", sub: "Current assets sufficiently cover short-term obligations." };
+        return { headline: "Liquidity Constraint", sub: "Strained working capital position; monitor cash flows." };
+    }
+
+    if (name.includes('roce')) {
+        if (val > 20) return { headline: "High Operating Return", sub: "Generating superior returns on all capital employed." };
+        if (val > 12) return { headline: "Efficient Operations", sub: "Capital is being deployed profitably across the business." };
+        return { headline: "Low Asset Productivity", sub: "Return on employed capital is below the cost of capital." };
     }
 
     // Show actual value-based insights instead of drift warnings

@@ -126,29 +126,29 @@ const FinancialTableCompact: FC<FinancialTableCompactProps> = ({
             </div>
 
             {/* Desktop Table View - Premium Gutter Layout */}
-            <div className="hidden md:block overflow-x-auto custom-scrollbar border border-slate-200 rounded-[2.5rem] bg-slate-50/50 p-6 shadow-inner">
+            <div className="hidden md:block overflow-x-auto custom-scrollbar border border-slate-200 rounded-[2.5rem] bg-slate-50/50 p-6 shadow-inner relative">
                 <div className="bg-white rounded-[1.5rem] border border-slate-200 overflow-hidden shadow-sm">
                     <table className="dense-table min-w-full border-collapse">
                         <thead>
-                            <tr className="bg-slate-50">
-                                <th className="sticky left-0 bg-slate-50 z-20 border-r border-slate-200 shadow-[4px_0_8px_rgba(0,0,0,0.02)] min-w-[200px]">
-                                    Metric
+                            <tr className="bg-slate-50/80 backdrop-blur-md">
+                                <th className="sticky left-0 bg-slate-50/90 backdrop-blur-md z-30 border-r border-slate-200 shadow-[4px_0_8px_rgba(0,0,0,0.02)] min-w-[220px] px-6 py-5 text-left text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] transition-colors">
+                                    Financial Metrics
                                 </th>
                                 {periods.map(p => (
-                                    <th key={p} className="text-right border-l border-slate-100 font-black text-slate-400 uppercase tracking-[0.1em] text-[10px] py-4">
+                                    <th key={p} className="text-right border-l border-slate-100 font-black text-slate-400 uppercase tracking-[0.15em] text-[10px] py-5 px-6 whitespace-nowrap">
                                         {p}
                                     </th>
                                 ))}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-slate-100">
                             {metrics.map((m, idx) => (
                                 <tr
                                     key={m.key}
-                                    className={`${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'} hover:bg-blue-50/30 transition-colors`}
+                                    className={`${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'} hover:bg-slate-50 transition-all group`}
                                 >
-                                    <td className={`sticky left-0 z-10 border-r border-slate-200 shadow-[2px_0_5px_rgba(0,0,0,0.02)] ${isHighlighted(m.label) ? 'font-bold text-slate-900 bg-inherit' : 'font-medium text-slate-600 bg-inherit'
-                                        }`}>
+                                    <td className={`sticky left-0 z-20 border-r border-slate-200 shadow-[2px_0_5px_rgba(0,0,0,0.02)] px-6 py-4 ${isHighlighted(m.label) ? 'font-black text-slate-900 bg-inherit' : 'font-semibold text-slate-600 bg-inherit'
+                                        } text-[12px] uppercase tracking-tight`}>
                                         {m.label}
                                     </td>
                                     {periods.map(period => {
@@ -159,19 +159,19 @@ const FinancialTableCompact: FC<FinancialTableCompactProps> = ({
                                         return (
                                             <td
                                                 key={period}
-                                                className={`text-right font-mono text-[12px] border-l border-slate-100/50 cursor-help group/cell ${val === null || val === undefined ? 'text-slate-300' : 'text-slate-700'
+                                                className={`px-6 py-4 text-right font-mono text-[13px] border-l border-slate-100/50 cursor-help group/cell ${val === null || val === undefined ? 'text-slate-300' : 'text-slate-900 font-bold'
                                                     }`}
                                                 title={metricDetail && typeof metricDetail.confidence === 'number' && !isNaN(metricDetail.confidence)
-                                                    ? `Confidence: ${(metricDetail.confidence * 100).toFixed(0)}% | Source: ${metricDetail.source_provenance?.calculation_agent || 'Fundametrics Internal'}`
+                                                    ? `Confidence: ${(metricDetail.confidence * 100).toFixed(0)}% | Source: ${metricDetail.source_provenance?.calculation_agent || 'Internal'}`
                                                     : undefined}
                                                 onClick={() => metricDetail && onExplain?.(metricDetail)}
                                             >
                                                 <div className="flex flex-col items-end">
                                                     <span>{val !== undefined && val !== null ? val.toLocaleString(undefined, { maximumFractionDigits: 1 }) : '—'}</span>
                                                     {metricDetail?.confidence !== undefined && (
-                                                        <div className="h-0.5 w-full bg-slate-100 mt-0.5 rounded-full overflow-hidden opacity-0 group-hover/cell:opacity-100 transition-opacity">
+                                                        <div className="h-0.5 w-12 bg-slate-100 mt-1 rounded-full overflow-hidden opacity-0 group-hover/cell:opacity-100 transition-opacity">
                                                             <div
-                                                                className="h-full bg-emerald-400"
+                                                                className={`h-full ${metricDetail.confidence > 0.8 ? 'bg-emerald-400' : 'bg-amber-400'}`}
                                                                 style={{ width: `${(metricDetail.confidence || 0) * 100}%` }}
                                                             />
                                                         </div>

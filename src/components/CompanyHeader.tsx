@@ -117,7 +117,7 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-end">
               <div className="text-3xl font-black font-mono text-slate-900 tracking-tighter leading-none">
-                {formattedPrice || <span className="text-sm text-slate-400">Update Pending</span>}
+                {formattedPrice || <span className="text-sm text-slate-400">--</span>}
               </div>
               {formattedPrice && (
                 <div className={`flex items-center gap-1.5 text-sm font-bold mt-1 ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
