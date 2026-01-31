@@ -13,7 +13,8 @@ import {
 import SEO from '../components/SEO';
 import TickerTape from '../components/TickerTape';
 import MarketMovers from '../components/MarketMovers';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { api } from '../utils/api';
 
 const LandingPage = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -40,6 +41,58 @@ const LandingPage = () => {
       a: "Currently, you can view all data on the platform. Export functionality for Excel/CSV is part of our upcoming Pro tier."
     }
   ];
+
+  const [sectors, setSectors] = useState<Array<{ name: string, icon: string, count: string }>>([]);
+
+  useEffect(() => {
+    const fetchSectors = async () => {
+      try {
+        const sectorList = await api.getSectors();
+        // Map sectors to icons
+        const sectorIconMap: Record<string, string> = {
+          'BANKING': '🏦',
+          'IT': '💻',
+          'PHARMACEUTICALS': '💊',
+          'AUTOMOBILE': '🚗',
+          'AUTOMOBILES': '🚗',
+          'ENERGY': '⚡',
+          'FMCG': '🛒',
+          'CONSUMER': '🛒',
+          'METALS': '⚙️',
+          'TELECOM': '📱',
+          'FINANCE': '💰',
+          'CEMENT': '🏭',
+          'CHEMICALS': '⚗️',
+          'CONSTRUCTION': '🏗️'
+        };
+
+        const mapped = sectorList.slice(0, 8).map((sector: string) => {
+          const upperSector = sector.toUpperCase();
+          let icon = '📈'; // Default chart icon
+
+          // Find matching icon
+          for (const [key, value] of Object.entries(sectorIconMap)) {
+            if (upperSector.includes(key)) {
+              icon = value;
+              break;
+            }
+          }
+
+          return {
+            name: sector,
+            icon,
+            count: '50+' // Placeholder - could be fetched from API
+          };
+        });
+
+        setSectors(mapped);
+      } catch (err) {
+        console.error('Failed to fetch sectors', err);
+      }
+    };
+
+    fetchSectors();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-manrope selection:bg-indigo-600 selection:text-white pb-20">
@@ -212,16 +265,7 @@ const LandingPage = () => {
               <p className="text-slate-500 text-sm font-medium mt-2">Analyze companies across major Indian market sectors</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { name: 'Banking', icon: '🏦', count: '150+' },
-                { name: 'IT Services', icon: '💻', count: '200+' },
-                { name: 'Pharmaceuticals', icon: '💊', count: '180+' },
-                { name: 'Automobiles', icon: '🚗', count: '120+' },
-                { name: 'Energy', icon: '⚡', count: '90+' },
-                { name: 'FMCG', icon: '🛒', count: '110+' },
-                { name: 'Metals', icon: '⚙️', count: '85+' },
-                { name: 'Telecom', icon: '📱', count: '45+' }
-              ].map((sector) => (
+              {sectors.map((sector) => (
                 <Link
                   key={sector.name}
                   to={`/stocks?sector=${encodeURIComponent(sector.name)}`}
