@@ -64,238 +64,231 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-indigo-600 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-manrope selection:bg-indigo-600 selection:text-white pb-20">
       <SEO
-        title="Terminal | Fundametrics | Indian Stock Intelligence"
+        title="Fundametrics Terminal | Indian Market Intelligence"
         description="Institutional-grade financial terminal for NSE stocks. Verified data, zero noise."
       />
 
-      {/* Top Ticker Tape */}
-      <TickerTape />
+      <div className="relative overflow-hidden">
+        {/* Modern Terminal Halo Backdrop */}
+        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="relative">
-        {/* Subtle Background Elements */}
-        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
-
-        {/* Hero Dashboard Section */}
-        <header className="relative z-10 px-4 sm:px-6 pt-12 sm:pt-20 pb-16 sm:pb-24 max-w-[1920px] mx-auto overflow-hidden text-center flex flex-col items-center">
-          <div className="max-w-4xl space-y-6 sm:space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-600/5 border border-indigo-100 text-indigo-700 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse" />
-              Institutional Data Feed Active
+        {/* Hero Section - Reduced Margins & Premium Spacing */}
+        <header className="relative z-10 px-6 pt-12 sm:pt-20 pb-20 max-w-7xl mx-auto text-center flex flex-col items-center">
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000 fill-mode-both">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 shadow-sm transition-all hover:border-indigo-200 group">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+              <span className="text-[10px] sm:text-[11px] font-bold text-indigo-700 uppercase tracking-[0.15em] font-manrope">
+                Professional Market Intel Active
+              </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] sm:leading-[0.85] text-slate-900 px-2">
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-[-0.04em] leading-[0.95] text-slate-900">
               The Financial Terminal <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-800">
-                For Modern India.
-              </span>
+              <span className="text-indigo-600">For Modern India.</span>
             </h1>
 
-            <p className="text-base sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium px-4">
-              Real-time institutional-grade intelligence for retail investors.
-              <span className="text-slate-900 font-bold"> Pure facts. No noise.</span>
+            <p className="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
+              Institutional-grade data for the discerning investor. <br className="hidden sm:block" />
+              <span className="text-slate-900 font-bold">Pure facts. Zero bias. No noise.</span>
             </p>
 
-            <div className="w-full max-w-2xl mx-auto pt-4 group px-4">
-              <div className="relative bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-indigo-200/20 p-2 focus-within:border-indigo-500 focus-within:shadow-indigo-200/40 transition-all duration-500">
-                <GlobalSearch variant="minimal" />
+            <div className="w-full max-w-2xl mx-auto pt-4">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-[22px] blur opacity-10 group-focus-within:opacity-25 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white border border-slate-200/80 rounded-2xl shadow-xl shadow-indigo-100/20 p-2 focus-within:border-indigo-500/50 focus-within:shadow-2xl focus-within:shadow-indigo-500/10 transition-all duration-300">
+                  <GlobalSearch variant="minimal" />
+                </div>
               </div>
-              <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-4 sm:gap-8 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                <div className="flex items-center gap-2"><Database size={14} className="text-indigo-600" /> Audit Traceable</div>
-                <div className="flex items-center gap-2"><Zap size={14} className="text-amber-500" /> Real-time Compute</div>
-                <div className="flex items-center gap-2"><ShieldCheck size={14} className="text-emerald-500" /> Verified Sourcing</div>
+
+              <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg"><Database size={14} strokeWidth={2.5} /></div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Audit Verified</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <div className="p-1.5 bg-amber-50 text-amber-500 rounded-lg"><Zap size={14} strokeWidth={2.5} /></div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Engine</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <div className="p-1.5 bg-emerald-50 text-emerald-500 rounded-lg"><ShieldCheck size={14} strokeWidth={2.5} /></div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Direct Feeds</span>
+                </div>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Personal Dashboard Shortcut (Phase 7) */}
-        {(watchlist.length > 0 || recentStocks.length > 0) && (
-          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-700">
-            <div className="bg-indigo-600 rounded-3xl p-8 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-2xl shadow-indigo-200">
-              {/* Aesthetic Backdrop */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20" />
+        <main className="relative z-10 px-6 max-w-7xl mx-auto space-y-32">
 
-              <div className="relative z-10 flex-1 text-center md:text-left">
-                <h3 className="text-2xl font-black tracking-tight mb-2 uppercase italic leading-none">Welcome back to your terminal</h3>
-                <p className="text-indigo-100 font-medium opacity-90">Quick access to your curated market insights.</p>
-              </div>
+          {/* USER DASHBOARD QUICK-GRID */}
+          {(watchlist.length > 0 || recentStocks.length > 0) && (
+            <section className="animate-in fade-in slide-in-from-top-4 duration-700">
+              <div className="bg-slate-900 rounded-[32px] p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl border border-slate-800">
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px] -mr-40 -mt-40" />
 
-              <div className="relative z-10 flex flex-wrap justify-center gap-4">
-                {watchlist.length > 0 && (
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[140px]">
-                    <div className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Watchlist</div>
-                    <div className="flex -space-x-2">
-                      {watchlist.slice(0, 3).map(s => (
-                        <Link key={s} to={`/company/${s}`} className="w-8 h-8 rounded-full bg-white text-indigo-600 flex items-center justify-center text-[10px] font-black border-2 border-indigo-600 hover:scale-110 transition-transform">{s[0]}</Link>
-                      ))}
-                      {watchlist.length > 3 && (
-                        <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-[10px] font-black border-2 border-indigo-600">+{watchlist.length - 3}</div>
-                      )}
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                  <div className="space-y-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-[10px] font-bold uppercase tracking-widest">
+                      Your Terminal
                     </div>
+                    <h3 className="text-3xl font-black tracking-tight leading-none uppercase italic">Workspace Monitor</h3>
+                    <p className="text-slate-400 font-medium text-sm">Quick analysis access for your priority assets.</p>
                   </div>
-                )}
 
-                {recentStocks.length > 0 && (
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[140px]">
-                    <div className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Recents</div>
-                    <div className="flex gap-2">
-                      {recentStocks.slice(0, 5).map(s => (
-                        <Link key={s} to={`/company/${s}`} className="text-xs font-bold hover:underline opacity-80">{s}</Link>
-                      ))}
-                    </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {watchlist.length > 0 && (
+                      <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-5 border border-slate-700/50">
+                        <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Priority (Watchlist)</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {watchlist.slice(0, 5).map(s => (
+                            <Link key={s} to={`/company/${s}`} className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-[11px] font-bold transition-all hover:-translate-y-0.5 shadow-lg shadow-indigo-500/10">{s}</Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {recentStocks.length > 0 && (
+                      <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-5 border border-slate-700/50">
+                        <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Recent Inquiries</h4>
+                        <div className="flex flex-wrap gap-3">
+                          {recentStocks.slice(0, 6).map(s => (
+                            <Link key={s} to={`/company/${s}`} className="text-xs font-bold text-slate-300 hover:text-indigo-400 transition-colors">{s}</Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        <main className="relative z-10 px-6 max-w-[1920px] mx-auto space-y-24 pb-32">
+            </section>
+          )}
 
           {/* MARKET PULSE SECTION */}
-          <section id="market-pulse">
-            <div className="flex items-center justify-between mb-10 overflow-hidden border-b border-slate-100 pb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-1.5 bg-indigo-600 rounded text-white shadow-sm shadow-indigo-200">
-                  <Activity size={14} />
+          <section id="market-pulse" className="space-y-12">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-indigo-600 rounded-xl text-white shadow-xl shadow-indigo-200/50">
+                    <Activity size={18} strokeWidth={2.5} />
+                  </div>
+                  <h2 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.25em]">Global Nodes</h2>
                 </div>
-                <h2 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.25em]">Global Indices Overview</h2>
+                <h3 className="text-4xl font-black tracking-tight text-slate-900 leading-none italic uppercase">Market Intelligence</h3>
               </div>
-              <div className="flex items-center gap-2 px-2 py-1 bg-emerald-50 rounded-md border border-emerald-100">
-                <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none">Market Pulse Live</span>
+              <div className="flex items-center gap-3 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em]">Core Engine Online</span>
               </div>
             </div>
-            <MarketIndices />
+            <div className="bg-white border border-slate-200 rounded-[32px] p-2 shadow-xl shadow-slate-200/40">
+              <MarketIndices />
+            </div>
           </section>
 
-          {/* MARKET LEADERS SECTION */}
-          <section id="leaders">
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 sm:mb-10 gap-4 sm:gap-6">
-              <div className="space-y-1">
-                <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-slate-100 text-slate-500 text-[9px] font-bold uppercase tracking-wider mb-2">
-                  <Zap size={10} className="text-amber-500" />
-                  Real-time Valuation
+          {/* ASSET DISCOVERY - BENTO GRID */}
+          <section id="leaders" className="space-y-12">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+                  <ArrowUpRight size={12} className="text-indigo-600" /> Discovery Hub
                 </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-[calc(-0.02em)] text-slate-900 leading-none">Market Leaders</h2>
-                <p className="text-slate-500 font-medium tracking-tight text-sm">Real-time snapshots of Bluechip performance markers.</p>
+                <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 italic uppercase leading-none">Market Leaders</h3>
+                <p className="text-slate-500 font-medium text-sm">Automated evaluation of high-cap institutional favorites.</p>
               </div>
-              <Link to="/stocks" className="group flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 shadow-xl shadow-slate-200 text-white rounded-2xl text-[10px] sm:text-[11px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:shadow-indigo-100 transition-all duration-300">
-                Access All Markets <ChevronRight size={16} className="group-hover:translate-x-1 duration-300" />
+              <Link to="/stocks" className="group px-8 py-4 bg-slate-900 text-white rounded-2xl text-[11px] font-bold uppercase tracking-widest hover:bg-indigo-600 transition-all duration-300 shadow-xl shadow-slate-200 hover:shadow-indigo-200">
+                Explore All Assets
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {stats.loading ? (
-                Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className="h-48 bg-white rounded-2xl animate-pulse border border-slate-200" />
+                Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="h-56 bg-white rounded-3xl animate-pulse border border-slate-200" />
                 ))
               ) : (
                 stats.recentCompanies.map((company) => (
                   <Link
                     key={company.symbol}
                     to={`/stocks/${company.symbol}`}
-                    className="group relative bg-white border border-slate-200 rounded-2xl p-5 hover:border-indigo-500 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 flex flex-col justify-between h-48"
+                    className="group relative bg-white border border-slate-200/80 rounded-[28px] p-6 hover:border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col justify-between h-56"
                   >
-                    {/* Sector Badge */}
-                    <div className="flex items-start justify-between mb-4">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-600 text-[9px] font-bold uppercase tracking-wider">
-                        {company.sector}
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1">
+                        <div className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Analyze →</div>
+                        <h4 className="text-3xl font-black text-slate-900 group-hover:text-indigo-600 transition-colors italic leading-none">{company.symbol}</h4>
+                      </div>
+                      <span className="p-2.5 rounded-xl bg-slate-50 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm">
+                        <Zap size={16} strokeWidth={2.5} />
                       </span>
-                      <div className="p-1.5 rounded-lg bg-slate-50 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                        <ArrowUpRight size={14} strokeWidth={2.5} />
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-4 truncate">{company.name}</p>
+                      <div className="flex items-center justify-between border-t border-slate-50 pt-4">
+                        <div className="space-y-0.5">
+                          <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Pricing Node</span>
+                          <div className="text-xl font-black text-slate-900">
+                            {company.currentPrice ? `₹${company.currentPrice.toLocaleString('en-IN')}` : '---'}
+                          </div>
+                        </div>
+                        <div className="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-600 text-[9px] font-bold uppercase tracking-tighter">
+                          Live Feed
+                        </div>
                       </div>
                     </div>
-
-                    {/* Company Info */}
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-black text-slate-900 tracking-tight uppercase mb-1 group-hover:text-indigo-600 transition-colors">
-                        {company.symbol}
-                      </h3>
-                      <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wide truncate">
-                        {company.name}
-                      </p>
-                    </div>
-
-                    {/* Price Section (Phase 15: Zero-Blank UI) */}
-                    <div className="border-t border-slate-100 pt-3 mt-3">
-                      {company.currentPrice ? (
-                        <div className="flex items-end justify-between">
-                          <div>
-                            <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Market Value</div>
-                            <div className="text-2xl font-black text-slate-900 tracking-tight">
-                              ₹{company.currentPrice.toLocaleString('en-IN')}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1 px-2 py-1 bg-indigo-50 rounded text-[8px] text-indigo-600 font-bold uppercase tracking-tighter">
-                            <span className="w-1 h-1 rounded-full bg-indigo-500 animate-pulse" />
-                            Verified
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="text-[8px] font-bold text-slate-300 uppercase tracking-widest mb-0.5">Market Value</div>
-                            <div className="text-sm font-black text-slate-400 uppercase tracking-widest">Awaiting Feed</div>
-                          </div>
-                          <div className="px-2 py-1 bg-slate-50 rounded text-[8px] text-slate-400 font-bold uppercase tracking-tighter">
-                            Registry Record
-                          </div>
-                        </div>
-                      )}
-                    </div>
                   </Link>
-
                 ))
               )}
             </div>
           </section>
 
-          {/* SECTOR INTELLIGENCE */}
-          <section id="sectors">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 p-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white relative overflow-hidden shadow-2xl">
-                <div className="absolute top-0 right-0 p-12 opacity-10"><Globe size={200} /></div>
-                <div className="relative z-10 h-full flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-4xl font-black tracking-tight mb-4 leading-tight">Sectoral <br /><span className="text-indigo-400">Intelligence.</span></h3>
-                    <p className="text-slate-300 font-medium leading-relaxed mb-8">
-                      Deep-dive into specialized market sectors with real-time performance tracking and growth metrics.
-                    </p>
+          {/* SECTOR INTELLIGENCE - MODERN BENTO */}
+          <section id="sectors" className="space-y-12 pb-20">
+            <div className="text-center space-y-4">
+              <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 italic uppercase">Systematic Intelligence</h3>
+              <p className="text-slate-500 font-medium max-w-xl mx-auto">Deep-dive into specialized market verticals with machine-driven performance monitoring.</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              <div className="lg:col-span-2 p-10 bg-slate-900 rounded-[40px] text-white relative overflow-hidden shadow-2xl border border-slate-800 flex flex-col justify-between group">
+                <div className="absolute top-0 right-0 p-12 opacity-5 scale-150 group-hover:scale-[1.6] transition-transform duration-1000"><Globe size={200} /></div>
+                <div className="relative z-10 space-y-6">
+                  <div className="p-3 bg-indigo-600 w-fit rounded-2xl shadow-xl shadow-indigo-500/30">
+                    <LayoutDashboard size={24} />
                   </div>
-                  <Link to="/stocks" className="group inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white hover:text-indigo-400 transition-colors">
-                    Explore Heatmaps <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  <h4 className="text-5xl font-black tracking-tighter leading-[0.9] uppercase italic">Sectoral <br /> Heatmaps</h4>
+                  <p className="text-slate-400 text-lg leading-relaxed max-w-sm">Dynamic cross-correlation of all NSE indices with instant drift detection.</p>
                 </div>
+                <Link to="/stocks" className="relative z-10 mt-10 inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em] text-indigo-400 hover:text-white transition-colors">
+                  Access Neural Grid <ArrowRight size={18} />
+                </Link>
               </div>
 
-              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-5">
+              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
-                  { name: 'Financials', tag: 'Banking/Insurance', icon: <TrendingUp className="text-blue-500" />, gradient: 'from-blue-50 to-blue-100/50' },
-                  { name: 'Technology', tag: 'IT Services', icon: <Zap className="text-amber-500" />, gradient: 'from-amber-50 to-amber-100/50' },
-                  { name: 'Automobile', tag: 'Manufacturing', icon: <Activity className="text-emerald-500" />, gradient: 'from-emerald-50 to-emerald-100/50' },
-                  { name: 'Healthcare', tag: 'Pharma', icon: <ShieldCheck className="text-rose-500" />, gradient: 'from-rose-50 to-rose-100/50' },
-                  { name: 'Energy', tag: 'Oil & Gas', icon: <TrendingUp className="text-indigo-500" />, gradient: 'from-indigo-50 to-indigo-100/50' },
-                  { name: 'Consumer', tag: 'FMCG/Retail', icon: <TrendingUp className="text-orange-500" />, gradient: 'from-orange-50 to-orange-100/50' },
-                ].map((sector) => (
-                  <div key={sector.name} className={`p-7 bg-gradient-to-br ${sector.gradient} border-2 border-slate-200 rounded-3xl hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group`}>
-                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg transition-all">
-                      {sector.icon}
+                  { name: 'Financials', color: 'text-blue-500', bg: 'bg-blue-50/50', icon: <TrendingUp size={20} /> },
+                  { name: 'Technology', color: 'text-amber-500', bg: 'bg-amber-50/50', icon: <Cpu size={20} /> },
+                  { name: 'Energy', color: 'text-indigo-500', bg: 'bg-indigo-50/50', icon: <Zap size={20} /> },
+                  { name: 'Pharma', color: 'text-rose-500', bg: 'bg-rose-50/50', icon: <ShieldAlert size={20} /> },
+                ].map((s) => (
+                  <div key={s.name} className="p-8 bg-white border border-slate-200 rounded-[32px] hover:border-indigo-400 hover:shadow-2xl hover:shadow-indigo-500/5 transition-all group flex flex-col justify-between gap-10">
+                    <div className={`w-14 h-14 rounded-2xl ${s.bg} ${s.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      {s.icon}
                     </div>
-                    <div className="text-xl font-black text-slate-900 mb-1.5 tracking-tight">{sector.name}</div>
-                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{sector.tag}</div>
+                    <div className="space-y-1">
+                      <h5 className="text-2xl font-black text-slate-900 italic uppercase leading-none">{s.name}</h5>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Analysis Node</span>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           </section>
-
-
-        </main >
-      </div >
-    </div >
+        </main>
+      </div>
+    </div>
   );
 };
 
