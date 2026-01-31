@@ -16,7 +16,9 @@ import {
   BarChart3,
   Search as SearchIcon,
   ShieldAlert,
-  ArrowUpRight
+  ArrowUpRight,
+  Cpu,
+  BookOpen
 } from 'lucide-react';
 import GlobalSearch from '../components/GlobalSearch';
 import MarketIndices from '../components/MarketIndices';

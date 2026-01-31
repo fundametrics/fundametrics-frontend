@@ -19,11 +19,9 @@ const Layout = () => {
       </div>
 
       <main className="flex-1 pb-20 lg:pb-0">
-        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-          <Suspense fallback={<PageSkeleton />}>
-            <Outlet />
-          </Suspense>
-        </div>
+        <Suspense fallback={<PageSkeleton />}>
+          <Outlet />
+        </Suspense>
       </main>
 
       <div className="hidden lg:block">

@@ -17,6 +17,7 @@ interface CompanyListItem {
   roce?: number;
   pe?: number;
   debt?: number;
+  changePercent?: number;
 }
 
 type SortField = 'name' | 'marketCap' | 'roe' | 'roce' | 'pe' | 'debt';
@@ -78,7 +79,8 @@ const StocksPage = () => {
             roe: c.roe || undefined,
             roce: c.roce || undefined,
             pe: c.pe || undefined,
-            debt: c.debt || undefined
+            debt: c.debt || undefined,
+            changePercent: c.changePercent || undefined
           }));
           setCompanies(mapped);
           setTotal(response.total || mapped.length);
@@ -217,59 +219,64 @@ const StocksPage = () => {
         canonical="https://fundametrics.in/stocks"
       />
 
-      {/* Hero Header */}
-      <div className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-[0.2em] mb-3">
-                <BarChart3 size={16} />
-                <span>Market Intelligence</span>
+      {/* Hero Header - Focused Redesign */}
+      <div className="bg-white border-b border-slate-200/60 transition-all duration-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+            <div className="flex-1 space-y-4">
+              <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 font-bold text-[10px] uppercase tracking-[0.2em] font-manrope">
+                <BarChart3 size={14} strokeWidth={2.5} />
+                <span>Institutional Registry</span>
               </div>
-              <h1 className="text-4xl font-black text-slate-900 tracking-tight">
-                Corporate Registry
+              <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight italic uppercase italic">
+                Market Monitor
               </h1>
-              <p className="text-slate-500 mt-2 max-w-xl font-medium">
-                Real-time factual disclosures for Indian public companies.
+              <p className="text-slate-500 max-w-xl font-medium text-sm leading-relaxed">
+                Real-time factual disclosures and automated analytics for the <br className="hidden sm:block" />
+                Indian public sector. Verified facts from direct feeds.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 flex-1 max-w-2xl">
-              {/* Search */}
-              <div className="relative flex-1 w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <div className="flex flex-col sm:flex-row items-stretch gap-4 flex-1 max-w-3xl">
+              {/* Search Group */}
+              <div className="relative flex-1 group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" size={18} strokeWidth={2.5} />
                 <input
                   type="text"
-                  placeholder="Search by name, symbol, or sector..."
+                  placeholder="Universal Insight Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm font-medium shadow-sm transition-all"
+                  className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 text-sm font-semibold shadow-sm transition-all placeholder:text-slate-400"
                 />
               </div>
 
-              {/* Sector Toggle (Always visible) */}
-              <div className="relative w-full sm:w-64">
-                <PieChart className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <select
-                  value={selectedSector}
-                  onChange={(e) => setSelectedSector(e.target.value)}
-                  className="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm font-bold appearance-none cursor-pointer shadow-sm transition-all"
-                >
-                  {sectors.map((s) => (
-                    <option key={s} value={s}>{s === 'all' ? 'All Sectors' : s}</option>
-                  ))}
-                </select>
-                <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-              </div>
+              {/* Advanced Controls Group */}
+              <div className="flex items-center gap-3">
+                <div className="relative min-w-[180px]">
+                  <PieChart className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} strokeWidth={2.5} />
+                  <select
+                    value={selectedSector}
+                    onChange={(e) => setSelectedSector(e.target.value)}
+                    className="w-full pl-11 pr-10 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 text-[11px] font-black uppercase tracking-wider appearance-none cursor-pointer shadow-sm transition-all"
+                  >
+                    {sectors.map((s) => (
+                      <option key={s} value={s}>{s === 'all' ? 'All Channels' : s}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                </div>
 
-              <button
-                onClick={() => setIsFilterExpanded(!isFilterExpanded)}
-                className={`p-3 rounded-xl border transition-all flex items-center gap-2 font-bold text-sm h-[46px] ${isFilterExpanded ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-white border-slate-200 text-slate-600 hover:border-indigo-600'
-                  }`}
-              >
-                <Filter size={18} />
-                <span className="hidden sm:inline">{isFilterExpanded ? 'Hide Advanced' : 'Show Advanced'}</span>
-              </button>
+                <button
+                  onClick={() => setIsFilterExpanded(!isFilterExpanded)}
+                  className={`p-3.5 rounded-2xl border transition-all flex items-center gap-2 font-bold text-xs h-[50px] shadow-sm ${isFilterExpanded
+                    ? 'bg-slate-900 border-slate-900 text-white'
+                    : 'bg-white border-slate-200 text-slate-600 hover:border-indigo-500 hover:text-indigo-600'
+                    }`}
+                >
+                  <Filter size={18} strokeWidth={2.5} />
+                  <span className="hidden sm:inline uppercase tracking-widest">{isFilterExpanded ? 'Close' : 'Filter'}</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -411,8 +418,8 @@ const StocksPage = () => {
                       <td className="px-6 py-5 text-right">
                         <div className="flex justify-end">
                           <div className={`w-10 h-8 rounded-lg flex items-center justify-center transition-all ${(company.changePercent || 0) > 0 ? 'bg-emerald-50 text-emerald-600' :
-                              (company.changePercent || 0) < 0 ? 'bg-rose-50 text-rose-600' :
-                                'bg-slate-50 text-slate-400'
+                            (company.changePercent || 0) < 0 ? 'bg-rose-50 text-rose-600' :
+                              'bg-slate-50 text-slate-400'
                             }`}>
                             <div className="flex flex-col items-center">
                               <Activity size={14} className={company.changePercent ? 'animate-pulse' : ''} />
