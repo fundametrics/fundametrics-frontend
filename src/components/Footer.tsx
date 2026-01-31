@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
 
           {/* Brand & Mission */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 flex flex-col items-start space-y-6">
             <Logo size="md" />
             <p className="text-slate-500 text-sm font-medium leading-relaxed max-w-sm">
               Institutional-grade financial intelligence for the modern Indian market. Pure data, zero bias, and 100% audit-verified facts.

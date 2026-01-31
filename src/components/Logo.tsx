@@ -7,10 +7,10 @@ interface LogoProps {
 
 const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const isSmall = size === 'sm';
-    const containerHeight = isSmall ? 'h-9' : size === 'lg' ? 'h-20' : 'h-11';
+    const containerHeight = isSmall ? 'h-12' : size === 'lg' ? 'h-32' : 'h-16';
 
     return (
-        <div className={`flex items-center justify-center ${containerHeight} ${className}`}>
+        <div className={`flex items-center justify-start ${containerHeight} ${className}`}>
             <img
                 src="/logo-v4.png"
                 alt="Fundametrics: Market Runs On Fundamentals"
