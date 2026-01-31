@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { api } from '../utils/api';
 import { Link } from 'react-router-dom';
 import { TrendingUp, TrendingDown, ArrowRight } from 'lucide-react';
 
@@ -15,26 +16,32 @@ const MarketMovers = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Mock data for Market Movers (since real-time % changes require live price updates)
-        const mockGainers: MiniCompany[] = [
-            { symbol: 'ADANIPORTS', name: 'Adani Ports & Special Economic Zone Ltd', changePercent: 5.23 },
-            { symbol: 'TATASTEEL', name: 'Tata Steel Ltd', changePercent: 4.87 },
-            { symbol: 'HINDALCO', name: 'Hindalco Industries Ltd', changePercent: 3.92 },
-            { symbol: 'JSWSTEEL', name: 'JSW Steel Ltd', changePercent: 3.45 },
-            { symbol: 'COALINDIA', name: 'Coal India Ltd', changePercent: 2.98 }
-        ];
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                // Fetch Top 5 Gainers (highest changePercent first, DESC order)
+                const gainersRes = await api.getStocks(0, 5, 'changePercent', -1, {});
 
-        const mockLosers: MiniCompany[] = [
-            { symbol: 'BAJAJFINSV', name: 'Bajaj Finserv Ltd', changePercent: -4.12 },
-            { symbol: 'HDFCLIFE', name: 'HDFC Life Insurance Company Ltd', changePercent: -3.67 },
-            { symbol: 'SBILIFE', name: 'SBI Life Insurance Company Ltd', changePercent: -2.89 },
-            { symbol: 'ICICIPRULI', name: 'ICICI Prudential Life Insurance Company Ltd', changePercent: -2.34 },
-            { symbol: 'BAJFINANCE', name: 'Bajaj Finance Ltd', changePercent: -1.98 }
-        ];
+                // Fetch Top 5 Losers (lowest changePercent first, ASC order)
+                const losersRes = await api.getStocks(0, 5, 'changePercent', 1, {});
 
-        setGainers(mockGainers);
-        setLosers(mockLosers);
-        setLoading(false);
+                if (gainersRes && Array.isArray(gainersRes.companies)) {
+                    // Filter out stocks with 0% change
+                    const validGainers = gainersRes.companies.filter(c => c.changePercent && c.changePercent > 0);
+                    setGainers(validGainers.slice(0, 5));
+                }
+                if (losersRes && Array.isArray(losersRes.companies)) {
+                    // Filter out stocks with 0% change
+                    const validLosers = losersRes.companies.filter(c => c.changePercent && c.changePercent < 0);
+                    setLosers(validLosers.slice(0, 5));
+                }
+            } catch (err) {
+                console.error("Failed to fetch market movers", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
     }, []);
 
     if (loading) return null; // Or a skeleton, but for landing page silence is better than jank
