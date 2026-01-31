@@ -20,52 +20,47 @@ const Navbar = () => {
 
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Section */}
-        <div className="flex items-center gap-6 h-full shrink-0">
+        <div className="flex items-center gap-8 h-full shrink-0">
           <Link to="/" className="flex items-center active:scale-95 transition-all duration-200">
             <Logo />
           </Link>
 
-          {/* Vertical Divider */}
-          <div className="hidden lg:block h-8 w-[1px] bg-slate-200/80" />
+          {/* Divider */}
+          <div className="hidden lg:block h-8 w-[1px] bg-slate-200 mx-2" />
 
-          <nav className="hidden lg:flex items-center gap-1">
-            <NavLink to="/" className={linkClass}>
-              {({ isActive }) => (
-                <>
-                  <LayoutGrid className={linkIconClass(isActive)} />
-                  <span className="font-manrope font-bold tracking-wider">Dashboard</span>
-                </>
-              )}
+          <nav className="hidden lg:flex items-center gap-6">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `flex items-center gap-2.5 px-4 py-2 rounded-lg text-[11px] font-bold uppercase tracking-[0.15em] transition-all 
+                ${isActive ? 'bg-indigo-50 text-indigo-700 shadow-sm border border-indigo-100/50' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`
+              }
+            >
+              <LayoutGrid size={16} strokeWidth={2.5} />
+              <span className="font-manrope">Dashboard</span>
             </NavLink>
-            <NavLink to="/watchlist" className={linkClass}>
-              {({ isActive }) => (
-                <>
-                  <Star className={linkIconClass(isActive)} />
-                  <span className="font-manrope font-bold tracking-wider">Watchlist</span>
-                </>
-              )}
-            </NavLink>
-            <NavLink to="/stocks" className={linkClass}>
-              {({ isActive }) => (
-                <>
-                  <Zap className={linkIconClass(isActive)} />
-                  <span className="font-manrope font-bold tracking-wider">Stocks</span>
-                </>
-              )}
-            </NavLink>
-            <NavLink to="/about" className={linkClass}>
-              {({ isActive }) => (
-                <>
-                  <Cpu className={linkIconClass(isActive)} />
-                  <span className="font-manrope font-bold tracking-wider">Logic</span>
-                </>
-              )}
-            </NavLink>
+
+            <div className="flex items-center gap-6">
+              <NavLink to="/watchlist" className={({ isActive }) => `flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors ${isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-900'}`}>
+                <Star size={16} strokeWidth={2.5} className="text-slate-400" />
+                <span className="font-manrope">Watchlist</span>
+              </NavLink>
+
+              <NavLink to="/stocks" className={({ isActive }) => `flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors ${isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-900'}`}>
+                <Zap size={16} strokeWidth={2.5} className="text-slate-400" />
+                <span className="font-manrope">Stocks</span>
+              </NavLink>
+
+              <NavLink to="/about" className={({ isActive }) => `flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors ${isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-900'}`}>
+                <Cpu size={16} strokeWidth={2.5} className="text-slate-400" />
+                <span className="font-manrope">Logic</span>
+              </NavLink>
+            </div>
           </nav>
         </div>
 
         {/* Global Action Bar - Compact Terminal Vibe */}
-        <div className="flex-1 max-w-lg hidden md:flex items-center bg-slate-100/80 rounded-lg px-1 transition-all duration-300 group/search focus-within:ring-2 focus-within:ring-indigo-500/10 focus-within:bg-white">
+        <div className="flex-1 max-w-lg hidden md:flex items-center bg-slate-100/40 backdrop-blur-md border border-slate-200/60 rounded-xl px-1 hover:border-indigo-400/50 hover:bg-white transition-all duration-300 group/search focus-within:ring-2 focus-within:ring-indigo-500/10 focus-within:border-indigo-500">
           <div className="flex-1">
             <GlobalSearch variant="minimal" />
           </div>
