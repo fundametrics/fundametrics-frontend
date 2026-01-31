@@ -21,28 +21,30 @@ const TickerTape = () => {
 
     if (indices.length === 0) return null;
 
-    // Double the indices to create a seamless loop (Filtered for Indian Markets)
+    // Double the indices to create a seamless loop
     const validIndices = indices.filter((i: any) => {
         const label = (i.id || i.label || '').toString().toUpperCase().trim();
         return ['NIFTY 50', 'SENSEX', 'BANK NIFTY', 'NIFTY BANK', 'NIFTY IT', 'BSE SENSEX'].includes(label);
     });
-    // Strict filter: usage of validIndices ONLY. Never fallback to full list.
-    const indianIndices = [...validIndices, ...validIndices, ...validIndices];
-    console.log('[Ticker] Filtered:', indianIndices.length, 'Total:', indices.length);
+
+    // If we have few items, add some spacing/variety or just loop twice for a cleaner look
+    const displayIndices = validIndices.length > 0 ? [...validIndices, ...validIndices] : [];
+
+    if (displayIndices.length === 0) return null;
 
     return (
-        <div className="w-full bg-slate-900 overflow-hidden py-2 border-b border-slate-800 relative z-50">
+        <div className="w-full bg-[#020617] overflow-hidden py-1 border-b border-slate-800 relative z-50">
             <div className="flex animate-ticker whitespace-nowrap">
-                {indianIndices.map((idx, i) => (
-                    <div key={`${idx.id}-${i}`} className="inline-flex items-center gap-4 px-8 border-r border-slate-800">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">{idx.label}</span>
-                        <span className="text-xs font-black text-white ml-1">
+                {displayIndices.map((idx, i) => (
+                    <div key={`${idx.id}-${i}`} className="inline-flex items-center gap-6 px-12 border-r border-white/5">
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{idx.label}</span>
+                        <span className="text-[11px] font-black text-white">
                             {idx.price ? idx.price.toLocaleString('en-IN') : '—'}
                         </span>
                         {idx.change !== undefined && (
-                            <span className={`inline-flex items-center gap-0.5 text-[10px] font-bold ${idx.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                            <span className={`inline-flex items-center gap-1 text-[10px] font-bold ${idx.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                                 {idx.change >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-                                {Math.abs(idx.changePercent).toFixed(2)}%
+                                {idx.changePercent ? Math.abs(idx.changePercent).toFixed(2) : '0.00'}%
                             </span>
                         )}
                     </div>
@@ -53,10 +55,10 @@ const TickerTape = () => {
                 __html: `
                 @keyframes ticker {
                     0% { transform: translateX(0); }
-                    100% { transform: translateX(-33.33%); }
+                    100% { transform: translateX(-50%); }
                 }
                 .animate-ticker {
-                    animation: ticker 40s linear infinite;
+                    animation: ticker 30s linear infinite;
                 }
                 .animate-ticker:hover {
                     animation-play-state: paused;
