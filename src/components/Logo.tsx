@@ -8,16 +8,16 @@ interface LogoProps {
 const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const isSmall = size === 'sm';
 
-    // Scale the image up significantly to compensate for massive whitespace padding.
-    // We use a high percentage height to "zoom in" on the center content.
+    // Scale the image up HEAVILY to compensate for massive whitespace.
+    // We use h-[800%] to zoom into the center content.
     const containerHeight = isSmall ? 'h-8' : size === 'lg' ? 'h-16' : 'h-10';
 
     return (
-        <div className={`flex items-center justify-center ${containerHeight} overflow-hidden ${className} bg-slate-50 border border-dashed border-slate-200`}>
+        <div className={`relative flex items-center justify-center ${containerHeight} overflow-hidden ${className}`}>
             <img
                 src="/brand-logo-v3.png"
                 alt="Fundametrics Logo"
-                className="h-[600%] w-auto object-contain transition-transform hover:scale-105 duration-300"
+                className="absolute h-[800%] w-auto object-contain transition-transform hover:scale-105 duration-300 pointer-events-none"
             />
         </div>
     );
