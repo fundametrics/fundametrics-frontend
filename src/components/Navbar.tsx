@@ -14,7 +14,7 @@ const Navbar = () => {
     `w-4 h-4 transition-transform group-hover:scale-110 duration-300 ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-900'}`;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <header className="w-full z-50 transition-all duration-300">
       {/* Glassmorphic Background Container */}
       <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm" />
 
