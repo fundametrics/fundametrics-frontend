@@ -14,7 +14,7 @@ const Navbar = () => {
     `w-3.5 h-3.5 transition-transform group-hover:scale-110 ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-900'}`;
 
   return (
-    <header className="bg-white border-b border-slate-100 sticky top-0 z-50 h-20">
+    <header className="bg-white border-b border-slate-100 sticky top-0 z-50 h-16">
       <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
 
         {/* Brand Section */}
@@ -92,7 +92,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-100 p-4 shadow-xl flex flex-col gap-2">
+        <div className="lg:hidden absolute top-16 left-0 w-full bg-white border-b border-slate-100 p-4 shadow-xl flex flex-col gap-2">
           <NavLink to="/" className={linkClass} onClick={() => setMobileMenuOpen(false)}>
             Dashboard
           </NavLink>

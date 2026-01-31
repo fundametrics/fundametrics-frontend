@@ -14,7 +14,7 @@ const Layout = () => {
       </div>
 
       {/* Mobile Top Bar (Simplified) */}
-      <div className="lg:hidden h-20 bg-white border-b border-slate-100 flex items-center justify-center sticky top-0 z-40">
+      <div className="lg:hidden h-14 bg-white border-b border-slate-100 flex items-center justify-center sticky top-0 z-40">
         <Logo size="sm" />
       </div>
 
