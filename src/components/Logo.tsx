@@ -8,8 +8,8 @@ interface LogoProps {
 const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const isSmall = size === 'sm';
 
-    // Scale the image up to fill the container despite its whitespace
-    // but keep the container itself constrained to standard navbar heights.
+    // Scale the image up significantly to compensate for massive whitespace padding.
+    // We use a high percentage height to "zoom in" on the center content.
     const containerHeight = isSmall ? 'h-8' : size === 'lg' ? 'h-16' : 'h-10';
 
     return (
@@ -17,8 +17,7 @@ const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
             <img
                 src="/brand-logo-v3.png"
                 alt="Fundametrics Logo"
-                className="h-[250%] w-auto object-contain transition-transform hover:scale-110 duration-300"
-                style={{ transform: 'translateY(1%)' }} // Fine-tune centering if needed
+                className="h-[600%] w-auto object-contain transition-transform hover:scale-105 duration-300"
             />
         </div>
     );
