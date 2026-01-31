@@ -18,7 +18,7 @@ const Navbar = () => {
       {/* Glassmorphic Background Container */}
       <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm" />
 
-      <div className="relative w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Section */}
         <div className="flex items-center gap-8 h-full shrink-0">
           <Link to="/" className="flex items-center active:scale-95 transition-all duration-200">
