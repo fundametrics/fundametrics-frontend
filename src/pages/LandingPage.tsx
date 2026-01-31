@@ -11,11 +11,41 @@ import {
   ArrowRight,
   Cpu,
   ShieldAlert,
-  TrendingUp
+  TrendingUp,
+  HelpCircle,
+  ChevronDown
 } from 'lucide-react';
 import SEO from '../components/SEO';
+import TickerTape from '../components/TickerTape';
+import MarketMovers from '../components/MarketMovers';
+import { useState } from 'react';
 
 const LandingPage = () => {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
+  const faqs = [
+    {
+      q: "Is the data real-time?",
+      a: "Our market data is updated in near real-time from NSE. Financial statements are updated within minutes of exchange filings."
+    },
+    {
+      q: "Is it really free?",
+      a: "Yes, Fundametrics is currently free for all retail investors. We believe institutional-grade data should be accessible to everyone."
+    },
+    {
+      q: "How accurate is the financial data?",
+      a: "We source data directly from corporate filings and exchange feeds. Our automated audit system verifies every number against the original PDF source."
+    },
+    {
+      q: "Can I download the data?",
+      a: "Currently, you can view all data on the platform. Export functionality for Excel/CSV is part of our upcoming Pro tier."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-white text-slate-900 font-manrope selection:bg-indigo-600 selection:text-white pb-20">
       <SEO
@@ -23,9 +53,11 @@ const LandingPage = () => {
         description="Analyze Indian stocks using PE ratio, ROE, ROCE, and financial metrics. Real-time institutional-grade intelligence for retail investors. Fast and free stock screener."
       />
 
+      <TickerTape />
+
       <div className="relative">
         {/* 1️⃣ HERO SECTION (MOST IMPORTANT) */}
-        <header className="relative px-6 pt-20 pb-28 max-w-[1100px] mx-auto text-center flex flex-col items-center overflow-visible">
+        <header className="relative px-6 pt-12 pb-20 max-w-[1100px] mx-auto text-center flex flex-col items-center overflow-visible">
           {/* Animated Background Elements */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl -z-10 animate-pulse" />
 
@@ -81,8 +113,11 @@ const LandingPage = () => {
           </div>
         </header>
 
-        {/* 2️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
-        <section className="bg-slate-50 border-y border-slate-100 py-6">
+        {/* 2️⃣ MARKET MOVERS (NEW) */}
+        <MarketMovers />
+
+        {/* 3️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
+        <section className="bg-slate-50 border-y border-slate-100 py-6 mb-20">
           <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div className="space-y-1">
               <div className="text-xl font-black text-indigo-600">2000+</div>
@@ -99,9 +134,9 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <main className="max-w-[1100px] mx-auto px-6 py-20 space-y-24">
+        <main className="max-w-[1100px] mx-auto px-6 space-y-24">
 
-          {/* 3️⃣ “HOW IT WORKS” (3 STEPS) */}
+          {/* 4️⃣ “HOW IT WORKS” (3 STEPS) */}
           <section id="process" className="space-y-12">
             <div className="text-center">
               <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">How it works</h2>
@@ -123,7 +158,7 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* 4️⃣ FEATURE HIGHLIGHTS (LIGHTWEIGHT) */}
+          {/* 5️⃣ FEATURE HIGHLIGHTS (LIGHTWEIGHT) */}
           <section id="features" className="space-y-12">
             <div className="text-center">
               <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Powerful Features</h2>
@@ -152,7 +187,30 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* 5️⃣ SEO CONTENT BLOCK (IMPORTANT) */}
+          {/* 6️⃣ FAQ SECTION (NEW) */}
+          <section id="faq" className="max-w-2xl mx-auto space-y-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Frequently Asked</h2>
+            </div>
+            <div className="space-y-4">
+              {faqs.map((faq, i) => (
+                <div key={i} className="bg-slate-50 rounded-2xl overflow-hidden transition-all hover:bg-slate-100">
+                  <button
+                    onClick={() => toggleFaq(i)}
+                    className="w-full flex items-center justify-between px-6 py-4 text-left"
+                  >
+                    <span className="font-bold text-sm text-slate-900">{faq.q}</span>
+                    <ChevronDown size={16} className={`text-slate-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div className={`px-6 overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-40 pb-4 opactiy-100' : 'max-h-0 opacity-0'}`}>
+                    <p className="text-xs font-medium text-slate-500 leading-relaxed">{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 7️⃣ SEO CONTENT BLOCK (IMPORTANT) */}
           <section className="py-16 border-t border-slate-100">
             <div className="max-w-3xl mx-auto text-center space-y-4">
               <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">Institutional Stock Research</h2>
@@ -165,7 +223,7 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* 6️⃣ PRIMARY CTA SECTION */}
+          {/* 8️⃣ PRIMARY CTA SECTION */}
           <section className="py-16 bg-slate-900 rounded-[32px] text-center text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl -mr-32 -mt-32" />
             <div className="relative z-10 space-y-6 px-6">
