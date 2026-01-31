@@ -12,8 +12,8 @@ const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     return (
         <div className={`flex items-center justify-center ${containerHeight} ${className}`}>
             <img
-                src="/brand-logo-v3-final.png"
-                alt="Fundametrics Logo"
+                src="/logo-v4.png"
+                alt="Fundametrics: Market Runs On Fundamentals"
                 className="h-full w-auto object-contain transition-transform hover:scale-105 duration-300"
             />
         </div>
