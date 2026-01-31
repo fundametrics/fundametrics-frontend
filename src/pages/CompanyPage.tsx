@@ -384,6 +384,7 @@ const CompanyPage = () => {
         priceDelayMinutes={15}
         coverage={(state as any).coverage}
         statementScope="FY24 Consolidated"
+        marketCap={marketCapVal}
       />
 
       <div className="flex w-full relative">

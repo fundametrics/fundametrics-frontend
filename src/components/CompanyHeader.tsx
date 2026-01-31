@@ -19,6 +19,7 @@ interface CompanyHeaderProps {
   trustGrade?: string;
   statementScope?: string;
   isPsu?: boolean;
+  marketCap?: number | null;
 }
 
 const CompanyHeader: FC<CompanyHeaderProps> = ({
@@ -28,6 +29,7 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
   price,
   priceDelayMinutes,
   isPsu = false,
+  marketCap,
 }) => {
   const { toggleWatchlist, isInWatchlist } = useWatchlist();
   const isWatched = symbol ? isInWatchlist(symbol) : false;
@@ -124,6 +126,15 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
                   {isPositive ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
                   <span>
                     {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercent.toFixed(2)}%)
+                  </span>
+                </div>
+              )}
+              {/* NEW: Market Cap Display */}
+              {marketCap !== undefined && marketCap !== null && (
+                <div className="mt-1 flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">M.Cap</span>
+                  <span className="text-xs font-black text-slate-700 font-mono">
+                    ₹{(marketCap).toLocaleString('en-IN')} Cr
                   </span>
                 </div>
               )}

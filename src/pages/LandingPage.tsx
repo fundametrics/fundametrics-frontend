@@ -25,14 +25,40 @@ const LandingPage = () => {
 
       <div className="relative">
         {/* 1️⃣ HERO SECTION (MOST IMPORTANT) */}
-        <header className="relative px-6 pt-20 pb-20 max-w-[1100px] mx-auto text-center flex flex-col items-center">
-          {/* SVG Background Pattern */}
-          <div className="absolute inset-0 -z-10 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}></div>
+        <header className="relative px-6 pt-20 pb-28 max-w-[1100px] mx-auto text-center flex flex-col items-center overflow-visible">
+          {/* Animated Background Elements */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl -z-10 animate-pulse" />
 
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-            <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.04em] leading-[1.1] text-slate-900">
+          {/* SVG Hero Image / Illustration */}
+          <div className="absolute top-0 inset-x-0 -z-10 flex justify-center opacity-40 mix-blend-multiply pointer-events-none overflow-hidden">
+            <svg width="1000" height="600" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-in fade-in zoom-in duration-1000">
+              <path d="M0 500 C 200 500, 200 400, 400 400 C 600 400, 600 200, 1000 100" stroke="url(#paint0_linear)" strokeWidth="4" strokeDasharray="10 10" className="animate-[dash_20s_linear_infinite]" />
+              <path d="M0 550 C 300 550, 400 450, 600 450 C 800 450, 900 300, 1000 250" stroke="url(#paint1_linear)" strokeWidth="60" strokeOpacity="0.1" />
+              <defs>
+                <linearGradient id="paint0_linear" x1="0" y1="500" x2="1000" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#6366f1" />
+                  <stop offset="1" stopColor="#818cf8" stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="paint1_linear" x1="0" y1="550" x2="1000" y2="250" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#6366f1" />
+                  <stop offset="1" stopColor="#c7d2fe" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div className="relative z-10 space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 font-bold text-[11px] uppercase tracking-widest animate-in slide-in-from-top-4 duration-700 delay-100">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+              </span>
+              Live Market Data
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.04em] leading-[1.1] text-slate-900 drop-shadow-sm">
               Fundamental Stock Analysis <br />
-              <span className="text-indigo-600">Made Simple.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 animate-pulse">Made Simple.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
@@ -40,12 +66,16 @@ const LandingPage = () => {
               Institutional-grade intelligence for the modern investor.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
               <Link
                 to="/stocks"
-                className="w-full sm:w-auto px-10 py-4 bg-indigo-600 text-white rounded-xl font-black text-xs uppercase tracking-[0.15em] hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200/50"
+                className="group relative w-full sm:w-auto px-10 py-4 bg-indigo-600 text-white rounded-xl font-black text-xs uppercase tracking-[0.15em] hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200/50 hover:shadow-indigo-300/60 hover:-translate-y-1 overflow-hidden"
               >
-                Explore Stocks →
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore Stocks
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-white/20 transition-transform duration-500 skew-x-12" />
               </Link>
             </div>
           </div>
