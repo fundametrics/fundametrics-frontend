@@ -7,7 +7,7 @@ interface LogoProps {
 
 const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const isSmall = size === 'sm';
-    const containerHeight = isSmall ? 'h-8' : size === 'lg' ? 'h-16' : 'h-10';
+    const containerHeight = isSmall ? 'h-11' : size === 'lg' ? 'h-24' : 'h-14';
 
     return (
         <div className={`flex items-center justify-center ${containerHeight} ${className}`}>
