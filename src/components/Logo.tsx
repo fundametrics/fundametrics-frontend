@@ -13,7 +13,7 @@ const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const containerHeight = isSmall ? 'h-8' : size === 'lg' ? 'h-16' : 'h-10';
 
     return (
-        <div className={`flex items-center justify-center ${containerHeight} overflow-hidden ${className}`}>
+        <div className={`flex items-center justify-center ${containerHeight} overflow-hidden ${className} bg-slate-50 border border-dashed border-slate-200`}>
             <img
                 src="/brand-logo-v3.png"
                 alt="Fundametrics Logo"
