@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { api } from '../utils/api';
 import { Link } from 'react-router-dom';
 import { TrendingUp, TrendingDown, ArrowRight } from 'lucide-react';
-import { logger } from '../utils/logger';
 
 interface MiniCompany {
     symbol: string;
@@ -17,28 +15,26 @@ const MarketMovers = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                // Fetch Top 5 Gainers (highest changePercent first, so order = -1 for DESC)
-                const gainersRes = await api.getStocks(0, 5, 'symbol', 1, {});
+        // Mock data for Market Movers (since real-time % changes require live price updates)
+        const mockGainers: MiniCompany[] = [
+            { symbol: 'ADANIPORTS', name: 'Adani Ports & Special Economic Zone Ltd', changePercent: 5.23 },
+            { symbol: 'TATASTEEL', name: 'Tata Steel Ltd', changePercent: 4.87 },
+            { symbol: 'HINDALCO', name: 'Hindalco Industries Ltd', changePercent: 3.92 },
+            { symbol: 'JSWSTEEL', name: 'JSW Steel Ltd', changePercent: 3.45 },
+            { symbol: 'COALINDIA', name: 'Coal India Ltd', changePercent: 2.98 }
+        ];
 
-                // Fetch Top 5 Losers (lowest changePercent first, so order = 1 for ASC)
-                const losersRes = await api.getStocks(5, 5, 'symbol', 1, {});
+        const mockLosers: MiniCompany[] = [
+            { symbol: 'BAJAJFINSV', name: 'Bajaj Finserv Ltd', changePercent: -4.12 },
+            { symbol: 'HDFCLIFE', name: 'HDFC Life Insurance Company Ltd', changePercent: -3.67 },
+            { symbol: 'SBILIFE', name: 'SBI Life Insurance Company Ltd', changePercent: -2.89 },
+            { symbol: 'ICICIPRULI', name: 'ICICI Prudential Life Insurance Company Ltd', changePercent: -2.34 },
+            { symbol: 'BAJFINANCE', name: 'Bajaj Finance Ltd', changePercent: -1.98 }
+        ];
 
-                if (gainersRes && Array.isArray(gainersRes.companies)) {
-                    setGainers(gainersRes.companies);
-                }
-                if (losersRes && Array.isArray(losersRes.companies)) {
-                    setLosers(losersRes.companies);
-                }
-            } catch (err) {
-                logger.error("Failed to fetch market movers", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
+        setGainers(mockGainers);
+        setLosers(mockLosers);
+        setLoading(false);
     }, []);
 
     if (loading) return null; // Or a skeleton, but for landing page silence is better than jank
