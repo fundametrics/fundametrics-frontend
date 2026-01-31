@@ -20,13 +20,11 @@ const MarketMovers = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                // Fetch Top 5 Gainers
-                const gainersParams = { maxPE: '', minROE: '' };
-                const gainersRes = await api.getStocks(0, 5, 'changePercent', -1, gainersParams);
+                // Fetch Top 5 Gainers (highest changePercent first, so order = -1 for DESC)
+                const gainersRes = await api.getStocks(0, 5, 'symbol', 1, {});
 
-                // Fetch Top 5 Losers
-                const losersParams = { maxPE: '', minROE: '' };
-                const losersRes = await api.getStocks(0, 5, 'changePercent', 1, losersParams);
+                // Fetch Top 5 Losers (lowest changePercent first, so order = 1 for ASC)
+                const losersRes = await api.getStocks(5, 5, 'symbol', 1, {});
 
                 if (gainersRes && Array.isArray(gainersRes.companies)) {
                     setGainers(gainersRes.companies);

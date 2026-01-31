@@ -183,7 +183,7 @@ const LandingPage = () => {
           </section>
 
           {/* 6️⃣ FAQ SECTION (NEW) */}
-          <section id="faq" className="max-w-2xl mx-auto space-y-8">
+          <section id="faq" className="max-w-4xl mx-auto space-y-8">
             <div className="text-center">
               <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Frequently Asked</h2>
             </div>
@@ -197,24 +197,41 @@ const LandingPage = () => {
                     <span className="font-bold text-sm text-slate-900">{faq.q}</span>
                     <ChevronDown size={16} className={`text-slate-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`} />
                   </button>
-                  <div className={`px-6 overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-40 pb-4 opactiy-100' : 'max-h-0 opacity-0'}`}>
-                    <p className="text-xs font-medium text-slate-500 leading-relaxed">{faq.a}</p>
+                  <div className={`px-6 overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-60 pb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <p className="text-sm font-medium text-slate-600 leading-relaxed">{faq.a}</p>
                   </div>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* 7️⃣ SEO CONTENT BLOCK (IMPORTANT) */}
+          {/* 7️⃣ MARKET SECTORS */}
           <section className="py-16 border-t border-slate-100">
-            <div className="max-w-3xl mx-auto text-center space-y-4">
-              <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">Institutional Stock Research</h2>
-              <p className="text-slate-500 text-sm font-medium leading-relaxed">
-                Fundametrics helps investors analyze Indian stocks using fundamental analysis.
-                Our platform provides a simplified overview of critical financial ratios including
-                PE ratio, ROE, ROCE, debt, and market capitalization for NSE-listed companies.
-                We focus on pure financial facts, removing market noise to help you make informed investment decisions based on primary data disclosures.
-              </p>
+            <div className="text-center mb-12">
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Explore by Sector</h2>
+              <p className="text-slate-500 text-sm font-medium mt-2">Analyze companies across major Indian market sectors</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { name: 'Banking', icon: '🏦', count: '150+' },
+                { name: 'IT Services', icon: '💻', count: '200+' },
+                { name: 'Pharmaceuticals', icon: '💊', count: '180+' },
+                { name: 'Automobiles', icon: '🚗', count: '120+' },
+                { name: 'Energy', icon: '⚡', count: '90+' },
+                { name: 'FMCG', icon: '🛒', count: '110+' },
+                { name: 'Metals', icon: '⚙️', count: '85+' },
+                { name: 'Telecom', icon: '📱', count: '45+' }
+              ].map((sector) => (
+                <Link
+                  key={sector.name}
+                  to={`/stocks?sector=${encodeURIComponent(sector.name)}`}
+                  className="group p-6 bg-white border border-slate-200 rounded-2xl hover:border-indigo-300 hover:shadow-lg transition-all text-center"
+                >
+                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">{sector.icon}</div>
+                  <h3 className="font-black text-slate-900 text-sm mb-1">{sector.name}</h3>
+                  <p className="text-[10px] font-bold text-slate-400">{sector.count} Companies</p>
+                </Link>
+              ))}
             </div>
           </section>
 
