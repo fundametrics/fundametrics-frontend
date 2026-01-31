@@ -21,7 +21,7 @@ const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 import ErrorBoundary from './components/ErrorBoundary';
 
 const App = () => {
-  console.log("VERSION: Landing Page V9 (Dynamic Sectors)");
+  console.log("VERSION: Landing Page V10 (Sticky Ticker)");
   return (
     <ErrorBoundary>
       <Routes>

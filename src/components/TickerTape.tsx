@@ -15,7 +15,7 @@ const TickerTape = () => {
             }
         };
         fetchPrices();
-        const interval = setInterval(fetchPrices, 60000 * 5); // 5 mins
+        const interval = setInterval(fetchPrices, 60000 * 15); // 15 mins
         return () => clearInterval(interval);
     }, []);
 
@@ -33,7 +33,7 @@ const TickerTape = () => {
     if (displayIndices.length === 0) return null;
 
     return (
-        <div className="w-full bg-[#020617] overflow-hidden py-1 border-b border-slate-800 relative z-50">
+        <div className="sticky top-0 w-full bg-[#020617] overflow-hidden py-1 border-b border-slate-800 z-50">
             <div className="flex animate-ticker whitespace-nowrap">
                 {displayIndices.map((idx, i) => (
                     <div key={`${idx.id}-${i}`} className="inline-flex items-center gap-6 px-12 border-r border-white/5">
