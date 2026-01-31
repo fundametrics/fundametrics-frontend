@@ -52,7 +52,7 @@ const LandingPage = () => {
 
       <div className="relative">
         {/* 1️⃣ HERO SECTION (MOST IMPORTANT) */}
-        <header className="relative px-6 pt-12 pb-20 max-w-[1100px] mx-auto text-center flex flex-col items-center overflow-visible">
+        <header className="relative px-6 pt-12 pb-20 max-w-[1400px] mx-auto text-center flex flex-col items-center overflow-visible">
           {/* Animated Background Elements */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl -z-10 animate-pulse" />
 
@@ -113,7 +113,7 @@ const LandingPage = () => {
 
         {/* 3️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
         <section className="bg-slate-50 border-y border-slate-100 py-6 mb-20">
-          <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+          <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div className="space-y-1">
               <div className="text-xl font-black text-indigo-600">2000+</div>
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Indian Companies</div>
@@ -129,7 +129,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <main className="max-w-[1100px] mx-auto px-6 space-y-24">
+        <main className="max-w-[1400px] mx-auto px-6 space-y-24">
 
           {/* 4️⃣ “HOW IT WORKS” (3 STEPS) */}
           <section id="process" className="space-y-12">

@@ -6,7 +6,7 @@ import { logger } from '../utils/logger';
 
 interface MiniCompany {
     symbol: string;
-    name: string;
+    name?: string;
     price?: number;
     changePercent?: number;
 }
@@ -61,7 +61,7 @@ const MarketMovers = () => {
                     <Link key={company.symbol} to={`/stocks/${company.symbol}`} className="flex items-center justify-between group p-2 rounded-lg hover:bg-slate-50 transition-colors">
                         <div>
                             <div className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors text-sm">{company.symbol}</div>
-                            <div className="text-[10px] text-slate-400 font-bold truncate max-w-[120px]">{company.name}</div>
+                            <div className="text-[10px] text-slate-400 font-bold truncate max-w-[120px]">{company.name || company.symbol}</div>
                         </div>
                         <div className={`text-right font-black text-xs ${type === 'gainers' ? 'text-emerald-600' : 'text-rose-600'}`}>
                             {company.changePercent ? (company.changePercent > 0 ? '+' : '') + company.changePercent.toFixed(2) + '%' : '—'}
@@ -73,7 +73,7 @@ const MarketMovers = () => {
     );
 
     return (
-        <section className="max-w-[1100px] mx-auto px-6 mb-20">
+        <section className="max-w-[1400px] mx-auto px-6 mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <MoverCard title="Top Gainers" data={gainers} type="gainers" />
                 <MoverCard title="Top Losers" data={losers} type="losers" />
