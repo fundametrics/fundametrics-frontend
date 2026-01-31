@@ -228,10 +228,10 @@ const StocksPage = () => {
                 <BarChart3 size={14} strokeWidth={2.5} />
                 <span>Institutional Registry</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight italic uppercase italic">
+              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight italic uppercase italic">
                 Market Monitor
               </h1>
-              <p className="text-slate-500 max-w-xl font-medium text-sm leading-relaxed">
+              <p className="text-slate-500 max-w-xl font-medium text-xs leading-relaxed">
                 Real-time factual disclosures and automated analytics for the <br className="hidden sm:block" />
                 Indian public sector. Verified facts from direct feeds.
               </p>

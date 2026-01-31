@@ -10,8 +10,8 @@ const Footer = () => {
 
           {/* Brand & Mission */}
           <div className="lg:col-span-2 flex flex-col items-start space-y-6">
-            <Logo size="lg" className="-ml-7" />
-            <p className="text-slate-500 text-sm font-medium leading-relaxed max-w-sm">
+            <Logo size="md" className="-ml-7" />
+            <p className="text-slate-500 text-xs font-medium leading-relaxed max-w-sm">
               Institutional-grade financial intelligence for the modern Indian market. Pure data, zero bias, and 100% audit-verified facts.
             </p>
             <div className="flex items-center gap-4 text-slate-300">
