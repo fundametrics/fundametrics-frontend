@@ -20,10 +20,13 @@ const Navbar = () => {
 
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Section */}
-        <div className="flex items-center gap-8 h-full shrink-0">
+        <div className="flex items-center gap-6 h-full shrink-0">
           <Link to="/" className="flex items-center active:scale-95 transition-all duration-200">
             <Logo />
           </Link>
+
+          {/* Vertical Divider */}
+          <div className="hidden lg:block h-8 w-[1px] bg-slate-200/80" />
 
           <nav className="hidden lg:flex items-center gap-1">
             <NavLink to="/" className={linkClass}>
@@ -62,7 +65,7 @@ const Navbar = () => {
         </div>
 
         {/* Global Action Bar - Compact Terminal Vibe */}
-        <div className="flex-1 max-w-lg hidden md:flex items-center bg-slate-100/40 backdrop-blur-md border border-slate-200/60 rounded-xl px-1 hover:border-indigo-400/50 hover:bg-white transition-all duration-300 group/search focus-within:ring-2 focus-within:ring-indigo-500/10 focus-within:border-indigo-500">
+        <div className="flex-1 max-w-lg hidden md:flex items-center bg-slate-100/80 rounded-lg px-1 transition-all duration-300 group/search focus-within:ring-2 focus-within:ring-indigo-500/10 focus-within:bg-white">
           <div className="flex-1">
             <GlobalSearch variant="minimal" />
           </div>
