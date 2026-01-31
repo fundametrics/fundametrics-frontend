@@ -26,6 +26,9 @@ const LandingPage = () => {
       <div className="relative">
         {/* 1️⃣ HERO SECTION (MOST IMPORTANT) */}
         <header className="relative px-6 pt-20 pb-20 max-w-[1100px] mx-auto text-center flex flex-col items-center">
+          {/* SVG Background Pattern */}
+          <div className="absolute inset-0 -z-10 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}></div>
+
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
             <h1 className="text-4xl sm:text-6xl font-black tracking-[-0.04em] leading-[1.1] text-slate-900">
               Fundamental Stock Analysis <br />
@@ -71,7 +74,7 @@ const LandingPage = () => {
           {/* 3️⃣ “HOW IT WORKS” (3 STEPS) */}
           <section id="process" className="space-y-12">
             <div className="text-center">
-              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight italic">How it works</h2>
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">How it works</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {[
@@ -93,27 +96,27 @@ const LandingPage = () => {
           {/* 4️⃣ FEATURE HIGHLIGHTS (LIGHTWEIGHT) */}
           <section id="features" className="space-y-12">
             <div className="text-center">
-              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight italic">Powerful Features</h2>
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Powerful Features</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-indigo-100 transition-colors">
                 <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg mb-4 flex items-center justify-center"><Activity size={16} /></div>
-                <h4 className="text-lg font-black text-slate-900 mb-2 italic">Fundamental Ratios</h4>
+                <h4 className="text-lg font-black text-slate-900 mb-2">Fundamental Ratios</h4>
                 <p className="text-slate-500 text-xs font-medium">Detailed tracking of PE, PB, ROE, ROCE and Debt-to-Equity ratios over multiple cycles.</p>
               </div>
               <div className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-indigo-100 transition-colors">
                 <div className="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg mb-4 flex items-center justify-center"><SearchIcon size={16} /></div>
-                <h4 className="text-lg font-black text-slate-900 mb-2 italic">Smart Stock Search</h4>
+                <h4 className="text-lg font-black text-slate-900 mb-2">Smart Stock Search</h4>
                 <p className="text-slate-500 text-xs font-medium">Lightning fast universal search to jump straight into any company's financial terminal.</p>
               </div>
               <div className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-indigo-100 transition-colors">
                 <div className="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-lg mb-4 flex items-center justify-center"><LayoutDashboard size={16} /></div>
-                <h4 className="text-lg font-black text-slate-900 mb-2 italic">Sector Intelligence</h4>
+                <h4 className="text-lg font-black text-slate-900 mb-2">Sector Intelligence</h4>
                 <p className="text-slate-500 text-xs font-medium">Analyze market trends by sector and compare competitors with standardized data points.</p>
               </div>
               <div className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-indigo-100 transition-colors">
                 <div className="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-lg mb-4 flex items-center justify-center"><ShieldCheck size={16} /></div>
-                <h4 className="text-lg font-black text-slate-900 mb-2 italic">Watchlist & Monitor</h4>
+                <h4 className="text-lg font-black text-slate-900 mb-2">Watchlist & Monitor</h4>
                 <p className="text-slate-500 text-xs font-medium">Save your priority assets for instant access and real-time valuation tracking.</p>
               </div>
             </div>
@@ -136,7 +139,7 @@ const LandingPage = () => {
           <section className="py-16 bg-slate-900 rounded-[32px] text-center text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl -mr-32 -mt-32" />
             <div className="relative z-10 space-y-6 px-6">
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight uppercase italic">Start Analyzing Stocks Today</h2>
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tight uppercase">Start Analyzing Stocks Today</h2>
               <p className="text-slate-400 font-medium text-base max-w-xl mx-auto">Access 100% verified financial data for over 2,000 Indian public companies.</p>
               <Link
                 to="/stocks"

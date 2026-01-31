@@ -65,7 +65,7 @@ const StocksPage = () => {
         };
 
         // Fetch from optimized, filter-aware API
-        const response = await api.getStocks(0, 200, sortField, order, filters).catch(err => {
+        const response = await api.getStocks(0, 50, sortField, order, filters).catch(err => {
           logger.error("API call failed", err);
           return { companies: [], total: 0 };
         });
@@ -228,7 +228,7 @@ const StocksPage = () => {
                 <BarChart3 size={14} strokeWidth={2.5} />
                 <span>Institutional Registry</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight italic uppercase italic">
+              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight uppercase">
                 Market Monitor
               </h1>
               <p className="text-slate-500 max-w-xl font-medium text-xs leading-relaxed">

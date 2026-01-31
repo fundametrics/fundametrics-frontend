@@ -66,11 +66,6 @@ const Navbar = () => {
           <div className="flex-1">
             <GlobalSearch variant="minimal" />
           </div>
-          <div className="hidden sm:flex items-center gap-2 px-3">
-            <kbd className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-tighter bg-white px-1.5 py-0.5 rounded border border-slate-200 shadow-sm group-hover/search:text-indigo-500 group-hover/search:border-indigo-100 transition-colors">
-              CMD+K
-            </kbd>
-          </div>
         </div>
 
         {/* Mobile Search Trigger */}
