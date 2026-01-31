@@ -14,7 +14,7 @@ const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
             <img
                 src="/logo-v4.png"
                 alt="Fundametrics: Market Runs On Fundamentals"
-                className="h-full w-auto object-contain transition-transform hover:scale-105 duration-300"
+                className="h-full w-auto object-contain object-left transition-transform hover:scale-105 duration-300"
             />
         </div>
     );
