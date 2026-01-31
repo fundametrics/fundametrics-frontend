@@ -7,12 +7,7 @@ import {
   BarChart3,
   Search as SearchIcon,
   ShieldCheck,
-  Globe,
   ArrowRight,
-  Cpu,
-  ShieldAlert,
-  TrendingUp,
-  HelpCircle,
   ChevronDown
 } from 'lucide-react';
 import SEO from '../components/SEO';

@@ -21,6 +21,7 @@ const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 import ErrorBoundary from './components/ErrorBoundary';
 
 const App = () => {
+  console.log("VERSION: Landing Page V6 (Fixed Imports)");
   return (
     <ErrorBoundary>
       <Routes>
