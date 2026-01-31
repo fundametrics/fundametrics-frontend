@@ -13,8 +13,8 @@ https://www.fundametrics.io/* https://fundametrics.in/:splat 301!
 /about /about/ 301
 /indices /indices/ 301
 
-# Static Sitemap
-/sitemap.xml /sitemap.xml 200
+# Static Sitemap (Forced)
+/sitemap.xml /sitemap.xml 200!
 
 # Catch-all for SPA
 /* /index.html 200
