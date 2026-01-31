@@ -1,3 +1,7 @@
+# Sitemap & robots.txt (Forced)
+/sitemap.xml /sitemap.xml 200!
+/robots.txt /robots.txt 200!
+
 # Redirect www to non-www
 https://www.fundametrics.in/* https://fundametrics.in/:splat 301!
 
