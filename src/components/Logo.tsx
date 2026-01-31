@@ -8,17 +8,17 @@ interface LogoProps {
 const Logo: FC<LogoProps> = ({ className = '', size = 'md' }) => {
     const isSmall = size === 'sm';
 
-    // Significantly increased heights to compensate for the whitespace padding in brand-logo-v3.png
-    // We use large negative margins to pull the actual branding content into view without increasing header height.
-    const dimensions = isSmall ? 'h-32' : size === 'lg' ? 'h-72' : 'h-48';
-    const margin = isSmall ? '-my-12' : size === 'lg' ? '-my-28' : '-my-18';
+    // Scale the image up to fill the container despite its whitespace
+    // but keep the container itself constrained to standard navbar heights.
+    const containerHeight = isSmall ? 'h-8' : size === 'lg' ? 'h-16' : 'h-10';
 
     return (
-        <div className={`flex items-center justify-center ${className}`}>
+        <div className={`flex items-center justify-center ${containerHeight} overflow-hidden ${className}`}>
             <img
                 src="/brand-logo-v3.png"
                 alt="Fundametrics Logo"
-                className={`${dimensions} w-auto object-contain transition-transform hover:scale-105 duration-300 ${margin}`}
+                className="h-[250%] w-auto object-contain transition-transform hover:scale-110 duration-300"
+                style={{ transform: 'translateY(1%)' }} // Fine-tune centering if needed
             />
         </div>
     );

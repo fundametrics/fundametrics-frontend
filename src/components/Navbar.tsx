@@ -8,7 +8,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `group flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-50 px-3 py-2 rounded-lg ${isActive ? 'text-indigo-600 bg-indigo-50' : 'text-slate-500 hover:text-slate-900'}`;
+    `group flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-slate-50 px-4 py-2 rounded-lg ${isActive ? 'text-indigo-600 bg-indigo-100/50' : 'text-slate-500 hover:text-slate-900'}`;
 
   const linkIconClass = (isActive: boolean) =>
     `w-3.5 h-3.5 transition-transform group-hover:scale-110 ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-900'}`;
