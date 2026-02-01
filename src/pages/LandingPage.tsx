@@ -11,7 +11,6 @@ import {
   ChevronDown
 } from 'lucide-react';
 import SEO from '../components/SEO';
-import TickerTape from '../components/TickerTape';
 import MarketMovers from '../components/MarketMovers';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
@@ -101,7 +100,7 @@ const LandingPage = () => {
         description="Analyze Indian stocks using PE ratio, ROE, ROCE, and financial metrics. Real-time institutional-grade intelligence for retail investors. Fast and free stock screener."
       />
 
-      <TickerTape />
+
 
       <div className="relative">
         {/* 1️⃣ HERO SECTION (MOST IMPORTANT) */}
