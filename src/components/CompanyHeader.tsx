@@ -118,7 +118,7 @@ const CompanyHeader: FC<CompanyHeaderProps> = ({
           {/* Desktop Right: Price Section - Elevated */}
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-end">
-              <div className="text-3xl font-black font-mono text-slate-900 tracking-tighter leading-none">
+              <div className="text-2xl font-black font-mono text-slate-900 tracking-tighter leading-none">
                 {formattedPrice || <span className="text-sm text-slate-400">--</span>}
               </div>
               {formattedPrice && (
