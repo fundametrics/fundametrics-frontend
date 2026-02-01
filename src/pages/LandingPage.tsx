@@ -105,7 +105,7 @@ const LandingPage = () => {
 
       <div className="relative">
         {/* 1️⃣ HERO SECTION (MOST IMPORTANT) */}
-        <header className="relative px-6 pt-12 pb-20 max-w-[1400px] mx-auto text-center flex flex-col items-center overflow-visible">
+        <header className="relative px-6 pt-24 pb-20 max-w-[1400px] mx-auto text-center flex flex-col items-center overflow-visible">
           {/* Animated Background Elements */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl -z-10 animate-pulse" />
 

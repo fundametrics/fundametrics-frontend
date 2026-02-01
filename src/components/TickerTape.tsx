@@ -33,7 +33,7 @@ const TickerTape = () => {
     if (displayIndices.length === 0) return null;
 
     return (
-        <div className="fixed top-0 left-0 right-0 w-full bg-[#020617] overflow-hidden py-1 border-b border-slate-800 z-[100]">
+        <div className="fixed top-16 left-0 right-0 w-full bg-[#020617] overflow-hidden py-1 border-b border-slate-800 z-40">
             <div className="flex animate-ticker whitespace-nowrap">
                 {displayIndices.map((idx, i) => (
                     <div key={`${idx.id}-${i}`} className="inline-flex items-center gap-6 px-12 border-r border-white/5">
