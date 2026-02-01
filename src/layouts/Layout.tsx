@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MobileBottomNav from '../components/MobileBottomNav';
 import PageSkeleton from '../components/PageSkeleton';
-import TickerTape from '../components/TickerTape';
 
 const Layout = () => {
   const location = useLocation();
@@ -22,8 +21,7 @@ const Layout = () => {
         <Logo size="sm" />
       </div>
 
-      {/* Ticker Tape - Fixed below header on Home only */}
-      {isHome && <TickerTape />}
+
 
       <main className="flex-1 pb-20 lg:pb-0">
         <Suspense fallback={<PageSkeleton />}>
