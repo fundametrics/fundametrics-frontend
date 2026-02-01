@@ -6,7 +6,7 @@ import { TrendingUp, TrendingDown, ArrowRight } from 'lucide-react';
 interface MiniCompany {
     symbol: string;
     name?: string;
-    price?: number;
+    currentPrice?: number;
     changePercent?: number;
 }
 
@@ -26,15 +26,11 @@ const MarketMovers = () => {
                 const losersRes = await api.getStocks(0, 5, 'changePercent', 1, {});
 
                 if (gainersRes && Array.isArray(gainersRes.companies)) {
-                    // Filter out stocks with 0% change, but fallback to raw list if empty to avoid UI blankness
-                    const companies = gainersRes.companies as any[];
-                    const validGainers = companies.filter(c => c.changePercent && c.changePercent > 0);
-                    setGainers(validGainers.length > 0 ? validGainers.slice(0, 5) : companies.slice(0, 5));
+                    // Include all companies, let formatting handle color/sign
+                    setGainers(gainersRes.companies.slice(0, 5));
                 }
                 if (losersRes && Array.isArray(losersRes.companies)) {
-                    const companies = losersRes.companies as any[];
-                    const validLosers = companies.filter(c => c.changePercent && c.changePercent < 0);
-                    setLosers(validLosers.length > 0 ? validLosers.slice(0, 5) : companies.slice(0, 5));
+                    setLosers(losersRes.companies.slice(0, 5));
                 }
             } catch (err) {
                 console.error("Failed to fetch market movers", err);
@@ -65,8 +61,10 @@ const MarketMovers = () => {
                             <div className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors text-sm">{company.symbol}</div>
                             <div className="text-[10px] text-slate-400 font-bold truncate max-w-[120px]">{company.name || company.symbol}</div>
                         </div>
-                        <div className={`text-right font-black text-xs ${type === 'gainers' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                            {company.changePercent ? (company.changePercent > 0 ? '+' : '') + company.changePercent.toFixed(2) + '%' : '—'}
+                        <div className={`text-right font-black text-xs ${company.changePercent && company.changePercent > 0 ? 'text-emerald-600' : company.changePercent && company.changePercent < 0 ? 'text-rose-600' : 'text-slate-500'}`}>
+                            {(company.changePercent !== undefined && company.changePercent !== null) ?
+                                (company.changePercent > 0 ? '+' : '') + company.changePercent.toFixed(2) + '%'
+                                : '0.00%'}
                         </div>
                     </Link>
                 ))}
