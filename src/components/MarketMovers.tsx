@@ -26,14 +26,15 @@ const MarketMovers = () => {
                 const losersRes = await api.getStocks(0, 5, 'changePercent', 1, {});
 
                 if (gainersRes && Array.isArray(gainersRes.companies)) {
-                    // Filter out stocks with 0% change
-                    const validGainers = gainersRes.companies.filter(c => c.changePercent && c.changePercent > 0);
-                    setGainers(validGainers.slice(0, 5));
+                    // Filter out stocks with 0% change, but fallback to raw list if empty to avoid UI blankness
+                    const companies = gainersRes.companies as any[];
+                    const validGainers = companies.filter(c => c.changePercent && c.changePercent > 0);
+                    setGainers(validGainers.length > 0 ? validGainers.slice(0, 5) : companies.slice(0, 5));
                 }
                 if (losersRes && Array.isArray(losersRes.companies)) {
-                    // Filter out stocks with 0% change
-                    const validLosers = losersRes.companies.filter(c => c.changePercent && c.changePercent < 0);
-                    setLosers(validLosers.slice(0, 5));
+                    const companies = losersRes.companies as any[];
+                    const validLosers = companies.filter(c => c.changePercent && c.changePercent < 0);
+                    setLosers(validLosers.length > 0 ? validLosers.slice(0, 5) : companies.slice(0, 5));
                 }
             } catch (err) {
                 console.error("Failed to fetch market movers", err);

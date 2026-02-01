@@ -3,7 +3,8 @@ import { api } from '../utils/api';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
 const TickerTape = () => {
-    const [indices, setIndices] = useState<any[]>([]);
+    return null;
+    // DISABLED AS PER USER REQUEST
 
     useEffect(() => {
         const fetchPrices = async () => {
