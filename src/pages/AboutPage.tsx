@@ -28,7 +28,7 @@ const AboutPage: FC = () => {
 
       <main className="max-w-4xl mx-auto px-6 py-16 space-y-20">
         {/* Principles & Coverage Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Our Operating Principles */}
           <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm">
             <h3 className="text-lg font-black text-slate-900 mb-6 uppercase tracking-tight">
@@ -53,7 +53,7 @@ const AboutPage: FC = () => {
             <h3 className="text-lg font-black text-slate-900 mb-8 uppercase tracking-tight">
               Platform coverage
             </h3>
-            <div className="grid grid-cols-2 gap-y-10 gap-x-4">
+            <div className="grid grid-cols-2 gap-y-8 sm:gap-y-10 gap-x-4">
               <div>
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Companies</div>
                 <div className="text-3xl font-black text-slate-900">500+</div>

@@ -11,7 +11,6 @@ import {
   ChevronDown
 } from 'lucide-react';
 import SEO from '../components/SEO';
-import PlatformIntelligence from '../components/PlatformIntelligence';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
 
@@ -108,8 +107,8 @@ const LandingPage = () => {
           {/* Animated Background Elements */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl -z-10 animate-pulse" />
 
-          {/* SVG Hero Image / Illustration */}
-          <div className="absolute top-0 inset-x-0 -z-10 flex justify-center opacity-40 mix-blend-multiply pointer-events-none overflow-hidden">
+          {/* SVG Hero Image / Illustration - Hidden on mobile */}
+          <div className="absolute top-0 inset-x-0 -z-10 justify-center opacity-40 mix-blend-multiply pointer-events-none overflow-hidden hidden sm:flex">
             <svg width="1000" height="600" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-in fade-in zoom-in duration-1000">
               <path d="M0 500 C 200 500, 200 400, 400 400 C 600 400, 600 200, 1000 100" stroke="url(#paint0_linear)" strokeWidth="4" strokeDasharray="10 10" className="animate-[dash_20s_linear_infinite]" />
               <path d="M0 550 C 300 550, 400 450, 600 450 C 800 450, 900 300, 1000 250" stroke="url(#paint1_linear)" strokeWidth="60" strokeOpacity="0.1" />
@@ -160,9 +159,9 @@ const LandingPage = () => {
           </div>
         </header>
 
-        {/* 2️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
+        {/* 2️⃣ QUICK STATS STRIP - Responsive */}
         <section className="bg-slate-50 border-y border-slate-100 py-6 mb-20">
-          <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+          <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
             <div className="space-y-1">
               <div className="text-xl font-black text-indigo-600">2000+</div>
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Indian Companies</div>
@@ -243,8 +242,8 @@ const LandingPage = () => {
                     onClick={() => toggleFaq(i)}
                     className="w-full flex items-center justify-between px-6 py-4 text-left"
                   >
-                    <span className="font-bold text-sm text-slate-900">{faq.q}</span>
-                    <ChevronDown size={16} className={`text-slate-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`} />
+                    <span className="font-bold text-sm text-slate-900 pr-4">{faq.q}</span>
+                    <ChevronDown size={16} className={`text-slate-400 transition-transform duration-300 flex-shrink-0 ${openFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   <div className={`px-6 overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-60 pb-4 opacity-100' : 'max-h-0 opacity-0'}`}>
                     <p className="text-sm font-medium text-slate-600 leading-relaxed">{faq.a}</p>
@@ -260,7 +259,7 @@ const LandingPage = () => {
               <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Explore by Sector</h2>
               <p className="text-slate-500 text-sm font-medium mt-2">Analyze companies across major Indian market sectors</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {sectors.map((sector) => (
                 <Link
                   key={sector.name}
@@ -279,8 +278,8 @@ const LandingPage = () => {
           <section className="py-16 bg-slate-900 rounded-[32px] text-center text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl -mr-32 -mt-32" />
             <div className="relative z-10 space-y-6 px-6">
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight uppercase">Start Analyzing Stocks Today</h2>
-              <p className="text-slate-400 font-medium text-base max-w-xl mx-auto">Access 100% verified financial data for over 2,000 Indian public companies.</p>
+              <h2 className="text-xl sm:text-2xl md:text-4xl font-black tracking-tight uppercase">Start Analyzing Stocks Today</h2>
+              <p className="text-slate-400 font-medium text-sm sm:text-base max-w-xl mx-auto">Access 100% verified financial data for over 2,000 Indian public companies.</p>
               <Link
                 to="/stocks"
                 className="inline-block px-10 py-5 bg-white text-slate-900 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-100 transition-all shadow-xl shadow-white/5"

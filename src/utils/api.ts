@@ -58,6 +58,7 @@ export const api = {
       sort_by,
       order: order.toString()
     });
+    if (filters.searchQuery) params.append('q', filters.searchQuery);
     if (filters.sector && filters.sector !== 'all') params.append('sector', filters.sector);
     if (filters.minCap) params.append('min_market_cap', filters.minCap);
     if (filters.maxCap) params.append('max_market_cap', filters.maxCap);

@@ -31,6 +31,9 @@ const StocksPage = () => {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(0);
+  const [sectorsList, setSectorsList] = useState<string[]>(['all']);
+  const ROWS_PER_PAGE = 50;
 
   // Filter State (Sync with URL or defaults)
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
@@ -47,6 +50,15 @@ const StocksPage = () => {
   // UI State
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
+  // Fetch Sectors once
+  useEffect(() => {
+    api.getSectors().then(list => {
+      if (Array.isArray(list)) {
+        setSectorsList(['all', ...list].sort());
+      }
+    }).catch(err => logger.error("Failed to fetch sectors", err));
+  }, []);
+
   // Fetch data with server-side sorting and ADAVANCED filtering (Phase 6)
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +69,7 @@ const StocksPage = () => {
 
         // Pass current filters to the API
         const filters = {
+          searchQuery,
           sector: selectedSector,
           minCap,
           maxCap,
@@ -65,7 +78,7 @@ const StocksPage = () => {
         };
 
         // Fetch from optimized, filter-aware API
-        const response = await api.getStocks(0, 50, sortField, order, filters).catch(err => {
+        const response = await api.getStocks(page * ROWS_PER_PAGE, ROWS_PER_PAGE, sortField, order, filters).catch(err => {
           logger.error("API call failed", err);
           return { companies: [], total: 0 };
         });
@@ -102,7 +115,7 @@ const StocksPage = () => {
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [sortField, sortDirection, selectedSector, minCap, maxCap, minROE, maxPE]); // Refetch when filters change
+  }, [page, searchQuery, sortField, sortDirection, selectedSector, minCap, maxCap, minROE, maxPE]); // Refetch when page, filters or search change
 
   // Update URL search params whenever filters change
   useEffect(() => {
@@ -120,58 +133,14 @@ const StocksPage = () => {
   }, [searchQuery, selectedSector, minCap, maxCap, minROE, maxPE, sortField, sortDirection, setSearchParams]);
 
   // Client-side filtering (sorting is now done on server for initial load)
-  const filteredCompanies = useMemo(() => {
-    let result = [...companies];
-
-    // Search Query (Internal)
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(c =>
-        c.name.toLowerCase().includes(q) ||
-        c.symbol.toLowerCase().includes(q) ||
-        c.sector.toLowerCase().includes(q)
-      );
-    }
-
-    // Sector Filter
-    if (selectedSector !== 'all') {
-      result = result.filter(c => c.sector === selectedSector);
-    }
-
-    // Market Cap Range
-    if (minCap) result = result.filter(c => (c.marketCap || 0) >= parseFloat(minCap));
-    if (maxCap) result = result.filter(c => (c.marketCap || Infinity) <= parseFloat(maxCap));
-
-    // ROC/ROE
-    if (minROE) result = result.filter(c => (c.roe || 0) >= parseFloat(minROE));
-
-    // PE Ratio
-    if (maxPE) result = result.filter(c => (c.pe || 0) <= parseFloat(maxPE));
-
-    // Secondary Sort (Client-side) for the current displayed batch
-    // This handles the direction correctly if already fetched
-    result.sort((a, b) => {
-      let aVal = a[sortField];
-      let bVal = b[sortField];
-
-      if (typeof aVal === 'string') aVal = aVal.toLowerCase();
-      if (typeof bVal === 'string') bVal = bVal.toLowerCase();
-
-      if (aVal === undefined || aVal === null) return 1;
-      if (bVal === undefined || bVal === null) return -1;
-
-      if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
-      return 0;
-    });
-
-    return result;
-  }, [companies, searchQuery, selectedSector, minCap, maxCap, minROE, maxPE, sortField, sortDirection]);
+  // No more client-side filtering. The server handles all 2000+ entries.
+  const filteredCompanies = companies;
 
   // Debounced handlers for inputs could be added here, but for numbers/ranges 
   // immediate filtering usually feels responsive in React if result set < 1000.
 
   const handleSort = (field: SortField) => {
+    setPage(0); // Reset to page 0 on sort change
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
@@ -181,6 +150,7 @@ const StocksPage = () => {
   };
 
   const clearFilters = () => {
+    setPage(0);
     setSearchQuery('');
     setSelectedSector('all');
     setMinCap('');
@@ -198,7 +168,7 @@ const StocksPage = () => {
     );
   };
 
-  const sectors = ['all', ...new Set(companies.map((c) => c.sector))].sort();
+  const totalPages = Math.ceil(total / ROWS_PER_PAGE);
 
   if (loading) {
     return (
@@ -256,10 +226,13 @@ const StocksPage = () => {
                   <PieChart className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} strokeWidth={2.5} />
                   <select
                     value={selectedSector}
-                    onChange={(e) => setSelectedSector(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedSector(e.target.value);
+                      setPage(0);
+                    }}
                     className="w-full pl-11 pr-10 py-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 text-[11px] font-black uppercase tracking-wider appearance-none cursor-pointer shadow-sm transition-all"
                   >
-                    {sectors.map((s) => (
+                    {sectorsList.map((s) => (
                       <option key={s} value={s}>{s === 'all' ? 'All Channels' : s}</option>
                     ))}
                   </select>
@@ -453,6 +426,34 @@ const StocksPage = () => {
             </div>
           )}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="mt-8 flex items-center justify-between bg-white px-6 py-4 rounded-xl border border-slate-200 shadow-sm">
+            <div className="text-xs font-bold text-slate-500">
+              Showing <span className="text-slate-900">{page * ROWS_PER_PAGE + 1}</span> to <span className="text-slate-900">{Math.min((page + 1) * ROWS_PER_PAGE, total)}</span> of <span className="text-slate-900">{total}</span> assets
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage(p => Math.max(0, p - 1))}
+                disabled={page === 0}
+                className="px-4 py-2 text-[10px] font-black uppercase tracking-widest bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                Previous
+              </button>
+              <div className="px-3 text-xs font-black text-indigo-600">
+                Page {page + 1} of {totalPages}
+              </div>
+              <button
+                onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                disabled={page >= totalPages - 1}
+                className="px-4 py-2 text-[10px] font-black uppercase tracking-widest bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div >
     </div >
   );

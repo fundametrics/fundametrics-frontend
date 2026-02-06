@@ -37,7 +37,7 @@ const WatchlistPage = () => {
             if (response && Array.isArray(response.companies)) {
                 const watchlistData = response.companies
                     .filter(c => watchlist.includes(c.symbol))
-                    .map(c => ({
+                    .map((c: any) => ({
                         symbol: c.symbol,
                         name: c.name || c.symbol,
                         sector: c.sector || 'NSE Listed',
@@ -89,7 +89,7 @@ const WatchlistPage = () => {
                         {watchlist.length > 0 && (
                             <button
                                 onClick={handleClearWatchlist}
-                                className="px-6 py-3 bg-white border border-slate-200 text-slate-500 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all flex items-center gap-2"
+                                className="px-4 sm:px-6 py-3 bg-white border border-slate-200 text-slate-500 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all flex items-center gap-2"
                             >
                                 <Trash2 size={16} />
                                 Clear All
@@ -105,9 +105,9 @@ const WatchlistPage = () => {
                 </div>
 
                 {watchlist.length === 0 ? (
-                    <div className="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-20 text-center">
-                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <Bookmark className="text-slate-300" size={40} />
+                    <div className="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-10 sm:p-20 text-center">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <Bookmark className="text-slate-300" size={32} />
                         </div>
                         <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Your watchlist is empty</h3>
                         <p className="text-slate-500 mt-2 max-w-sm mx-auto font-medium">
@@ -133,10 +133,11 @@ const WatchlistPage = () => {
                                         </Link>
                                         <button
                                             onClick={() => toggleWatchlist(company.symbol)}
-                                            className="p-2 text-slate-300 hover:text-red-500 transition-colors"
+                                            className="p-3 text-slate-300 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50 active:scale-95"
                                             title="Remove from watchlist"
+                                            aria-label="Remove from watchlist"
                                         >
-                                            <Trash2 size={18} />
+                                            <Trash2 size={20} />
                                         </button>
                                     </div>
 
