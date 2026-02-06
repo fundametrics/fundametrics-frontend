@@ -11,7 +11,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import SEO from '../components/SEO';
-import MarketMovers from '../components/MarketMovers';
+import PlatformIntelligence from '../components/PlatformIntelligence';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
 
@@ -160,8 +160,10 @@ const LandingPage = () => {
           </div>
         </header>
 
-        {/* 2️⃣ MARKET MOVERS (NEW) */}
-        <MarketMovers />
+        {/* 2️⃣ PLATFORM INTELLIGENCE (NEW ABOUT SECTION) */}
+        <div className="mb-20">
+          <PlatformIntelligence />
+        </div>
 
         {/* 3️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
         <section className="bg-slate-50 border-y border-slate-100 py-6 mb-20">
@@ -181,7 +183,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <main className="max-w-[1400px] mx-auto px-6 space-y-24">
+        <main className="max-w-[1400px] mx-auto px-6 space-y-40 py-20">
 
           {/* 4️⃣ “HOW IT WORKS” (3 STEPS) */}
           <section id="process" className="space-y-12">
