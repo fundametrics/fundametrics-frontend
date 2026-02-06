@@ -160,12 +160,7 @@ const LandingPage = () => {
           </div>
         </header>
 
-        {/* 2️⃣ PLATFORM INTELLIGENCE (NEW ABOUT SECTION) */}
-        <div className="mb-20">
-          <PlatformIntelligence />
-        </div>
-
-        {/* 3️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
+        {/* 2️⃣ QUICK STATS STRIP (OPTIONAL BUT POWERFUL) */}
         <section className="bg-slate-50 border-y border-slate-100 py-6 mb-20">
           <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div className="space-y-1">
