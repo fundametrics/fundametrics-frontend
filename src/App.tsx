@@ -17,7 +17,6 @@ const MethodologyPage = lazy(() => import('./pages/MethodologyPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const DataSourcesPage = lazy(() => import('./pages/DataSourcesPage'));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
-const ScrollbarTest = lazy(() => import('./pages/ScrollbarTest'));
 const ScrollbarDemo = lazy(() => import('./pages/ScrollbarDemo'));
 
 import ErrorBoundary from './components/ErrorBoundary';
@@ -46,7 +45,6 @@ const App = () => {
           <Route path="fundamental-analysis" element={<GlossaryPage />} />
 
           <Route path="admin" element={<AdminPage />} />
-          <Route path="scrollbar-test" element={<ScrollbarTest />} />
           <Route path="scrollbar-demo" element={<ScrollbarDemo />} />
           <Route path="disclaimer" element={<DisclaimerPage />} />
           <Route path="methodology" element={<MethodologyPage />} />
