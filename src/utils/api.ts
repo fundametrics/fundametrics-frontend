@@ -64,6 +64,9 @@ export const api = {
     if (filters.maxCap) params.append('max_market_cap', filters.maxCap);
     if (filters.minROE) params.append('min_roe', filters.minROE);
     if (filters.maxPE) params.append('max_pe', filters.maxPE);
+    if (filters.symbols && Array.isArray(filters.symbols)) {
+      params.append('symbols', filters.symbols.join(','));
+    }
 
     return request<StocksResponse>(`/api/companies?${params.toString()}`);
   },

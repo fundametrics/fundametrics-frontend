@@ -29,22 +29,20 @@ const WatchlistPage = () => {
 
     const loadWatchlistData = async () => {
         try {
-            const response = await api.getRegistry(0, 100).catch(err => {
+            const response = await api.getStocks(0, 100, 'symbol', 1, { symbols: watchlist }).catch(err => {
                 console.error('API call failed for watchlist', err);
                 return { companies: [] };
             });
 
             if (response && Array.isArray(response.companies)) {
-                const watchlistData = response.companies
-                    .filter(c => watchlist.includes(c.symbol))
-                    .map((c: any) => ({
-                        symbol: c.symbol,
-                        name: c.name || c.symbol,
-                        sector: c.sector || 'NSE Listed',
-                        marketCap: c.marketCap || 0,
-                        roe: c.roe || 0,
-                        pe: c.pe || 0,
-                    }));
+                const watchlistData = response.companies.map((c: any) => ({
+                    symbol: c.symbol,
+                    name: c.name || c.symbol,
+                    sector: c.sector || 'NSE Listed',
+                    marketCap: c.marketCap || 0,
+                    roe: c.roe || 0,
+                    pe: c.pe || 0,
+                }));
                 setCompanies(watchlistData);
             } else {
                 setCompanies([]);
