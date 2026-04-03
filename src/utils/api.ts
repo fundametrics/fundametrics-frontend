@@ -68,32 +68,32 @@ export const api = {
       params.append('symbols', filters.symbols.join(','));
     }
 
-    return request<StocksResponse>(`/api/companies?${params.toString()}`);
+    return request<StocksResponse>(`/api/v1/stocks?${params.toString()}`);
   },
   getRegistry: (skip: number = 0, limit: number = 50, status?: string) =>
-    request<StocksResponse>(`/companies/registry?skip=${skip}&limit=${limit}${status ? `&status=${status}` : ''}`),
-  getCompany: (symbol: string) => request<StockDetailResponse>(`/api/company/${symbol}`),
-  getCompanyStatus: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/status`),
-  generateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/company/${symbol}/generate`, 'POST'),
-  adminGenerateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/admin/company/${symbol}/generate`, 'POST'),
-  getMarketFacts: (symbol: string) => request<MarketFacts>(`/api/stocks/${symbol}/market`),
-  getCoverageIndex: () => request<CoverageIndexResponse>("/coverage"),
+    request<StocksResponse>(`/api/v1/stocks?skip=${skip}&limit=${limit}${status ? `&status=${status}` : ''}`),
+  getCompany: (symbol: string) => request<StockDetailResponse>(`/api/v1/stocks/${symbol}`),
+  getCompanyStatus: (symbol: string) => request<{ status: string; message: string }>(`/api/v1/stocks/${symbol}/cache-status`),
+  generateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/api/v1/stocks/${symbol}/cache-status`, 'GET'),
+  adminGenerateCompanyData: (symbol: string) => request<{ status: string; message: string }>(`/api/v1/stocks/${symbol}/cache-status`, 'GET'),
+  getMarketFacts: (symbol: string) => request<MarketFacts>(`/api/v1/stocks/${symbol}/live`),
+  getCoverageIndex: () => request<CoverageIndexResponse>("/api/v1/admin/coverage"),
   searchSymbols: (query: string, sector?: string) =>
-    request<{ query: string; results: { symbol: string; name: string; sector: string; status: string }[]; disclaimer: string }>(
-      `/api/search?q=${encodeURIComponent(query)}${sector ? `&sector=${encodeURIComponent(sector)}` : ""}`,
+    request<any>(
+      `/api/v1/stocks?search=${encodeURIComponent(query)}${sector ? `&sector=${encodeURIComponent(sector)}` : ""}`,
     ),
   searchRegistry: (query: string) =>
-    request<{ query: string; results: { symbol: string; name: string; sector: string; status: string }[]; disclaimer: string }>(
-      `/api/search?q=${encodeURIComponent(query)}`,
+    request<any>(
+      `/api/v1/stocks?search=${encodeURIComponent(query)}`,
     ),
-  getSectors: () => request<string[]>("/api/sectors"),
+  getSectors: () => request<string[]>("/api/v1/sectors"),
   checkComparison: (metric_a: any, metric_b: any) =>
     request<{ comparable: boolean; reason: string | null }>("/api/v1/compare/check", "POST", { metric_a, metric_b }),
-  getIndices: () => request<string[]>("/api/indices"),
-  getIndicesPrices: () => request<{ id: string, label: string, price: number, change: number, changePercent: number, symbol: string }[]>("/api/indices/prices"),
+  getIndices: () => request<string[]>("/api/v1/indices"),
+  getIndicesPrices: () => request<{ id: string, label: string, price: number, change: number, changePercent: number, symbol: string }[]>("/api/v1/indices/prices"),
   getIndexConstituents: (index: string) =>
-    request<{ index: string; count: number; constituents: { symbol: string; name: string; sector: string; currentPrice?: number }[] }>(`/api/indices/${index}/constituents`),
-  getPeers: (symbol: string) => request<{ symbol: string; peers: any[] }>(`/api/peers/${symbol}`),
-  getAdminStats: () => request<any>('/admin/stats'),
+    request<{ index: string; count: number; constituents: { symbol: string; name: string; sector: string; currentPrice?: number }[] }>(`/api/v1/indices/${index}/constituents`),
+  getPeers: (symbol: string) => request<{ symbol: string; peers: any[] }>(`/api/v1/stocks/${symbol}/vs-peers`),
+  getAdminStats: () => request<any>('/api/v1/admin/scheduler/status'),
 };
 
