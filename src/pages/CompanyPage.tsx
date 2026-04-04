@@ -183,6 +183,13 @@ const CompanyPage = () => {
               error: null,
               statusData: statusRes
             });
+            
+            // Phase 9: Set up polling if status is generating
+            if (statusRes.status === 'generating' || statusRes.status === 'queued') {
+               setTimeout(() => {
+                  if (isMounted) loadCompany();
+               }, 5000);
+            }
           }
         } catch (statusErr) {
           if (!isMounted) return;
@@ -428,16 +435,29 @@ const CompanyPage = () => {
           <main className="flex-1 px-4 lg:px-8 py-20 flex items-center justify-center">
             {/* Fallback Screen */}
             <div className="max-w-xl w-full bg-white rounded-[2.5rem] border border-slate-200 p-12 text-center shadow-xl shadow-slate-100">
-              <div className="w-20 h-20 bg-amber-50 rounded-3xl flex items-center justify-center mx-auto mb-8">
-                <ShieldCheck size={40} className="text-amber-500" />
+              <div className="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center mx-auto mb-8 relative">
+                {isPending ? (
+                  <Activity size={40} className="text-indigo-500 animate-spin" />
+                ) : (
+                  <ShieldCheck size={40} className="text-amber-500" />
+                )}
               </div>
               <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-4">{companyName}</h2>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-full mb-8">
                 {symbol} • {sector}
               </div>
               <p className="text-slate-500 font-medium leading-relaxed mb-6">
-                We are aggregating data for this company. Please check back later.
+                {isPending 
+                  ? "We are currently aggregating and processing deep fundamentals data for this company. This usually takes a few seconds..." 
+                  : "We are aggregating data for this company. Please check back later."}
               </p>
+              {isPending && (
+                <div className="mt-8 flex items-center gap-2 text-indigo-600 justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              )}
             </div>
           </main>
         ) : (
